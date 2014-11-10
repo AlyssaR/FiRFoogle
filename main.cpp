@@ -2,7 +2,6 @@
 #include <fstream>
 
 #include "tree.h"
-using namespace std;
 
 void removeStopwords(char*);
 //use time libraries to check detail of algorithm

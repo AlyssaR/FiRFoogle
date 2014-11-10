@@ -1,5 +1,7 @@
 #include "tree.h"
 
+Tree::Tree() {}
+
 void Tree::rotateWithLeftChild(File *& k1) { //Case 1
     File * k2 = k1->left;
     //Rotate Files
