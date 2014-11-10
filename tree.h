@@ -3,30 +3,29 @@
 
 #include "file.h"
 
-struct Node {
-    Node * left, * right;
-    int height, id;
-    Node(int x) : id(x) {}
-};
-
 class Tree {
 private:
-    Node * root;
+    File * root;
 
-    void insert(int, Node *&);
-    int height(Node * t) { return (t==nullptr?-1:t->height); }
+    void insert(int, char*, char*, File*&);
+    int height(File * t) { return (t==nullptr?-1:t->height); }
     int max(int a, int b) { return (a>=b?a:b); }
 
-    void rotateWithLeftChild(Node *&); //Case 1
-    void doubleWithLeftChild(Node *&); //Case 2
-    void doubleWithRightChild(Node *&); //Case 3
-    void rotateWithRightChild(Node *&); //Case 4
+    void rotateWithLeftChild(File *&); //Case 1
+    void doubleWithLeftChild(File *&); //Case 2
+    void doubleWithRightChild(File *&); //Case 3
+    void rotateWithRightChild(File *&); //Case 4
 
 
 public:
     Tree(): root(nullptr) {}
-    void insert(int v) { insert(v, root); }
+    void insert(int v, char* t, char* a) { insert(v, t, a, root); }
+    void get() {
+        cout << root->author << " wrote: " << root->title
+             << " (" << root->id << ")" << endl;
+    }
 
+    ~Tree() { delete root; }
 };
 
 

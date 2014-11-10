@@ -1,6 +1,7 @@
 #include <cstring>
-#include <iostream>
 #include <fstream>
+
+#include "tree.h"
 using namespace std;
 
 void removeStopwords(char*);
@@ -13,7 +14,12 @@ int main(int argc, char* argv[]) {
                 << "Correct Usage: ./a.out stopwords.txt" << endl;
         return 1;
     }
-    removeStopwords(argv[1]);
+
+    Tree * birch = new Tree();
+    birch->insert(1, "acorn", "alyssa");
+    birch->get();
+
+    //    removeStopwords(argv[1]);
 
     return 0;
 }

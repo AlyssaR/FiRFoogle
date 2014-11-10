@@ -6,7 +6,6 @@ CONFIG += c++11
 QMAKE_CXXFLAGS += -Wno-write-strings
 
 SOURCES += main.cpp \
-    file.cpp \
     tree.cpp
 
 HEADERS += \

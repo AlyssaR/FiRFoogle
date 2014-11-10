@@ -1,8 +1,8 @@
 #include "tree.h"
 
-void Tree::rotateWithLeftChild(Node *& k1) { //Case 1
-    Node * k2 = k1->left;
-    //Rotate nodes
+void Tree::rotateWithLeftChild(File *& k1) { //Case 1
+    File * k2 = k1->left;
+    //Rotate Files
     k1->left = k2->right;
     k2->right = k1;
     //Update Heights
@@ -12,19 +12,19 @@ void Tree::rotateWithLeftChild(Node *& k1) { //Case 1
     k1 = k2;
 }
 
-void Tree::doubleWithLeftChild(Node *& k3) { //Case 2
+void Tree::doubleWithLeftChild(File *& k3) { //Case 2
     rotateWithRightChild(k3->left);
     rotateWithLeftChild(k3);
 }
 
-void Tree::doubleWithRightChild(Node *& k3) { //Case 3
+void Tree::doubleWithRightChild(File *& k3) { //Case 3
     rotateWithLeftChild(k3->right);
     rotateWithRightChild(k3);
 }
 
-void Tree::rotateWithRightChild(Node *& k1) { //Case 4
-    Node * k2 = k1->right;
-    //Rotate nodes
+void Tree::rotateWithRightChild(File *& k1) { //Case 4
+    File * k2 = k1->right;
+    //Rotate Files
     k1->right = k2->left;
     k2->left = k1;
     //Update Heights
@@ -34,11 +34,11 @@ void Tree::rotateWithRightChild(Node *& k1) { //Case 4
     k1 = k2;
 }
 
-void Tree::insert(int val, Node *& t) {
-    if(t==nullptr) //Add node
-        t = new Node(val);
+void Tree::insert(int val, char* title, char* author, File*& t) {
+    if(t==nullptr) //Add File
+        t = new File(val, title, author);
     else if(val < t->id) { //Go left
-        insert(val, t->left);
+        insert(val, title, author, t->left);
         if(height(t->left)-height(t->right) == 2) {
             if(val < t->left->id) //Case 1
                 rotateWithLeftChild(t);
@@ -47,7 +47,7 @@ void Tree::insert(int val, Node *& t) {
         }
     }
     else if(t->id < val) { //Go right
-        insert(val, t->right);
+        insert(val, title, author, t->right);
         if(height(t->right)-height(t->left) == 2) {
             if(val < t->right->id) //Case 3
                 rotateWithRightChild(t);
