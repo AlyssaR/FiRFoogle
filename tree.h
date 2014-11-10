@@ -5,7 +5,7 @@
 
 class Tree {
 private:
-    File * root;
+    File * root = nullptr;
 
     void insert(int, char*, char*, File*&);
     int height(File * t) { return (t==nullptr?-1:t->height); }
@@ -18,7 +18,7 @@ private:
 
 
 public:
-    Tree(): root(nullptr) {}
+    Tree();
     void insert(int v, char* t, char* a) { insert(v, t, a, root); }
     void get() {
         cout << root->author << " wrote: " << root->title
