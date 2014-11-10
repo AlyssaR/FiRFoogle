@@ -5,5 +5,11 @@ CONFIG -= qt
 CONFIG += c++11
 QMAKE_CXXFLAGS += -Wno-write-strings
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    file.cpp \
+    tree.cpp
+
+HEADERS += \
+    file.h \
+    tree.h
 
