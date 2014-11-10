@@ -45,7 +45,7 @@ void removeStopwords(char* file) {
         exit(1);
     }
 
-    char *buffer = new char[100], *text = "";
+    char *buffer = new char[100], *text = new char[100];
 
     while(fin >> buffer) {
         //make word lowercase
@@ -53,16 +53,15 @@ void removeStopwords(char* file) {
             char c = buffer[i];
             buffer[i] = tolower(c);
         }
-        cout << buffer << endl;
+        //compare to stopwords
         for(int i = 0; i < STOPWORDS_SIZE; i++) {
-            if(strcmp(buffer, stopwords[i]) == 0) {
-                cout << "Test1" << endl;
-                i = STOPWORDS_SIZE; //break for loop if buffer is a stopword
-            } else if(strcmp(buffer, stopwords[i]) != 0 && i == STOPWORDS_SIZE - 1) {
-                cout << "Test2" << endl;
+            if(strcmp(buffer, stopwords[i]) == 0)
+                break; //break if buffer is a stopword
+            else if(strcmp(buffer, stopwords[i]) != 0 && i == STOPWORDS_SIZE - 1) {
                 strcat(text, buffer); //if buffer isn't a stopword, add to text
-                cout << text << endl;
+                strcat(text, " "); //Add space between words
             }
         }
     }
+    cout << text << endl;
 } //close removeStopwords
