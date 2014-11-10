@@ -1,3 +1,4 @@
+#include <cstring>
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -7,7 +8,11 @@ void removeStopwords(char*);
 
 
 int main(int argc, char* argv[]) {
-
+    if(argc < 2) {
+        cerr << "[!] Invalid number of arguments."
+                << "Correct Usage: ./a.out stopwords.txt" << endl;
+        return 1;
+    }
     removeStopwords(argv[1]);
 
     return 0;
