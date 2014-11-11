@@ -22,6 +22,12 @@ char* XMLParser::lowercase(char* filename) {
     buffer = new char[length]; // allocate memory for a buffer of appropriate dimension
     fin.read(buffer, length); // read the whole file into the buffer
     fin.close();
+
+    /** Make Word Lowercase **/
+    for(int i = 0; i < strlen(buffer); i++) {
+        char c = buffer[i];
+        buffer[i] = tolower(c);
+    }
 }
 
 void XMLParser::readFile(char* filename) {
@@ -30,8 +36,8 @@ void XMLParser::readFile(char* filename) {
 
     /** http://rapidxml.sourceforge.net/manual.html#namespacerapidxml_1two_minute_tutorial **/
     /** parse through file **/
-//    xml_document<> doc;    // character type defaults to char
-//    doc.parse<0>(fileText);    // 0 means default parse flags
+    xml_document<> doc; // character type defaults to char
+    doc.parse<0>(fileText); // 0 means default parse flags
 
 }
 
