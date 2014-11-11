@@ -1,12 +1,15 @@
 #ifndef XMLPARSER_H
 #define XMLPARSER_H
 
-#include "English_Stem.h"
+#include "porter2_stemmer.h"
+#include "rapidxml.h"
 #include <cstring>
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 using namespace std;
+using namespace rapidxml;
 
 class XMLParser
 {
@@ -14,7 +17,7 @@ private:
     char* filename;
 public:
     XMLParser();
-    void ascii(char*);
+    char* lowercase(char*);
     void readFile(char*);
     void stopwords();
     void stem();

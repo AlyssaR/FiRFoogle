@@ -8,10 +8,12 @@ QMAKE_CXXFLAGS += -Wno-write-strings
 
 SOURCES += main.cpp \
     xmlparser.cpp \
-    tree.cpp
+    tree.cpp \
+    porter2_stemmer.cpp
 
 HEADERS += \
     xmlparser.h \
-    English_Stem.h \
     file.h \
-    tree.h
+    tree.h \
+    porter2_stemmer.h \
+    rapidxml.h

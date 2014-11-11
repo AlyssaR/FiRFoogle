@@ -3,7 +3,7 @@
 #include "xmlparser.h"
 
 //use time libraries to check detail of algorithm
-void removeStopwords(char*);
+void testParser(char*);
 
 int main(int argc, char* argv[]) {
     if(argc < 2) {
@@ -15,16 +15,12 @@ int main(int argc, char* argv[]) {
     birch->insert(1, "acorn", "alyssa");
     birch->get();
 
-    removeStopwords(argv[1]);
-
+    testParser(argv[1]);
     return 0;
 }
 
-void removeStopwords(char* file) {
-    const int STOPWORDS_SIZE = 177;
-
+void testParser(char* file) {
     XMLParser parser;
-
-    parser.ascii(file);
     parser.readFile(file);
 }
+

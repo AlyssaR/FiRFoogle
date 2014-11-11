@@ -2,39 +2,37 @@
 
 XMLParser::XMLParser() {}
 
-void XMLParser::ascii(char* filename) {
-    char* temp;
+char* XMLParser::lowercase(char* filename) {
+    char* buffer;
+    int length;
 
+    /** Read in file and convert to ASCII **/
     ifstream fin;
     fin.open(filename);
     if(!fin.is_open()) {
         cout << "ERROR: Unable to open " << filename << "." << endl;
         exit(1);
     }
-    /** Convert file to ascii **/
-    wstring s((istreambuf_iterator<char>(fin)), istreambuf_iterator<char>());
-    string asciiText(s.begin(), s.end());
-    cout << asciiText;
-    //    wcstombs(temp, s, s.size());
+
+    /** http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring **/
+    /** read ASCII file into char* **/
+    fin.seekg(0, ios::end); // go to the end
+    length = fin.tellg(); // report location (this is the length)
+    fin.seekg(0, ios::beg); // go back to the beginning
+    buffer = new char[length]; // allocate memory for a buffer of appropriate dimension
+    fin.read(buffer, length); // read the whole file into the buffer
+    fin.close();
 }
 
 void XMLParser::readFile(char* filename) {
-    char* buffer = " ";
 
-    /** Open Filestream **/
-    ifstream fin;
-    fin.open(filename);
-    if(!fin.is_open()) {
-        cout << "ERROR: Unable to open " << filename << "." << endl;
-        exit(1);
-    }
+    char* fileText = lowercase(filename);
 
-    fin.ignore(4897);
-    for(int i = 0; i < 6; i++)  //ignore lines that aren't needed
-        fin.ignore(numeric_limits<streamsize>::max(), ' ');
-    fin.getline(buffer, 10, '>');
+    /** http://rapidxml.sourceforge.net/manual.html#namespacerapidxml_1two_minute_tutorial **/
+    /** parse through file **/
+//    xml_document<> doc;    // character type defaults to char
+//    doc.parse<0>(fileText);    // 0 means default parse flags
 
-    fin.close();
 }
 
 void XMLParser::stopwords() {
@@ -87,4 +85,5 @@ void XMLParser::stopwords() {
 
 void XMLParser::stem() {
 
+//    Porter2Stemmer::stem();
 }
