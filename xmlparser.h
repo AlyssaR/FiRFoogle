@@ -2,6 +2,7 @@
 #define XMLPARSER_H
 
 #include "English_Stem.h"
+#include <cstring>
 #include <iostream>
 #include <fstream>
 #include <string>
