@@ -16,7 +16,6 @@ private:
     char* filename;
 public:
     XMLParser();
-    char* lowercase(char*);
     void readFile(char*);
     void stopwords();
     void stem();

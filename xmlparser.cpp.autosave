@@ -4,25 +4,17 @@ XMLParser::XMLParser() {}
 
 void XMLParser::readFile(char* filename) {
 
-    ifstream fin ("test.txt");
-        // get length of file:
-        fin.seekg (0, fin.end);
-        int length = fin.tellg();
-        fin.seekg (0, fin.beg);
+    ifstream fin (filename);
 
-        char* fileText = new char [length];
-
-     if(fin) {
-        cout << "Reading " << length << " characters... ";
-        // read data as a block:
-        fin.read (fileText,length);
-
-        if(fin)
-          cout << "all characters read successfully.";
-        else
-          cout << "error: only " << fin.gcount() << " could be read";
-      }
-        fin.close();
+    /** get length of file **/
+    fin.seekg (0, fin.end);
+    int length = fin.tellg();
+    fin.seekg (0, fin.beg);
+    
+    /** read file into char[] **/
+    char* fileText = new char [length];
+    fin.read(fileText,length);
+    fin.close();
 
 
 
