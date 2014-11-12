@@ -3,15 +3,20 @@
 
 class Entry {
 private:
-    int key, value;
+    char* keyword;
+    int docID, numTimes;
     Entry * next;
 public:
-    Entry(int k, int v) : key(k), value(v), next(nullptr) {}
+    Entry(char* k, int d, int n = 0)
+        : keyword(k), docID(d), numTimes(n), next(nullptr) {}
 
-    int getKey() { return key; }
-    int getValue() { return value; }
-    void setValue(int v) { value = v; }
+    char* getKeyword() { return keyword; }
+    int getDocID() { return docID; }
+    int getNumTimes() { return numTimes; }
     Entry* getNext() { return next; }
+
+    void setDocID(int d) { docID = d; }
+    void setNumTimes(int n) { numTimes = n; }
     void setNext(Entry * n) { next = n; }
 
     ~Entry() { delete next; }

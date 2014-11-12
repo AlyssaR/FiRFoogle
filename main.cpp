@@ -10,10 +10,6 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    Tree * birch = new Tree();
-    birch->insert(1, "acorn", "alyssa");
-    birch->get();
-
     testParser(argv[1]);
     return 0;
 }

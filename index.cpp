@@ -6,46 +6,46 @@ Index::Index() {
           table[i] = NULL;
 }
 
-int Index::get(int key) {
-    int hash = (key % TABLE_SIZE);
+int Index::get(char* keyword) {
+    int hash = hashIt(keyword);
     if (table[hash] == NULL)
           return -1;
     else {
           Entry *entry = table[hash];
-          while (entry != NULL && entry->getKey() != key)
+          while (entry != NULL && strcmp(entry->getKeyword(), keyword) != 0)
                 entry = entry->getNext();
           if (entry == NULL)
                 return -1;
           else
-                return entry->getValue();
+                return entry->getDocID();
     }
 }
 
-void Index::put(int key, int value) {
-    int hash = (key % TABLE_SIZE);
+void Index::put(char* keyword, int docID) {
+    int hash = hashIt(keyword);
     if (table[hash] == NULL)
-          table[hash] = new Entry(key, value);
+          table[hash] = new Entry(keyword, docID);
     else {
           Entry *entry = table[hash];
           while (entry->getNext() != NULL)
                 entry = entry->getNext();
-          if (entry->getKey() == key)
-                entry->setValue(value);
+          if (strcmp(entry->getKeyword(),keyword) == 0)
+                entry->setDocID(docID);
           else
-                entry->setNext(new Entry(key, value));
+                entry->setNext(new Entry(keyword, docID));
     }
 }
 
-void Index::remove(int key) {
-    int hash = (key % TABLE_SIZE);
+void Index::remove(char* keyword) {
+    int hash = hashIt(keyword);
     if (table[hash] != NULL) {
           Entry *prevEntry = NULL;
           Entry *entry = table[hash];
-          while (entry->getNext() != NULL && entry->getKey() != key) {
+          while (entry->getNext() != NULL && strcmp(entry->getKeyword(), keyword) != 0) {
                 prevEntry = entry;
                 entry = entry->getNext();
           }
-          if (entry->getKey() == key) {
+          if (strcmp(entry->getKeyword(), keyword) == 0) {
                 if (prevEntry == NULL) {
                      Entry *nextEntry = entry->getNext();
                      delete entry;
