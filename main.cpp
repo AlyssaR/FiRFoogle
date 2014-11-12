@@ -1,5 +1,4 @@
 #include <fstream>
-#include "tree.h"
 #include "xmlparser.h"
 
 //use time libraries to check detail of algorithm
