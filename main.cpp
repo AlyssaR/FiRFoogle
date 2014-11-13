@@ -9,17 +9,18 @@ void testIndex();
 int main(int argc, char* argv[]) {
     if(argc < 2) {
         cerr << "ERROR: Invalid number of arguments" << endl;
+        cerr << "Correct usage: ./a.out input.xml" << endl;
         exit(1);
     }
-    testIndex();
-//    testParser(argv[1]);
+//    testIndex();
+    testParser(argv[1]);
 
     return 0;
 }
 
-void testParser(char* file) {
+void testParser(char* xml) {
     XMLParser parser;
-    parser.readFile(file);
+    parser.readFile(xml);
 }
 
 void testIndex() {

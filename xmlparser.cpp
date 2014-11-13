@@ -2,15 +2,16 @@
 
 XMLParser::XMLParser() {}
 
-void XMLParser::readFile(char* filename) {
+void XMLParser::readFile(char* xml) {
+    filename = xml; //Store as class wide variable
 
-    ifstream fin ("test.txt");
-        // get length of file:
-        fin.seekg (0, fin.end);
-        int length = fin.tellg();
-        fin.seekg (0, fin.beg);
+    ifstream fin (filename);
+    // get length of file:
+    fin.seekg (0, fin.end);
+    int length = fin.tellg();
+    fin.seekg (0, fin.beg);
 
-        char* fileText = new char [length];
+    char* fileText = new char [length];
 
      if(fin) {
         cout << "Reading " << length << " characters... ";
@@ -18,19 +19,17 @@ void XMLParser::readFile(char* filename) {
         fin.read (fileText,length);
 
         if(fin)
-          cout << "all characters read successfully.";
+          cout << "all characters read successfully." << endl;
         else
-          cout << "error: only " << fin.gcount() << " could be read";
+          cout << "error: only " << fin.gcount() << " could be read" << endl;
       }
         fin.close();
-
-
 
     /** http://rapidxml.sourceforge.net/manual.html#namespacerapidxml_1two_minute_tutorial **/
     /** parse through file **/
     xml_document<> doc; // character type defaults to char
-    doc.parse<0>(fileText); // 0 means default parse flags
-
+    doc.parse<parse_declaration_node | parse_no_data_nodes>(fileText);
+    //doc.parse<0>(fileText); // 0 means default parse flags
 }
 
 void XMLParser::stopwords() {
