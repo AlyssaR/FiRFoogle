@@ -28,9 +28,9 @@ void Index::put(char* keyword, int docID) {
           table[hash] = new Entry(keyword, docID);
     else {
           Entry *entry = table[hash];
-          while(entry->getNext() != NULL && entry->getDocID() != docID)
+          while(entry->getNext() != NULL && (entry->getKeyword() != keyword || entry->getDocID() != docID))
                 entry = entry->getNext();
-          if(entry->getDocID() == docID)
+          if(entry->getKeyword() == keyword && entry->getDocID() == docID)
               entry->addNumTimes();
           else
               entry->setNext(new Entry(keyword, docID));
