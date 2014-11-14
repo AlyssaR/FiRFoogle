@@ -11,7 +11,7 @@ using namespace std;
 class Index {
 private:
     Entry **table;
-    const int TABLE_SIZE = 16451136; //4048^2. Lulz
+    const int TABLE_SIZE = 999999;
     hash<char*> hashIt;
 public:
     Index();

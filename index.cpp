@@ -7,7 +7,7 @@ Index::Index() {
 }
 
 map<int, int> Index::get(char* keyword) {
-    int hash = hashIt(keyword), docID;
+    int hash = hashIt(keyword) - 4000000, docID;
     map<int, int> ids;
     if (table[hash] == NULL)
           return ids;
@@ -22,7 +22,7 @@ map<int, int> Index::get(char* keyword) {
 }
 
 void Index::put(char* keyword, int docID) {
-    int hash = hashIt(keyword);
+    int hash = hashIt(keyword) - 4000000;
 
     if(table[hash] == NULL)
           table[hash] = new Entry(keyword, docID);
@@ -38,7 +38,7 @@ void Index::put(char* keyword, int docID) {
 }
 
 void Index::remove(char* keyword) {
-    int hash = hashIt(keyword);
+    int hash = hashIt(keyword) - 4000000;
     if (table[hash] != NULL) {
           Entry *prevEntry = NULL;
           Entry *entry = table[hash];
