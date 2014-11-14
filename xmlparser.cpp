@@ -29,7 +29,7 @@ void XMLParser::readFile(char* xml) {
     /** parse through file **/
     xml_document<> doc; // character type defaults to char
     doc.parse<parse_declaration_node | parse_no_data_nodes>(fileText);
-    //doc.parse<0>(fileText); // 0 means default parse flags
+
 }
 
 void XMLParser::stopwords() {

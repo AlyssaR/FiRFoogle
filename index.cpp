@@ -6,48 +6,34 @@ Index::Index() {
           table[i] = NULL;
 }
 
-int* Index::get(char* keyword) {
-    int * ids = new int(TABLE_SIZE), hash = hashIt(keyword);
-    ids[0] = -1;
+map<int, int> Index::get(char* keyword) {
+    int hash = hashIt(keyword), docID;
+    map<int, int> ids;
     if (table[hash] == NULL)
           return ids;
-    else {
-          Entry *entry = table[hash];
-          while (entry != NULL && strcmp(entry->getKeyword(), keyword) != 0)
-                entry = entry->getNext();
-          if (entry == NULL)
-                return ids;
-          else {
-              int x = 0;
-              while (entry != NULL) {
-                  ids[x] = entry->getDocID();
-                  entry = entry->getMore();
-                  x++;
-              }
-              ids[x+1] = -1;
-          return ids;
-          }
+
+    Entry *entry = table[hash];
+    while (entry != NULL) {
+        docID = entry->getDocID();
+        ids[docID] = entry->getNumTimes();
+        entry = entry->getNext();
     }
+    return ids;
 }
 
 void Index::put(char* keyword, int docID) {
     int hash = hashIt(keyword);
-    if (table[hash] == NULL)
+
+    if(table[hash] == NULL)
           table[hash] = new Entry(keyword, docID);
     else {
           Entry *entry = table[hash];
-          while (entry->getNext() != NULL && strcmp(entry->getKeyword(),keyword) != 0)
+          while(entry->getNext() != NULL && entry->getDocID() != docID)
                 entry = entry->getNext();
-          if (strcmp(entry->getKeyword(),keyword) == 0) {
-              while (entry->getMore() != NULL && entry->getDocID() == docID)
-                    entry = entry->getMore();
-              if(entry->getDocID() == docID)
-                  entry->addNumTimes();
-              else
-                  entry->setMore(new Entry(keyword, docID));
-          }
+          if(entry->getDocID() == docID)
+              entry->addNumTimes();
           else
-                entry->setNext(new Entry(keyword, docID));
+              entry->setNext(new Entry(keyword, docID));
     }
 }
 
@@ -67,7 +53,7 @@ void Index::remove(char* keyword) {
                      table[hash] = nextEntry;
                 } else {
                      Entry *next = entry->getNext();
-                      delete entry;
+                     delete entry;
                      prevEntry->setNext(next);
                 }
           }
@@ -75,13 +61,19 @@ void Index::remove(char* keyword) {
 }
 
 void Index::printIDs(char * keyword) {
-    int * docs = get(keyword), x = 0;
     cout << keyword << " is in:";
-    while(docs[x] > 0) {
-        cout << " " << docs[x];
-        x++;
-    }
+    map<int, int> docs = get(keyword);
+    for(auto iter = docs.begin(); iter != docs.end(); ++iter)
+        cout << " " << iter->first << " (" << iter->second << ")";
     cout << endl;
+}
+
+void Index::printTable() {
+    for(int i = 0; i < TABLE_SIZE; i++) {
+        if(table[i] == nullptr)
+            continue;
+        printIDs(table[i]->getKeyword());
+    }
 }
 
 Index::~Index() {

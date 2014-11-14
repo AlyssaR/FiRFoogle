@@ -12,8 +12,8 @@ int main(int argc, char* argv[]) {
         cerr << "Correct usage: ./a.out input.xml" << endl;
         exit(1);
     }
-//    testIndex();
-    testParser(argv[1]);
+    testIndex();
+//    testParser(argv[1]);
 
     return 0;
 }
@@ -29,7 +29,7 @@ void testIndex() {
     indice->put("molly", 1);
     indice->put("tom", 2);
     indice->put("molly", 3);
-    indice->printIDs("molly");
-    indice->printIDs("tom");
+    indice->put("molly", 3);
+    indice->printTable();
 }
 
