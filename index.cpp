@@ -14,8 +14,10 @@ map<int, int> Index::get(char* keyword) {
 
     Entry *entry = table[hash];
     while (entry != NULL) {
-        docID = entry->getDocID();
-        ids[docID] = entry->getNumTimes();
+        if(strcmp(entry->getKeyword(), keyword) == 0) {
+            docID = entry->getDocID();
+            ids[docID] = entry->getNumTimes();
+        }
         entry = entry->getNext();
     }
     return ids;
@@ -28,9 +30,9 @@ void Index::put(char* keyword, int docID) {
           table[hash] = new Entry(keyword, docID);
     else {
           Entry *entry = table[hash];
-          while(entry->getNext() != NULL && (entry->getKeyword() != keyword || entry->getDocID() != docID))
+          while(entry->getNext() != NULL && (strcmp(entry->getKeyword(), keyword) != 0 || entry->getDocID() != docID))
                 entry = entry->getNext();
-          if(entry->getKeyword() == keyword && entry->getDocID() == docID)
+          if(strcmp(entry->getKeyword(), keyword) != 0 && entry->getDocID() == docID)
               entry->addNumTimes();
           else
               entry->setNext(new Entry(keyword, docID));
