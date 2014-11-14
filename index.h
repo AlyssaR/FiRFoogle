@@ -18,7 +18,7 @@ public:
 
     map<int, int> get(char*); //Returns all weighted docIDs associated with given keyword
     void put(char*, int); //Finds table entry to place any keyword/docID pair
-    void remove(char*); /*! Haven't written yet !*/
+    void remove(char*);
 
     void printIDs(char*);
     void printTable();
