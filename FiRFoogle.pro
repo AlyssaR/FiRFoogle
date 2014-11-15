@@ -10,12 +10,13 @@ SOURCES += main.cpp \
     xmlparser.cpp \
     porter2_stemmer.cpp \
     index.cpp \
-    handler.cpp
+    handler.cpp \
+    tinyxml2.cpp
 
 HEADERS += \
     xmlparser.h \
     porter2_stemmer.h \
-    rapidxml.h \
     index.h \
     entry.h \
-    handler.h
+    handler.h \
+    tinyxml2.h

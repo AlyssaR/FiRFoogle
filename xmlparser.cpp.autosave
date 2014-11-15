@@ -2,6 +2,10 @@
 
 XMLParser::XMLParser() {}
 
+void splitFile(char* file) {
+    
+}
+
 vector<int> XMLParser::readFile(char* file) {
     filename = file; //Store as class wide variable
 
