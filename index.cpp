@@ -7,6 +7,7 @@ Index::Index() {
 }
 
 void Index::add(int doc, const map<string, int>& keywords) {
+    cout << doc << endl;
     for(auto key : keywords) //Add all keywords in doc
         put(doc, key.first, key.second);
 }
@@ -30,11 +31,11 @@ map<int, int> Index::get(string keyword) {
 }
 
 void Index::put(int docID, string keyword, int weight) {
-    int hash = hashIt(keyword) - 4000000;
-
+    int hash = hashIt(keyword) - 400000000;
+    cout << hash << endl;
     /** Add if first**/
     if(table[hash] == nullptr)
-          table[hash] = new Entry(keyword, docID, weight);
+        table[hash] = new Entry(keyword, docID, weight);
     /** Add to end of key chain. Ha. Keychain. **/
     else {
           Entry *entry = table[hash];

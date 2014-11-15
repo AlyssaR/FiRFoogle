@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     porter2_stemmer.cpp \
     index.cpp \
     handler.cpp \
-    tinyxml2.cpp
+    tinyxml2.cpp \
+    babyparser.cpp
 
 HEADERS += \
     xmlparser.h \
@@ -19,4 +20,5 @@ HEADERS += \
     index.h \
     entry.h \
     handler.h \
-    tinyxml2.h
+    tinyxml2.h \
+    babyparser.h

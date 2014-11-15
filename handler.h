@@ -3,16 +3,16 @@
 
 #include <fstream>
 #include "index.h"
-#include "xmlparser.h"
+#include "babyparser.h"
 
 class Handler {
 private:
     Index * index;
-    XMLParser * parse;
+    BabyParser * parse;
 public:
     Handler() {
         index = new Index();
-        parse = new XMLParser(); //Change to use baby parser
+        parse = new BabyParser(); //Change to use big boy parser
     }
 
     bool createIndex(char*); //Accepts XML filename from caller

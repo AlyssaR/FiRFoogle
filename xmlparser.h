@@ -12,8 +12,7 @@
 using namespace std;
 using namespace tinyxml2;
 
-class XMLParser
-{
+class XMLParser {
 private:
     char* filename;
 public:

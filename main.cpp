@@ -4,7 +4,7 @@
 
 //use time libraries to check detail of algorithm
 void testParser(char*);
-void testIndex();
+void testIndex(char * xml);
 
 int main(int argc, char* argv[]) {
     if(argc < 2) {
@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 //    testParser(argv[1]);
-    testIndex();
+    testIndex(argv[1]);
 
     return 0;
 }
@@ -24,8 +24,8 @@ void testParser(char* xml) {
 //    parser.readFile(xml);
 }
 
-void testIndex() {
+void testIndex(char * xml) {
     Handler * index = new Handler();
-    index->createIndex();
+    index->createIndex(xml);
 }
 

@@ -11,7 +11,7 @@ using namespace std;
 class Index {
 private:
     Entry **table;
-    const int TABLE_SIZE = 999999;
+    const int TABLE_SIZE = 500000000;
 
     hash<string> hashIt;
     void put(int, string, int); //Adds individual key
