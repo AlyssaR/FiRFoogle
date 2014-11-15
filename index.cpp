@@ -6,7 +6,11 @@ Index::Index() {
           table[i] = NULL;
 }
 
-map<int, int> Index::get(char* keyword) {
+void add(int doc, map<char*, int>& keys) {
+    /** Finish at some point in life **/
+}
+
+map<int, int> Index::get(string keyword) {
     int hash = hashIt(keyword) - 4000000, docID;
     map<int, int> ids;
     if (table[hash] == NULL)
@@ -14,7 +18,7 @@ map<int, int> Index::get(char* keyword) {
 
     Entry *entry = table[hash];
     while (entry != NULL) {
-        if(strcmp(entry->getKeyword(), keyword) == 0) {
+        if(keyword == entry->getKeyword()) {
             docID = entry->getDocID();
             ids[docID] = entry->getWeight();
         }
@@ -23,7 +27,7 @@ map<int, int> Index::get(char* keyword) {
     return ids;
 }
 
-void Index::put(int docID, char* keyword, int weight) {
+void Index::put(int docID, string keyword, int weight) {
     int hash = hashIt(keyword) - 4000000;
 
     if(table[hash] == NULL)
@@ -36,17 +40,17 @@ void Index::put(int docID, char* keyword, int weight) {
     }
 }
 
-void Index::remove(char* keyword) {
+void Index::remove(string keyword) {
     int hash = hashIt(keyword) - 4000000;
     if (table[hash] != NULL) {
           Entry *prevEntry = NULL;
           Entry *entry = table[hash];
-          while (entry->getNext() != NULL && strcmp(entry->getKeyword(), keyword) != 0) {
+          while (entry->getNext() != NULL && entry->getKeyword() == keyword) {
                 prevEntry = entry;
                 entry = entry->getNext();
           }
-          if (strcmp(entry->getKeyword(), keyword) == 0) {
-                if (prevEntry == NULL) {
+          if(entry->getKeyword() == keyword) {
+                if(prevEntry == NULL) {
                      Entry *nextEntry = entry->getNext();
                      delete entry;
                      table[hash] = nextEntry;
@@ -59,7 +63,7 @@ void Index::remove(char* keyword) {
     }
 }
 
-void Index::printIDs(char * keyword) {
+void Index::printIDs(string keyword) {
     cout << keyword << " is in:";
     map<int, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)

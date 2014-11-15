@@ -2,10 +2,16 @@
 
 XMLParser::XMLParser() {}
 
-void XMLParser::readFile(char* xml) {
-    filename = xml; //Store as class wide variable
+vector<int> XMLParser::readFile(char* file) {
+    filename = file; //Store as class wide variable
 
-    ifstream fin (filename);
+    ifstream fin(filename);
+    if(!fin.is_open()) {
+        cerr << "[!] Unable to open file " << filename << "\n"
+             << "--> Please check path and try again." << endl;
+        exit(1);
+    }
+
     // get length of file:
     fin.seekg (0, fin.end);
     int length = fin.tellg();
@@ -30,6 +36,14 @@ void XMLParser::readFile(char* xml) {
     xml_document<> doc; // character type defaults to char
     doc.parse<parse_declaration_node | parse_no_data_nodes>(fileText);
 
+    vector<int> temp; /*! Delete later */
+    return temp;
+}
+
+map<string, int> XMLParser::getKeywords(int doc) {
+    map<string, int> temp; /*! Delete later */
+
+    return temp;
 }
 
 void XMLParser::stopwords() {

@@ -1,16 +1,19 @@
 #ifndef ENTRY_H
 #define ENTRY_H
 
+#include <string>
+using namespace std;
+
 class Entry {
 private:
-    char* keyword;
+    string keyword;
     int docID, weight;
     Entry * next;
 public:
-    Entry(char* k, int d, int n = 1) : keyword(k), docID(d),
+    Entry(string k, int d, int n = 1) : keyword(k), docID(d),
         next(nullptr), weight(n) {}
 
-    char* getKeyword() { return keyword; }
+    string getKeyword() { return keyword; }
     int getDocID() { return docID; }
     int getWeight() { return weight; }
     Entry* getNext() { return next; }

@@ -13,15 +13,15 @@ private:
     Entry **table;
     const int TABLE_SIZE = 999999;
 
-    hash<char*> hashIt;
-    void put(int, char*, int); //Finds table entry to place any keyword/docID pair
+    hash<string> hashIt;
+    void put(int, string, int); //Finds table entry to place any keyword/docID pair
 public:
     Index();
 
-    void add(int, map<char*, int>); //Adds all keywords
-    map<int, int> get(char*); //Returns all weighted docIDs associated with given keyword
-    void remove(char*);
-    void printIDs(char*);
+    void add(int, map<string, int>&); //Adds all keywords
+    map<int, int> get(string); //Returns all weighted docIDs associated with given keyword
+    void remove(string);
+    void printIDs(string);
     void printTable();
 
     ~Index();
