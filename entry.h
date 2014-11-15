@@ -4,20 +4,20 @@
 class Entry {
 private:
     char* keyword;
-    int docID, numTimes;
+    int docID, weight;
     Entry * next;
 public:
     Entry(char* k, int d, int n = 1) : keyword(k), docID(d),
-        numTimes(n), next(nullptr) {}
+        next(nullptr), weight(n) {}
 
     char* getKeyword() { return keyword; }
     int getDocID() { return docID; }
-    int getNumTimes() { return numTimes; }
+    int getWeight() { return weight; }
     Entry* getNext() { return next; }
 
-    void addNumTimes() { numTimes++; }
     void setDocID(int d) { docID = d; }
     void setNext(Entry * n) { next = n; }
+    void setWeight(int w) { weight = w; }
 
     ~Entry() { delete next; }
 };

@@ -26,10 +26,6 @@ void testParser(char* xml) {
 void testIndex() {
     Index * indice = new Index();
 
-    indice->put("molly", 1);
-    indice->put("tom", 2);
-    indice->put("molly", 3);
-    indice->put("molly", 3);
     indice->printTable();
 }
 

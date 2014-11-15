@@ -16,26 +16,23 @@ map<int, int> Index::get(char* keyword) {
     while (entry != NULL) {
         if(strcmp(entry->getKeyword(), keyword) == 0) {
             docID = entry->getDocID();
-            ids[docID] = entry->getNumTimes();
+            ids[docID] = entry->getWeight();
         }
         entry = entry->getNext();
     }
     return ids;
 }
 
-void Index::put(char* keyword, int docID) {
+void Index::put(int docID, char* keyword, int weight) {
     int hash = hashIt(keyword) - 4000000;
 
     if(table[hash] == NULL)
-          table[hash] = new Entry(keyword, docID);
+          table[hash] = new Entry(keyword, docID, weight);
     else {
           Entry *entry = table[hash];
-          while(entry->getNext() != NULL && (strcmp(entry->getKeyword(), keyword) != 0 || entry->getDocID() != docID))
+          while(entry->getNext() != nullptr)
                 entry = entry->getNext();
-          if(strcmp(entry->getKeyword(), keyword) != 0 && entry->getDocID() == docID)
-              entry->addNumTimes();
-          else
-              entry->setNext(new Entry(keyword, docID));
+          entry->setNext(new Entry(keyword, docID, weight));
     }
 }
 
