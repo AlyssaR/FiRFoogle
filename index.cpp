@@ -13,7 +13,7 @@ void Index::add(int doc, const map<string, int>& keywords) {
 }
 
 map<int, int> Index::get(string keyword) {
-    int hash = hashIt(keyword) - 4000000, docID;
+    int hash = hashIt(keyword), docID;
     Entry *entry = table[hash];
     map<int, int> ids;
 
@@ -31,7 +31,7 @@ map<int, int> Index::get(string keyword) {
 }
 
 void Index::put(int docID, string keyword, int weight) {
-    int hash = hashIt(keyword) - 400000000;
+    int hash = hashIt(keyword);
     cout << hash << endl;
     /** Add if first**/
     if(table[hash] == nullptr)
