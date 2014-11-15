@@ -13,14 +13,15 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 //    testIndex();
-//    testParser(argv[1]);
+    testParser(argv[1]);
 
     return 0;
 }
 
 void testParser(char* xml) {
     XMLParser parser;
-    parser.readFile(xml);
+//    parser.splitFile(xml);
+//    parser.readFile(xml);
 }
 
 void testIndex() {

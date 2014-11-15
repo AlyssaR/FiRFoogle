@@ -18,7 +18,7 @@ private:
 public:
     Index();
 
-    void add(int, map<string, int>&); //Adds all keywords
+    void add(int, const map<string, int>&); //Adds all keywords
     map<int, int> get(string); //Returns all weighted docIDs associated with given keyword
     void remove(string);
     void printIDs(string);

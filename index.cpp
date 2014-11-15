@@ -6,7 +6,7 @@ Index::Index() {
           table[i] = NULL;
 }
 
-void add(int doc, map<char*, int>& keys) {
+void Index::add(int doc, const map<string, int>& keys) {
     /** Finish at some point in life **/
 }
 
