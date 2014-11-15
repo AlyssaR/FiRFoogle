@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
         cerr << "Correct usage: ./a.out input.xml" << endl;
         exit(1);
     }
-    testIndex();
+//    testIndex();
 //    testParser(argv[1]);
 
     return 0;

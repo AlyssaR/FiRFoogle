@@ -12,5 +12,5 @@ bool createIndex(char* filename) {
     for(auto id : docs)
         index.add(id, parse->getKeywords(id));
 
-
+    return true;
 }
