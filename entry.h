@@ -8,10 +8,10 @@ class Entry {
 private:
     string keyword;
     int docID, weight;
-    Entry * next;
+    Entry * next = nullptr;
 public:
     Entry(string k, int d, int n = 1) : keyword(k), docID(d),
-        next(nullptr), weight(n) {}
+        weight(n) {}
 
     string getKeyword() { return keyword; }
     int getDocID() { return docID; }

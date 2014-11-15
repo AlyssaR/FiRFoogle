@@ -3,21 +3,23 @@
 Index::Index() {
     table = new Entry*[TABLE_SIZE];
     for (int i = 0; i < TABLE_SIZE; i++)
-          table[i] = NULL;
+          table[i] = nullptr;
 }
 
-void Index::add(int doc, const map<string, int>& keys) {
-    /** Finish at some point in life **/
+void Index::add(int doc, const map<string, int>& keywords) {
+    for(auto key : keywords) //Add all keywords in doc
+        put(doc, key.first, key.second);
 }
 
 map<int, int> Index::get(string keyword) {
     int hash = hashIt(keyword) - 4000000, docID;
-    map<int, int> ids;
-    if (table[hash] == NULL)
-          return ids;
-
     Entry *entry = table[hash];
-    while (entry != NULL) {
+    map<int, int> ids;
+
+    if (table[hash] == nullptr)
+          return ids;
+    /** If not empty, return all docs in chain with correct key **/
+    while (entry != nullptr) {
         if(keyword == entry->getKeyword()) {
             docID = entry->getDocID();
             ids[docID] = entry->getWeight();
@@ -30,8 +32,10 @@ map<int, int> Index::get(string keyword) {
 void Index::put(int docID, string keyword, int weight) {
     int hash = hashIt(keyword) - 4000000;
 
-    if(table[hash] == NULL)
+    /** Add if first**/
+    if(table[hash] == nullptr)
           table[hash] = new Entry(keyword, docID, weight);
+    /** Add to end of key chain. Ha. Keychain. **/
     else {
           Entry *entry = table[hash];
           while(entry->getNext() != nullptr)
@@ -40,17 +44,19 @@ void Index::put(int docID, string keyword, int weight) {
     }
 }
 
-void Index::remove(string keyword) {
+/* NOT WRITTEN YET!
+ *
+ * void Index::remove(string keyword) {
     int hash = hashIt(keyword) - 4000000;
-    if (table[hash] != NULL) {
-          Entry *prevEntry = NULL;
+    if(table[hash] != nullptr) {
+          Entry *prevEntry = nullptr;
           Entry *entry = table[hash];
-          while (entry->getNext() != NULL && entry->getKeyword() == keyword) {
+          while(entry->getNext() != nullptr && entry->getKeyword() == keyword) {
                 prevEntry = entry;
                 entry = entry->getNext();
           }
           if(entry->getKeyword() == keyword) {
-                if(prevEntry == NULL) {
+                if(prevEntry == nullptr) {
                      Entry *nextEntry = entry->getNext();
                      delete entry;
                      table[hash] = nextEntry;
@@ -61,30 +67,31 @@ void Index::remove(string keyword) {
                 }
           }
     }
-}
+}*/
 
 void Index::printIDs(string keyword) {
-    cout << keyword << " is in:";
+    cout << "<key>" << keyword << "</key>";
     map<int, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)
-        cout << " " << iter->first << " (" << iter->second << ")";
+        cout << "\t<doc>" << iter->first << "</doc><weight>"
+             << iter->second << "</weight>" << endl;
     cout << endl;
 }
 
 void Index::printTable() {
-    for(int i = 0; i < TABLE_SIZE; i++) {
-        if(table[i] == nullptr)
+    for(int x = 0; x < TABLE_SIZE; x++) {
+        if(table[x] == nullptr) //Skip empty entries
             continue;
-        printIDs(table[i]->getKeyword());
+        printIDs(table[x]->getKeyword()); //Print all docs for keyword
     }
 }
 
 Index::~Index() {
-    for (int i = 0; i < TABLE_SIZE; i++)
-          if (table[i] != NULL) {
-                Entry *prevEntry = NULL;
-                Entry *entry = table[i];
-                while (entry != NULL) {
+    for(int x = 0; x < TABLE_SIZE; x++)
+          if(table[x] != nullptr) {
+                Entry *prevEntry = nullptr;
+                Entry *entry = table[x];
+                while(entry != nullptr) {
                      prevEntry = entry;
                      entry = entry->getNext();
                      delete prevEntry;

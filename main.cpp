@@ -1,5 +1,5 @@
 #include <fstream>
-#include "index.h"
+#include "handler.h"
 #include "xmlparser.h"
 
 //use time libraries to check detail of algorithm
@@ -12,8 +12,8 @@ int main(int argc, char* argv[]) {
         cerr << "Correct usage: ./a.out input.xml" << endl;
         exit(1);
     }
-//    testIndex();
-    testParser(argv[1]);
+//    testParser(argv[1]);
+    testIndex();
 
     return 0;
 }
@@ -25,8 +25,7 @@ void testParser(char* xml) {
 }
 
 void testIndex() {
-    Index * indice = new Index();
-
-    indice->printTable();
+    Handler * index = new Handler();
+    index->createIndex();
 }
 

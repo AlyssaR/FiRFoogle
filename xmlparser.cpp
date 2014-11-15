@@ -43,6 +43,7 @@ vector<int> XMLParser::readFile(char* file) {
 map<string, int> XMLParser::getKeywords(int doc) {
     map<string, int> temp; /*! Delete later */
 
+
     return temp;
 }
 
