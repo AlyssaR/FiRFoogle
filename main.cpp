@@ -27,5 +27,24 @@ void testParser(char* xml) {
 void testIndex(char* xml, char * output) {
     Handler * index = new Handler();
     index->createIndex(xml, output);
+/*  Test search query
+ *
+    vector<string> ands, ors, nots;
+    ands.push_back("most");
+    ands.push_back("he'll");
+    ands.push_back("should");
+    ands.push_back("after");
+    ands.push_back("again");
+    ands.push_back("against");
+    nots.push_back("not");
+    nots.push_back("nor");
+    nots.push_back("cannot");
+    nots.push_back("can't");
+    ors.push_back("him");
+    ors.push_back("her");
+*/
+    vector<int> searchResults = index->search(ands, ors, nots);
+    for(auto result : searchResults)
+        cout << "Doc " << result << endl;
 }
 

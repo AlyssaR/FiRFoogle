@@ -2,7 +2,7 @@
 
 vector<int> BabyParser::readFile() {
     vector<int> allTheDocs;
-    for(int x = 13; x < 954; x++)
+    for(int x = 4; x < 27; x++)
         allTheDocs.push_back(x);
 
     cout << "[+] Articles read successfully." << endl;
@@ -11,7 +11,7 @@ vector<int> BabyParser::readFile() {
 
 map<string, int> BabyParser::getKeywords(int doc) {
     map<string, int> allTheWords;
-    int times = rand()%50 +1, whichWord;
+    int times = rand()%15 +1, whichWord;
     map<int, int> used;
     string words[] = {"a", "about", "above", "after", "again", "against", "all" ,"am", "an", "and", "any", "are", "aren't",
                          "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by",
