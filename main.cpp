@@ -7,13 +7,13 @@ void testParser(char*);
 void testIndex(char * xml, char* output);
 
 int main(int argc, char* argv[]) {
-    if(argc < 3) {
+    if(argc < 2) {
         cerr << "ERROR: Invalid number of arguments" << endl;
         cerr << "Correct usage: ./a.out input.xml saved_index.xml" << endl;
         exit(1);
     }
-//    testParser(argv[1]);
-    testIndex(argv[1], argv[2]);
+    testParser(argv[1]);
+//    testIndex(argv[1], argv[2]);
 
     return 0;
 }
@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 void testParser(char* xml) {
     XMLParser parser;
 //    parser.splitFile(xml);
-    parser.readFile(xml);
+//    parser.readFile(xml);
 }
 
 void testIndex(char* xml, char * output) {

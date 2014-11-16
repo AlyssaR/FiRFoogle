@@ -17,6 +17,7 @@ private:
     char* filename;
 public:
     XMLParser();
+    void splitFile(char*); //splits file into smaller files
     vector<int> readFile(char*); //Accepts filename and returns doc IDs
     map<string, int> getKeywords(int); //Accepts doc ID and returns keyword/weight map
     void stopwords();

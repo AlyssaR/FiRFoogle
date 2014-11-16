@@ -2,6 +2,22 @@
 
 XMLParser::XMLParser() {}
 
+void splitFile(char* file) {}
+
+//void splitFile(char* file) {
+//    char* nextWord;
+
+//    ifstream fin(file);
+//    if(!fin.is_open()) {
+//        cerr << "ERROR: Unable to open file " << file << endl;
+//        exit(1);
+//    }
+
+//    fin.ignore(4858);
+//    fin >> nextWord;
+//    cout << nextWord << endl;
+//}
+
 vector<int> XMLParser::readFile(char* file) {
     filename = file; //Store as class wide variable
 
