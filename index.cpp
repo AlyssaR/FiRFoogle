@@ -1,24 +1,24 @@
 #include "index.h"
 
 Index::Index() {
-    table = new Entry*[TABLE_SIZE];
+    /*table = new Entry*[TABLE_SIZE];
     for (int i = 0; i < TABLE_SIZE; i++)
           table[i] = nullptr;
+    */
 }
 
 void Index::add(int doc, const map<string, int>& keywords) {
-    cout << doc << endl;
     for(auto key : keywords) //Add all keywords in doc
         put(doc, key.first, key.second);
 }
 
 map<int, int> Index::get(string keyword) {
     int hash = hashIt(keyword), docID;
-    Entry *entry = table[hash];
+    Entry * entry = table[hash];
     map<int, int> ids;
 
-    if (table[hash] == nullptr)
-          return ids;
+    if(entry == nullptr)
+        return ids;
     /** If not empty, return all docs in chain with correct key **/
     while (entry != nullptr) {
         if(keyword == entry->getKeyword()) {
@@ -32,7 +32,6 @@ map<int, int> Index::get(string keyword) {
 
 void Index::put(int docID, string keyword, int weight) {
     int hash = hashIt(keyword);
-    cout << hash << endl;
     /** Add if first**/
     if(table[hash] == nullptr)
         table[hash] = new Entry(keyword, docID, weight);
@@ -70,33 +69,32 @@ void Index::put(int docID, string keyword, int weight) {
     }
 }*/
 
-void Index::printIDs(string keyword) {
-    cout << "<key>" << keyword << "</key>";
+void Index::printIDs(string keyword, ofstream& out) {
+    out << "<key>" << keyword << "</key>" << endl;
     map<int, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)
-        cout << "\t<doc>" << iter->first << "</doc><weight>"
+        out << "\t<doc>" << iter->first << "</doc><weight>"
              << iter->second << "</weight>" << endl;
-    cout << endl;
 }
 
-void Index::printTable() {
-    for(int x = 0; x < TABLE_SIZE; x++) {
-        if(table[x] == nullptr) //Skip empty entries
-            continue;
-        printIDs(table[x]->getKeyword()); //Print all docs for keyword
-    }
+void Index::printTable(char * output) {
+    ofstream out(output);
+    for(auto entry : table)
+        printIDs(entry.second->getKeyword(), out); //Print all docs for keyword
+    out.close();
+    cout << "[+] Index saved successfully to " << output << endl;
 }
 
 Index::~Index() {
-    for(int x = 0; x < TABLE_SIZE; x++)
-          if(table[x] != nullptr) {
+    for(auto item : table) {
+          if(item.second != nullptr) {
                 Entry *prevEntry = nullptr;
-                Entry *entry = table[x];
+                Entry *entry = item.second;
                 while(entry != nullptr) {
                      prevEntry = entry;
                      entry = entry->getNext();
                      delete prevEntry;
                 }
           }
-    delete[] table;
+    }
 }

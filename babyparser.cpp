@@ -5,6 +5,7 @@ vector<int> BabyParser::readFile() {
     for(int x = 13; x < 954; x++)
         allTheDocs.push_back(x);
 
+    cout << "[+] Articles read successfully." << endl;
     return allTheDocs;
 }
 
