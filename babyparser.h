@@ -2,6 +2,7 @@
 #define BABYPARSER_H
 
 #include "xmlparser.h"
+#include <map>
 #include <random>
 #include <time.h>
 
