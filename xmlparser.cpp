@@ -2,116 +2,76 @@
 
 XMLParser::XMLParser() {}
 
-void splitFile(char* file) {}
+void XMLParser::parseFile(char* filename) {
 
-//void splitFile(char* file) {
-//    char* nextWord;
+        try {
+            /** Open XML document **/
+            rapidxml::file<> file(filename);
+            rapidxml::xml_document<> doc;
+            doc.parse<0>(file.data());
+            rapidxml::xml_node<>* root_node = doc.first_node();
+            if(root_node == 0)
+                cout << "ERROR: Improperly formated XML" << endl;
 
-//    ifstream fin(file);
-//    if(!fin.is_open()) {
-//        cerr << "ERROR: Unable to open file " << file << endl;
-//        exit(1);
-//    }
+            /** Loop through all entries in XML file **/
+//            for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling()) {
 
-//    fin.ignore(4858);
-//    fin >> nextWord;
-//    cout << nextWord << endl;
-//}
+                /** Use instead of for-loop to test one element **/
+                rapidxml::xml_node<>* page_node = root_node->first_node("page");
 
-vector<int> XMLParser::readFile(char* file) {
-    filename = file; //Store as class wide variable
+                /** Get information from individual document **/
+                rapidxml::xml_node<>* revision_node = page_node->first_node("revision");
+                string title = page_node->first_node("title")->value();
+                string text = revision_node->first_node("text")->value();
+                string id = revision_node->first_node("sha1")->value();
 
-    ifstream fin(filename);
-    if(!fin.is_open()) {
-        cerr << "[!] Unable to open file " << filename << "\n"
-             << "--> Please check path and try again." << endl;
-        exit(1);
-    }
+                /** Write text out to file to be cleaned **/
+                ofstream fout;
+                fout.open("temp.txt");
+                fout << text;
+                fout.close();
 
-    // get length of file:
-    fin.seekg (0, fin.end);
-    int length = fin.tellg();
-    fin.seekg (0, fin.beg);
-
-    char* fileText = new char [length];
-
-     if(fin) {
-        cout << "Reading " << length << " characters... ";
-        // read data as a block:
-        fin.read (fileText,length);
-
-        if(fin)
-          cout << "all characters read successfully." << endl;
-        else
-          cout << "error: only " << fin.gcount() << " could be read" << endl;
-      }
-        fin.close();
-
-    /** http://rapidxml.sourceforge.net/manual.html#namespacerapidxml_1two_minute_tutorial **/
-    /** parse through file **/
-    XMLDocument doc; // character type defaults to char
-    doc.Parse(file);
-
-    vector<int> temp; /*! Delete later */
-    return temp;
-}
-
-map<string, int> XMLParser::getKeywords(int doc) {
-    map<string, int> temp; /*! Delete later */
+                /** Call cleaning function **/
+                stopwords();
+//                stem();
 
 
-    return temp;
-}
+//                // go through the cleaned text and grab each word
+//                stringstream stream(text);
+
+//                while(stream.good()) {
+//                    string word;
+//                    stream >> word;
+
+//                    //clean the text
+
+//                    /*
+//                    create second stringstream out of word
+//                    since the pre-cleaned word may have had multiple words
+//                    that were read in all as one (e.g. "all-one-word" would be
+//                    cleaned to "all one word" which is three individual words).
+//                    */
+//                    stringstream cleaned(word);
+//                    while(cleaned.good()) {
+//                        cleaned >> word;
+//                        /*
+//                        put the word in the map if not already there and increment
+//                        the word frequency
+//                        */
+//                    }
+//                }
+//            }
+        }
+        catch(exception& e) {
+            cout << e.what() << endl;
+        }
+} //close loadFile
 
 void XMLParser::stopwords() {
-    const int STOPWORDS_SIZE = 177;
-
-    char* stopwords[] = {"a", "about", "above", "after", "again", "against", "all" ,"am", "an", "and", "any", "are", "aren't",
-                         "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by",
-                         "can't", "cannot", "could", "couldn't", "could've", "did", "didn't", "do", "does", "doesn't",
-                         "doing","don't", "down", "during", "each", "few", "for", "from", "further", "had", "hadn't", "has",
-                         "hasn't", "have", "haven't", "having", "he", "he'd", "he'll", "he's", "her", "here", "here's",
-                         "hers", "herself", "him", "himself", "his", "how", "how's", "i","i'd", "i'll", "i'm", "i've", "if",
-                         "in", "into", "is", "isn't", "it", "it's", "its", "itself", "let's", "me", "more", "most", "mustn't",
-                         "my", "myself", "no", "nor", "not", "of", "off", "on", "once", "only", "or", "other", "ought", "our",
-                         "ours", "ourselves", "out", "over", "own", "same", "shan't", "she", "she'd", "she'll", "she's",
-                         "should", "shouldn't", "should've", "so", "some", "such", "than", "that", "that's", "the", "their",
-                         "theirs", "them", "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll",
-                         "they're", "they've", "this", "those", "through", "to", "too", "under", "until", "up", "very", "was",
-                         "wasn't", "we", "we'd", "we'll", "we're", "we've", "were", "weren't", "what", "what's", "when",
-                         "when's", "where", "where's", "which", "while", "who", "who's", "whom", "why", "why's", "with",
-                         "won't", "would", "wouldn't", "would've", "you", "you'd", "you'll", "you're", "you've", "your",
-                         "yours", "yourself", "yourselves"};
-
     ifstream fin;
-    fin.open(filename);
+    fin.open("temp.txt");
     if(!fin.is_open()) {
-        cout << "ERROR: Unable to open " << filename << "." << endl;
-        exit(1);
+        cout << "ERROR: Could not open file temp.txt" << endl;
     }
-
-    char *buffer = new char[100], *text = new char[100];
-
-    while(fin >> buffer) {
-        //make word lowercase
-        for(int i = 0; i < strlen(buffer); i++) {
-            char c = buffer[i];
-            buffer[i] = tolower(c);
-        }
-        //compare to stopwords
-        for(int i = 0; i < STOPWORDS_SIZE; i++) {
-            if(strcmp(buffer, stopwords[i]) == 0)
-                break; //break if buffer is a stopword
-            else if(strcmp(buffer, stopwords[i]) != 0 && i == STOPWORDS_SIZE - 1) {
-                strcat(text, buffer); //if buffer isn't a stopword, add to text
-                strcat(text, " "); //Add space between words
-            }
-        }
-    }
-    cout << text << endl;
-}
-
-void XMLParser::stem() {
-
-//    Porter2Stemmer::stem();
-}
+    cout << "Stopwords" << endl;
+} //close clean

@@ -1,25 +1,19 @@
 #ifndef XMLPARSER_H
 #define XMLPARSER_H
 
-#include <algorithm>
-#include <cstring>
-#include <iostream>
 #include <fstream>
-#include <map>
-#include "porter2_stemmer.h"
-#include "tinyxml2.h"
-
+#include <iostream>
+#include <string>
+#include "rapidxml.h"
+#include "rapidxml_utils.h"
 using namespace std;
-using namespace tinyxml2;
+//using namespace tinyxml2;
 
-class XMLParser {
-private:
-    char* filename;
+class XMLParser
+{
 public:
     XMLParser();
-    void splitFile(char*); //splits file into smaller files
-    vector<int> readFile(char*); //Accepts filename and returns doc IDs
-    map<string, int> getKeywords(int); //Accepts doc ID and returns keyword/weight map
+    void parseFile(char*);
     void stopwords();
     void stem();
 };
