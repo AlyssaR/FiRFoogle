@@ -3,7 +3,6 @@
 #include "xmlparser.h"
 
 void maintain(char*, char*);
-void mainMenu();
 void stressTest(char*, char*);
 void interactive(char*, char*);
 
@@ -54,8 +53,8 @@ void maintain(char * input, char * output) {
         if(option == -1)
             break;
         else if(option == 1)
-            //Add files to index
-            cout << "Add file here" << endl;
+            testIndex(input, output);
+            //cout << "Add file here" << endl;
         else if(option == 2)
             index->deleteIndex();
         else
@@ -69,19 +68,6 @@ void stressTest(char * input, char * output) {
 
 void interactive(char * input, char * output) {
     cout << "Why are you here? It's de-fault of no one but you." << endl;
-}
-
-void mainMenu() {
-    cout << "    ====================\n"
-         << "\t FiRFoogle\n"
-         << "    ====================" << endl;
-
-    cout << "[1] Interactive/User (default)\n"
-         << "[2] Maintenance\n"
-         << "[3] Stress Test\n"
-         << "[-1] to Quit" << endl;
-
-    cout << "\nPlease select a mode: ";
 }
 
 void testParser(char* xml) {

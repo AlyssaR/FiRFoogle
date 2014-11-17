@@ -79,8 +79,10 @@ void Index::printIDs(string keyword, ofstream& out) {
 
 void Index::printTable(char * output) {
     ofstream out(output);
+    out << "<index>" << endl;
     for(auto entry : table)
         printIDs(entry.second->getKeyword(), out); //Print all docs for keyword
+    out << "</index>" << endl;
     out.close();
     cout << "[+] Index saved successfully to " << output << endl;
 }
