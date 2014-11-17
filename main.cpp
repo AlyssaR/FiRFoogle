@@ -33,7 +33,6 @@ int main(int argc, char* argv[], int option = 0) {
         cerr << "\nInvalid user mode. Please try again.\n" << endl;
 
 //    testParser(argv[1]);
->>>>>>> 62663c2694a65161165e2606f191b8c35de5698e
 //    testIndex(argv[1], argv[2]);
 
     return 0;
