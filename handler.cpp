@@ -1,5 +1,7 @@
 #include "handler.h"
 
+bool inOrder(int i,int j) { return (i>j); }
+
 bool Handler::createIndex(char* filename, char* output) {
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds, total;
@@ -12,6 +14,8 @@ bool Handler::createIndex(char* filename, char* output) {
     total = elapsed_seconds;
 
     cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
+
+    sort(docs.begin(), docs.end(), &inOrder);
 
     /** Adds keywords from all docs to index **/
     start = chrono::system_clock::now();
@@ -32,7 +36,7 @@ bool Handler::createIndex(char* filename, char* output) {
 }
 
 vector<int> Handler::search(vector<string> ands, vector<string> ors, vector<string> nots) {
-    map<int, int> results, entries, temp;
+    unordered_map<int, int> results, entries, temp;
 
     /** Get all OR'd terms **/
     for(auto word : ors) {
@@ -86,14 +90,14 @@ vector<int> Handler::search(vector<string> ands, vector<string> ors, vector<stri
     return sorted(entries);
 }
 
-bool inOrder(pair<int,int> first, pair<int,int> second) { //Compares by value
+bool byValues(pair<int,int> first, pair<int,int> second) { //Compares by value
     return first.second > second.second;
 }
 
-vector<int> Handler::sorted(map<int, int> entries) {
+vector<int> Handler::sorted(unordered_map<int, int> entries) {
     vector<pair<int, int>> pairs(entries.begin(), entries.end());
 
-    sort(pairs.begin(), pairs.end(), &inOrder);
+    sort(pairs.begin(), pairs.end(), &byValues);
 
     vector<int> justDocs;
     for(auto doc : pairs)

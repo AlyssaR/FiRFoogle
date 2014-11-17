@@ -9,10 +9,10 @@ vector<int> BabyParser::readFile() {
     return allTheDocs;
 }
 
-map<string, int> BabyParser::getKeywords(int doc) {
-    map<string, int> allTheWords;
+unordered_map<string, int> BabyParser::getKeywords(int doc) {
+    unordered_map<string, int> allTheWords;
     int times = rand()%15 +1, whichWord;
-    map<int, int> used;
+    unordered_map<int, int> used;
     string words[] = {"a", "about", "above", "after", "again", "against", "all" ,"am", "an", "and", "any", "are", "aren't",
                          "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by",
                          "can't", "cannot", "could", "couldn't", "could've", "did", "didn't", "do", "does", "doesn't",

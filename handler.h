@@ -13,7 +13,7 @@ class Handler {
 private:
     Index * index;
     BabyParser * parse;
-    vector<int> sorted(map<int, int>); //Sorts docs by weights
+    vector<int> sorted(unordered_map<int, int>); //Sorts docs by weights
 public:
     Handler() {
         index = new Index();
