@@ -34,32 +34,6 @@ void XMLParser::parseFile(char* filename) {
                 /** Call cleaning function **/
                 stopwords();
 //                stem();
-
-
-//                // go through the cleaned text and grab each word
-//                stringstream stream(text);
-
-//                while(stream.good()) {
-//                    string word;
-//                    stream >> word;
-
-//                    //clean the text
-
-//                    /*
-//                    create second stringstream out of word
-//                    since the pre-cleaned word may have had multiple words
-//                    that were read in all as one (e.g. "all-one-word" would be
-//                    cleaned to "all one word" which is three individual words).
-//                    */
-//                    stringstream cleaned(word);
-//                    while(cleaned.good()) {
-//                        cleaned >> word;
-//                        /*
-//                        put the word in the map if not already there and increment
-//                        the word frequency
-//                        */
-//                    }
-//                }
 //            }
         }
         catch(exception& e) {
