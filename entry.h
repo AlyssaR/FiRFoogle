@@ -7,21 +7,19 @@ using namespace std;
 
 class Entry {
 private:
-    string keyword;
-    int docID, weight;
+    string keyword, docID;
+    int weight;
     Entry * next = nullptr;
 public:
-    Entry(string k, int d, int n = 1) : keyword(k), docID(d),
+    Entry(string k, string d, int n = 1) : keyword(k), docID(d),
         weight(n) {}
 
-    void display() { cout << "[!] Don't forget to write this!!" << endl; } /** WRITE THIS **/
-
     string getKeyword() { return keyword; }
-    int getDocID() { return docID; }
+    string getDocID() { return docID; }
     int getWeight() { return weight; }
     Entry* getNext() { return next; }
 
-    void setDocID(int d) { docID = d; }
+    void setDocID(string d) { docID = d; }
     void setNext(Entry * n) { next = n; }
     void setWeight(int w) { weight = w; }
 

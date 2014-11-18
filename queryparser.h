@@ -1,23 +1,21 @@
 #ifndef QUERYPARSER_H
 #define QUERYPARSER_H
 
-#include "entry.h"
+#include <fstream>
+#include <sstream>
 #include <vector>
+
+#include "article.h"
+#include "entry.h"
+#include "handler.h"
 using namespace std;
 
 class QueryParser {
-private:
-    vector<Entry*> results;
 public:
     QueryParser();
 
-    vector<Entry*> find(string);
-
-    ~QueryParser() {
-        for(auto item : results)
-            delete item;
-        results.clear();
-    }
+    vector<Article*> find(string);
+    vector<Article*> getDocInfo(vector<string>);
 };
 
 #endif // QUERYPARSER_H

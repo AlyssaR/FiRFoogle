@@ -25,4 +25,5 @@ HEADERS += \
     rapidxml_iterators.h \
     rapidxml_utils.h \
     rapidxml_print.h \
-    queryparser.h
+    queryparser.h \
+    article.h

@@ -7,17 +7,17 @@ Index::Index() {
     */
 }
 
-void Index::add(int doc, const unordered_map<string, int>& keywords) {
+void Index::add(string doc, const unordered_map<string, int>& keywords) {
     for(auto key : keywords) {
         keys.insert(key.first); //Add keyword to vector
         put(doc, key.first, key.second); //Add to index
     }
 }
 
-unordered_map<int, int> Index::get(string keyword) {
-    int docID;
+unordered_map<string, int> Index::get(string keyword) {
+    string docID;
     Entry * entry = table[keyword];
-    unordered_map<int, int> ids;
+    unordered_map<string, int> ids;
 
     if(entry == nullptr)
         return ids;
@@ -33,7 +33,7 @@ unordered_map<int, int> Index::get(string keyword) {
     return ids;
 }
 
-void Index::put(int docID, string keyword, int weight) {
+void Index::put(string docID, string keyword, int weight) {
     /** Add if first**/
     if(table[keyword] == nullptr)
         table[keyword] = new Entry(keyword, docID, weight);
@@ -73,7 +73,7 @@ void Index::put(int docID, string keyword, int weight) {
 
 void Index::printIDs(string keyword, ofstream& out) {
     out << "<key>" << keyword << "</key>" << endl;
-    unordered_map<int, int> docs = get(keyword);
+    unordered_map<string, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)
         out << "\t<doc>" << iter->first << "</doc><weight>"
              << iter->second << "</weight>" << endl;

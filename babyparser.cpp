@@ -1,15 +1,15 @@
 #include "babyparser.h"
 
-vector<int> BabyParser::readFile() {
-    vector<int> allTheDocs;
+vector<string> BabyParser::readFile() {
+    vector<string> allTheDocs;
     for(int x = 4; x < 27; x++)
-        allTheDocs.push_back(x);
+        allTheDocs.push_back(to_string(x));
 
     cout << "[+] Articles read successfully." << endl;
     return allTheDocs;
 }
 
-unordered_map<string, int> BabyParser::getKeywords(int doc) {
+unordered_map<string, int> BabyParser::getKeywords(string doc) {
     unordered_map<string, int> allTheWords;
     int times = rand()%15 +1, whichWord;
     unordered_map<int, int> used;

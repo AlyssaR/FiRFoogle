@@ -18,12 +18,12 @@ private:
     unordered_map<string, Entry*> table;
     set<string> keys;
     void printIDs(string, ofstream&);
-    void put(int, string, int); //Adds individual key
+    void put(string, string, int); //Adds individual key
 public:
     Index();
 
-    void add(int, const unordered_map<string, int>&); //Adds all keywords from doc
-    unordered_map<int, int> get(string); //Returns weighted docs for given keyword
+    void add(string, const unordered_map<string, int>&); //Adds all keywords from doc
+    unordered_map<string, int> get(string); //Returns weighted docs for given keyword
 
     void remove(string); /*! Not written yet !*/
     void printTable(char*);

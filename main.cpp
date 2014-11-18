@@ -74,7 +74,7 @@ void stressTest(char * input, char * output) {
 
 void interactive(char * input, char * output) {
     QueryParser * query = new QueryParser();
-    vector<Entry*> results;
+    vector<Article*> results;
     string search;
 
     /** Enter search query **/
@@ -85,7 +85,7 @@ void interactive(char * input, char * output) {
         cout << "Please tell FiRFoogle what you are searching for and press Enter."
              << "\n\t(eg. 'AND Meaning Life')\t (Type -1 to Exit)" << endl;
         cout << "\nSearch: ";
-        cin >> search;
+        getline(cin, search);
         if(search.compare("-1") == 0)
             break;
 
@@ -143,7 +143,7 @@ void testIndex(char* xml, char * output) {
     ors.push_back("him");
     ors.push_back("her");
 
-    vector<int> searchResults = index->search(ands, ors, nots);
+    vector<string> searchResults = index->search(ands, ors, nots);
     for(auto result : searchResults)
         cout << "Doc " << result << endl;
 }

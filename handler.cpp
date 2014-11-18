@@ -1,6 +1,6 @@
 #include "handler.h"
 
-bool inOrder(int i,int j) { return (i>j); }
+bool inOrder(string i,string j) { return (i>j); }
 
 bool Handler::addToIndex(char* filename, char* output) {
     chrono::time_point<chrono::system_clock> start, end;
@@ -8,7 +8,7 @@ bool Handler::addToIndex(char* filename, char* output) {
 
     /** Reads file and returns vector of document ids **/
     start = chrono::system_clock::now();
-    vector<int> docs = parse->readFile();
+    vector<string> docs = parse->readFile();
     end = chrono::system_clock::now();
     elapsed_seconds = end-start;
     total = elapsed_seconds;
@@ -35,8 +35,8 @@ bool Handler::addToIndex(char* filename, char* output) {
     return true;
 }
 
-vector<int> Handler::search(vector<string> ands, vector<string> ors, vector<string> nots) {
-    unordered_map<int, int> results, entries, temp;
+vector<string> Handler::search(vector<string> ands, vector<string> ors, vector<string> nots) {
+    unordered_map<string, int> results, entries, temp;
 
     /** Get all OR'd terms **/
     for(auto word : ors) {
@@ -90,16 +90,16 @@ vector<int> Handler::search(vector<string> ands, vector<string> ors, vector<stri
     return sorted(entries);
 }
 
-bool byValues(pair<int,int> first, pair<int,int> second) { //Compares by value
+bool byValues(pair<string,int> first, pair<string,int> second) { //Compares by value
     return first.second > second.second;
 }
 
-vector<int> Handler::sorted(unordered_map<int, int> entries) {
-    vector<pair<int, int>> pairs(entries.begin(), entries.end());
+vector<string> Handler::sorted(unordered_map<string, int> entries) {
+    vector<pair<string, int>> pairs(entries.begin(), entries.end());
 
     sort(pairs.begin(), pairs.end(), &byValues);
 
-    vector<int> justDocs;
+    vector<string> justDocs;
     for(auto doc : pairs)
         justDocs.push_back(doc.first);
 

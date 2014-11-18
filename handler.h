@@ -13,7 +13,7 @@ class Handler {
 private:
     Index * index;
     BabyParser * parse;
-    vector<int> sorted(unordered_map<int, int>); //Sorts docs by weights
+    vector<string> sorted(unordered_map<string, int>); //Sorts docs by weights
 public:
     Handler() {
         index = new Index();
@@ -22,7 +22,7 @@ public:
 
     bool addToIndex(char*, char*); //Accepts XML and output filename from caller
     void deleteIndex() { delete index; }
-    vector<int> search(vector<string>, vector<string>, vector<string>); //Accepts keywords, returns docs in weighted order
+    vector<string> search(vector<string>, vector<string>, vector<string>); //Accepts keywords, returns docs in weighted order
 
     ~Handler() {
         delete index;
