@@ -1,6 +1,7 @@
 #ifndef ENTRY_H
 #define ENTRY_H
 
+#include <iostream>
 #include <string>
 using namespace std;
 
@@ -12,6 +13,8 @@ private:
 public:
     Entry(string k, int d, int n = 1) : keyword(k), docID(d),
         weight(n) {}
+
+    void display() { cout << "[!] Don't forget to write this!!" << endl; } /** WRITE THIS **/
 
     string getKeyword() { return keyword; }
     int getDocID() { return docID; }

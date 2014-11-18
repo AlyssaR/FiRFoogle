@@ -1,5 +1,6 @@
 #include <fstream>
 #include "handler.h"
+#include "queryparser.h"
 #include "xmlparser.h"
 
 void maintain(char*, char*);
@@ -58,7 +59,7 @@ void maintain(char * input, char * output) {
             cin >> in;
             cout << "Enter the filename (with extension) to save index to: ";
             cin >> out;
-            testIndex(in, out);
+            index->addToIndex(in, out);
         }
         else if(option == 2)
             index->deleteIndex();
@@ -72,7 +73,50 @@ void stressTest(char * input, char * output) {
 }
 
 void interactive(char * input, char * output) {
-    cout << "Why are you here? It's de-fault of no one but you." << endl;
+    QueryParser * query = new QueryParser();
+    vector<Entry*> results;
+    string search;
+
+    /** Enter search query **/
+    while(true) {
+        cout << "    ====================\n"
+             << "\tFiRFoogle\n"
+             << "    ====================" << endl;
+        cout << "Please tell FiRFoogle what you are searching for and press Enter."
+             << "\n\t(eg. 'AND Meaning Life')\t (Type -1 to Exit)" << endl;
+        cout << "\nSearch: ";
+        cin >> search;
+        if(search.compare("-1") == 0)
+            break;
+
+        results = query->find(search); /*! Note to self: Uh... make this */
+
+        /** Display Search Results **/
+        auto iter = results.begin();
+        int index = 1;
+        do {
+            /** Print 5 Results at a Time **/
+            for(int x = index; iter != results.end() && x < index+6; iter++, x++) {
+                //Print out crap
+            }
+            cout << "Options:\n'more'\t see next page \n#\t see specific article \n'quit'\t quit"
+                 << "\nPlease select an option: ";
+            cin >> search;
+
+            /** Input isn't a number, so prepare string for while loop check **/
+            if(!atoi(search.c_str())) {
+                transform(search.begin(), search.end(), search.begin(), ::tolower); //Lower case input
+                index += 5; //Increment index
+            }
+            /** Display selected article and reprint current list of results **/
+            else {
+                results[index-1]->display(); //Print article
+                search = "more";
+            }
+        } while(search.compare("more") == 0);
+
+    }
+
 }
 
 void testParser(char* xml) {

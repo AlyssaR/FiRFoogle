@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     porter2_stemmer.cpp \
     index.cpp \
     handler.cpp \
-    babyparser.cpp
+    babyparser.cpp \
+    queryparser.cpp
 
 HEADERS += \
     xmlparser.h \
@@ -23,4 +24,5 @@ HEADERS += \
     rapidxml.h \
     rapidxml_iterators.h \
     rapidxml_utils.h \
-    rapidxml_print.h
+    rapidxml_print.h \
+    queryparser.h
