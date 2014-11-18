@@ -16,6 +16,7 @@ public:
     string getTitle() { return title; }
     string getAuthor() { return author; }
     string getID() { return id; }
+    //string getText() { return text; }
 };
 
 #endif // ARTICLE_H

@@ -22,14 +22,14 @@ vector<Article*> QueryParser::find(string query) {
                 iter++;
             }
         }
-        if((*iter).compare("OR") == 0) {
+        else if((*iter).compare("OR") == 0) {
             iter++;
             while(iter != terms.end() && (*iter).compare("AND") != 0 && (*iter).compare("NOT") != 0) {
                 ors.push_back(*iter);
                 iter++;
             }
         }
-        if((*iter).compare("NOT") == 0) {
+        else if((*iter).compare("NOT") == 0) {
             iter++;
             while(iter != terms.end() && (*iter).compare("OR") != 0 && (*iter).compare("AND") != 0) {
                 nots.push_back(*iter);
@@ -40,15 +40,29 @@ vector<Article*> QueryParser::find(string query) {
 
     /** Get Doc IDs that match those terms **/
     docIDs = index->search(ands, ors, nots);
+    getDocInfo(docIDs);
 
     /** Return a vector of entries with info for those docs **/
-    return getDocInfo(docIDs);
+    return results;
 }
 
-vector<Article*> QueryParser::getDocInfo(vector<string> docIDs) {
+void QueryParser::getDocInfo(vector<string> docIDs) {
+    string author, title, buffer;
+
     for(auto doc : docIDs) {
         ifstream in("./documents/" + doc + ".txt");
-
+        if(!in.is_open()) {
+            cerr << "[!] Couldn't open ./documents/" << doc << ".txt" << endl;
+            continue;
+        }
+        in >> buffer;
+        getline(in, title);
+        in >> buffer;
+        getline(in, author);
         in.close();
+        results.push_back(new Article(title, author, doc));
+    }
+    for(auto doc : results) {
+        cout << doc->getTitle() << " by: " << doc->getAuthor() << endl;
     }
 }

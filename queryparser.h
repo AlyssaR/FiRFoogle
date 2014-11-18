@@ -11,11 +11,19 @@
 using namespace std;
 
 class QueryParser {
+private:
+    vector<Article*> results;
 public:
     QueryParser();
 
     vector<Article*> find(string);
-    vector<Article*> getDocInfo(vector<string>);
+    void getDocInfo(vector<string>);
+
+    ~QueryParser() {
+        for(auto entry : results)
+            delete entry;
+        results.clear();
+    }
 };
 
 #endif // QUERYPARSER_H

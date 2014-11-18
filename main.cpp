@@ -99,7 +99,8 @@ void interactive(char * input, char * output) {
             for(int x = index; iter != results.end() && x < index+6; iter++, x++) {
                 //Print out crap
             }
-            cout << "Options:\n'more'\t see next page \n#\t see specific article \n'quit'\t quit"
+            cout << "Options:\n'more'\t\t see next page \n#\t\t see specific article"
+                 << "\n-1\t\t quit \nAnything else\t Return to search"
                  << "\nPlease select an option: ";
             cin >> search;
 
@@ -114,7 +115,7 @@ void interactive(char * input, char * output) {
                 search = "more";
             }
         } while(search.compare("more") == 0);
-
+        cin.ignore();
     }
 
 }
