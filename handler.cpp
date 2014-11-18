@@ -2,7 +2,7 @@
 
 bool inOrder(int i,int j) { return (i>j); }
 
-bool Handler::createIndex(char* filename, char* output) {
+bool Handler::addToIndex(char* filename, char* output) {
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds, total;
 

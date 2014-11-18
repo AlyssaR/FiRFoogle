@@ -52,9 +52,14 @@ void maintain(char * input, char * output) {
         cin >> option;
         if(option == -1)
             break;
-        else if(option == 1)
-            testIndex(input, output);
-            //cout << "Add file here" << endl;
+        else if(option == 1) {
+            char * in = new char[50], * out = new char[50];
+            cout << "Enter the filename (with path/extension) to read in: ";
+            cin >> in;
+            cout << "Enter the filename (with extension) to save index to: ";
+            cin >> out;
+            testIndex(in, out);
+        }
         else if(option == 2)
             index->deleteIndex();
         else
@@ -78,8 +83,8 @@ void testParser(char* xml) {
 
 void testIndex(char* xml, char * output) {
     Handler * index = new Handler();
-    index->createIndex(xml, output);
 
+    index->addToIndex(xml, output);
     vector<string> ands, ors, nots;
     ands.push_back("most");
     ands.push_back("he'll");
