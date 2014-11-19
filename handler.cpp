@@ -3,6 +3,8 @@
 bool inOrder(string i,string j) { return (i>j); }
 
 bool Handler::addToIndex(char* filename, char* output) {
+    index->setFilename(output);
+
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds, total;
 
@@ -88,6 +90,24 @@ vector<string> Handler::search(vector<string> ands, vector<string> ors, vector<s
     }
 
     return sorted(entries);
+}
+
+void Handler::deleteIndex() {
+    set<string> ids = index->getIDs();
+    char *filename = new char[100];
+    for(auto doc : ids) {
+        strcpy(filename, doc.c_str());
+        strcat(filename, ".txt");
+        remove(filename);
+
+        strcpy(filename, doc.c_str());
+        strcat(filename, ".xml");
+        remove(filename);
+    }
+    remove(index->getFilename());
+    index = new Index();
+
+    cout << "[+] Index and all log files have been successfully deleted" << endl;
 }
 
 bool byValues(pair<string,int> first, pair<string,int> second) { //Compares by value

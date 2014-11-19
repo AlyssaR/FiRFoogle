@@ -5,6 +5,7 @@
 #include <chrono>
 #include <ctime>
 #include <fstream>
+#include <stdio.h>
 #include <vector>
 #include "index.h"
 #include "babyparser.h"
@@ -21,7 +22,7 @@ public:
     }
 
     bool addToIndex(char*, char*); //Accepts XML and output filename from caller
-    void deleteIndex() { delete index; }
+    void deleteIndex();
     vector<string> search(vector<string>, vector<string>, vector<string>); //Accepts keywords, returns docs in weighted order
 
     ~Handler() {

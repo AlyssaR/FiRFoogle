@@ -1,15 +1,10 @@
 #include "index.h"
-
-Index::Index() {
-    /*table = new Entry*[TABLE_SIZE];
-    for (int i = 0; i < TABLE_SIZE; i++)
-          table[i] = nullptr;
-    */
-}
+Index::Index() {}
 
 void Index::add(string doc, const unordered_map<string, int>& keywords) {
+    docs.insert(doc); //Add doc id to set
     for(auto key : keywords) {
-        keys.insert(key.first); //Add keyword to vector
+        keys.insert(key.first); //Add keyword to set
         put(doc, key.first, key.second); //Add to index
     }
 }
