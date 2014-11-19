@@ -14,16 +14,16 @@ void XMLParser::parseFile(char* filename) {
                 cout << "ERROR: Improperly formated XML" << endl;
 
             /** Loop through all entries in XML file **/
-//            for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling()) {
+            for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling()) {
 
+                cout << "+" << flush;
                 /** Use instead of for-loop to test one element **/
-                rapidxml::xml_node<>* page_node = root_node->first_node("page");
+ //               rapidxml::xml_node<>* page_node = root_node->first_node("page");
 
                 /** Get information from individual document **/
                 rapidxml::xml_node<>* revision_node = page_node->first_node("revision");
                 rapidxml::xml_node<>* contributor_node = revision_node->first_node("contributor");
                 string title = page_node->first_node("title")->value();
-                string author = contributor_node->first_node("username")->value();
                 string text = revision_node->first_node("text")->value();
                 string id = revision_node->first_node("sha1")->value();
 
@@ -37,7 +37,6 @@ void XMLParser::parseFile(char* filename) {
                 ofstream fout_file;
                 fout_file.open(filename.c_str());
                 fout_file << "Title: " << title << endl;
-                fout_file << "Author: " << author << endl << endl;
                 fout_file << "Text: ";
 
                 /** Call cleaning function **/
@@ -70,7 +69,7 @@ void XMLParser::parseFile(char* filename) {
 //                        */
 //                    }
 //                }
-//            }
+            }
         }
         catch(exception& e) {
             cout << e.what() << endl;
@@ -97,6 +96,8 @@ void XMLParser::removePunct(ofstream &fout_file) {
             if (ispunct(word[i]))
                 word[i] = ' ';
         }
+
+        /** Seperate Conjunction-Words (ex. "can t" = "can" "t") **/
         istringstream iss(word);
             do {
                 string sub;
@@ -109,7 +110,7 @@ void XMLParser::removePunct(ofstream &fout_file) {
 }
 
 void XMLParser::stopwords(string word, ofstream &fout_file) {
-    int stopwords_size = 570;
+    int stopwords_size = 568;
     string stopwords[] = {"a", "about", "above", "abroad", "according", "accordingly", "across", "actually", "after",
                          "afterwords", "again", "against", "ago", "ahead", "aint", "all", "allow", "almost", "alone", "allows",
                          "along", "alongside", "already", "also", "although", "always", "am", "amid", "amidst", "among", "amongst",
@@ -162,10 +163,10 @@ void XMLParser::stopwords(string word, ofstream &fout_file) {
                          "we", "welcome", "well", "went", "were", "weren't", "what", "when", "where", "whereupon","wherever"
                          "whether", "which", "whichever", "while", "whilst", "whither", "who", "whomever", "whose", "why", "will",
                          "willing", "wish", "with", "within", "without", "wonder", "won", "would", "wouldn", "whom", "why",
-                         "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves", " ", ""};
+                         "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};
 
 
-    /** Remove Stopwords **/
+     /** Remove Stopwords **/
         for(int i = 0; i < stopwords_size; i++) {
             if(strcmp(word.c_str(), stopwords[i].c_str()) == 0) { //if the word is a stopword
                 i = stopwords_size;
