@@ -3,12 +3,11 @@
 #include "queryparser.h"
 #include "xmlparser.h"
 
-void maintain(char*, char*);
-void stressTest(char*, char*);
-void interactive(char*, char*);
+void maintain(Handler*);
+void stressTest(Handler*);
+void interactive(Handler*);
 
 void testParser(char*);
-void testIndex(char *, char*);
 
 int main(int argc, char* argv[], int option = 0) {
     if(argc < 3) {
@@ -21,25 +20,26 @@ int main(int argc, char* argv[], int option = 0) {
         exit(1);
     }
 
+    Handler * index = new Handler();
+    index->addToIndex(argv[1], argv[2]);
+
     argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
 
     if(option == 3)
-        stressTest(argv[1], argv[2]);
+        stressTest(index);
     else if(option == 2)
-        maintain(argv[1], argv[2]);
+        maintain(index);
     else if(option == 1)
-        interactive(argv[1], argv[2]);
+        interactive(index);
     else
         cerr << "\nInvalid user mode. Please try again.\n" << endl;
 
 //    testParser(argv[1]);
-//    testIndex(argv[1], argv[2]);
 
     return 0;
 }
 
-void maintain(char * input, char * output) {
-    Handler * index = new Handler();
+void maintain(Handler * index) {
     int option;
     while(true) {
         cout << "    ====================\n"
@@ -68,12 +68,12 @@ void maintain(char * input, char * output) {
     }
 }
 
-void stressTest(char * input, char * output) {
+void stressTest(Handler * index) {
     cout << "No need to test. You're definitely stressed." << endl;
 }
 
-void interactive(char * input, char * output) {
-    QueryParser * query = new QueryParser();
+void interactive(Handler * index) {
+    QueryParser * query = new QueryParser(index);
     vector<Article*> results;
     string search;
 
@@ -89,16 +89,22 @@ void interactive(char * input, char * output) {
         if(search.compare("-1") == 0)
             break;
 
-        results = query->find(search); /*! Note to self: Uh... make this */
+        results = query->find(search);
 
         /** Display Search Results **/
         auto iter = results.begin();
         int index = 1;
         do {
+            cout << "    ====================\n"
+                 << "\tFiRFoogle\n"
+                 << "    ====================" << endl;
+            cout << "Total found: " << results.size() << " results" << endl;
+            cout << "Viewing Results: " << index << " to " << index + 4 << "\n" << endl;
+
             /** Print 5 Results at a Time **/
-            for(int x = index; iter != results.end() && x < index+6; iter++, x++) {
-                //Print out crap
-            }
+            for(int x = index; iter != results.end() && x < index+6; iter++, x++)
+                cout << "[" << x << "] " << (*iter)->getTitle() << " by: " << (*iter)->getAuthor() << endl;
+
             cout << "Options:\n'more'\t\t see next page \n#\t\t see specific article"
                  << "\n-1\t\t quit \nAnything else\t Return to search"
                  << "\nPlease select an option: ";
@@ -109,6 +115,8 @@ void interactive(char * input, char * output) {
                 transform(search.begin(), search.end(), search.begin(), ::tolower); //Lower case input
                 index += 5; //Increment index
             }
+            else if(atoi(search.c_str()) == -1)
+                exit(0);
             /** Display selected article and reprint current list of results **/
             else {
                 results[index-1]->display(); //Print article
@@ -124,28 +132,5 @@ void testParser(char* xml) {
     XMLParser parser;
 //    parser.splitFile(xml);
 //    parser.readFile(xml);
-}
-
-void testIndex(char* xml, char * output) {
-    Handler * index = new Handler();
-
-    index->addToIndex(xml, output);
-    vector<string> ands, ors, nots;
-    ands.push_back("most");
-    ands.push_back("he'll");
-    ands.push_back("should");
-    ands.push_back("after");
-    ands.push_back("again");
-    ands.push_back("against");
-    nots.push_back("not");
-    nots.push_back("nor");
-    nots.push_back("cannot");
-    nots.push_back("can't");
-    ors.push_back("him");
-    ors.push_back("her");
-
-    vector<string> searchResults = index->search(ands, ors, nots);
-    for(auto result : searchResults)
-        cout << "Doc " << result << endl;
 }
 

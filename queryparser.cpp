@@ -1,11 +1,8 @@
 #include "queryparser.h"
 
-QueryParser::QueryParser() {}
-
 vector<Article*> QueryParser::find(string query) {
     vector<string> docIDs;
     vector<string> ands, ors, nots, terms;
-    Handler * index = new Handler();
 
     /** Split query into individual words **/
     stringstream stream(query);
@@ -50,9 +47,9 @@ void QueryParser::getDocInfo(vector<string> docIDs) {
     string author, title, buffer;
 
     for(auto doc : docIDs) {
-        ifstream in("./documents/" + doc + ".txt");
+        ifstream in(doc + ".txt");
         if(!in.is_open()) {
-            cerr << "[!] Couldn't open ./documents/" << doc << ".txt" << endl;
+            cerr << "[!] Couldn't open " << doc << ".txt" << endl;
             continue;
         }
         in >> buffer;
@@ -61,8 +58,5 @@ void QueryParser::getDocInfo(vector<string> docIDs) {
         getline(in, author);
         in.close();
         results.push_back(new Article(title, author, doc));
-    }
-    for(auto doc : results) {
-        cout << doc->getTitle() << " by: " << doc->getAuthor() << endl;
     }
 }

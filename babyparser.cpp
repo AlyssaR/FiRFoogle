@@ -38,5 +38,11 @@ unordered_map<string, int> BabyParser::getKeywords(string doc) {
         used[whichWord] = 4;
     }
 
+    ofstream out(doc + ".txt");
+    out << "Title: Blah" << endl;
+    out << "Author: Bloop\n" << endl;
+    out << "Text: Blammy" << endl;
+    out.close();
+
     return allTheWords;
 }
