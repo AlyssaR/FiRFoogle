@@ -9,7 +9,7 @@ void interactive(Handler*);
 
 void testParser(char*);
 
-int main(int argc, char* argv[], int option = 0) {
+int main(int argc, char* argv[], int option) {
     if(argc < 3) {
         cerr << "\nERROR: Invalid number of arguments" << endl;
         cerr << "Correct usage: ./a.out input.xml saved_index.xml [optional mode choice]" << endl;
