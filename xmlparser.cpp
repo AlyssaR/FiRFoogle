@@ -101,8 +101,6 @@ void XMLParser::removePunct(ofstream &fout_file) {
             do {
                 string sub;
                 iss >> sub;
-                cout << sub << " ";
-                cout << "(" << word << ")" << endl;
                 stopwords(sub, fout_file);
             } while (iss);
     }
@@ -167,15 +165,11 @@ void XMLParser::stopwords(string word, ofstream &fout_file) {
                          "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves", " ", ""};
 
 
-    cout << word << endl;
     /** Remove Stopwords **/
         for(int i = 0; i < stopwords_size; i++) {
- //           cout << i << endl;
             if(strcmp(word.c_str(), stopwords[i].c_str()) == 0) { //if the word is a stopword
                 i = stopwords_size;
-                cout << "!" << word << ": is a stopword" << endl;
             } else if(i == stopwords_size - 1) { //if the word doesn't match any stopwords
-              cout << word << ": not a stopword" << endl;
               fout_file << word << " ";
             }
         }
