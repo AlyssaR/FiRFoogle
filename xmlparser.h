@@ -4,17 +4,18 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include "rapidxml.h"
 #include "rapidxml_utils.h"
 using namespace std;
-//using namespace tinyxml2;
 
-class XMLParser
-{
+class XMLParser {
 public:
     XMLParser();
     void parseFile(char*);
-    void stopwords();
+    void clean(ofstream&);
+    void removePunct(ofstream&);
+    void stopwords(string, ofstream&);
     void stem();
 };
 
