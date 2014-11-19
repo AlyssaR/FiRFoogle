@@ -102,21 +102,31 @@ void interactive(Handler * index) {
             cout << "Viewing Results: " << index << " to " << index + 4 << "\n" << endl;
 
             /** Print 5 Results at a Time **/
-            for(int x = index; iter != results.end() && x < index+6; iter++, x++)
+            for(int x = index; iter != results.end() && x < index+5; iter++, x++)
                 cout << "[" << x << "] " << (*iter)->getTitle() << " by: " << (*iter)->getAuthor() << endl;
 
-            cout << "Options:\n'more'\t\t see next page \n#\t\t see specific article"
-                 << "\n-1\t\t quit \nAnything else\t Return to search"
-                 << "\nPlease select an option: ";
+            cout << "Options:\n'more'\t\t see next page \n'back'\t\t see last page"
+                 << "\n#\t\t see specific article \n-1\t\t quit"
+                 << "\nAnything else\t Return to search"
+                 << "\n\nPlease select an option: ";
             cin >> search;
 
             /** Input isn't a number, so prepare string for while loop check **/
             if(!atoi(search.c_str())) {
                 transform(search.begin(), search.end(), search.begin(), ::tolower); //Lower case input
-                index += 5; //Increment index
+                if(search.compare("back") == 0) {
+                    index -= 5;
+                    if(index < 1)
+                        index += 5;
+                    search = "more";
+                }
+                else
+                    index += 5; //Increment index
             }
+            /** If -1, exit **/
             else if(atoi(search.c_str()) == -1)
                 exit(0);
+
             /** Display selected article and reprint current list of results **/
             else {
                 results[index-1]->display(); //Print article
