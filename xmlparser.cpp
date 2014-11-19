@@ -102,8 +102,8 @@ void XMLParser::removePunct(ofstream &fout_file) {
                 string sub;
                 iss >> sub;
                 cout << sub << " ";
-                cout << word << endl;
-//                stopwords(sub, fout_file);
+                cout << "(" << word << ")" << endl;
+                stopwords(sub, fout_file);
             } while (iss);
     }
 
@@ -111,8 +111,8 @@ void XMLParser::removePunct(ofstream &fout_file) {
 }
 
 void XMLParser::stopwords(string word, ofstream &fout_file) {
-    int stopwords_size = 586;
-    string stopwords[] = {"a", "about", "above", "abroad", "according", "accordingly", "across", "actually", "adj," "after",
+    int stopwords_size = 570;
+    string stopwords[] = {"a", "about", "above", "abroad", "according", "accordingly", "across", "actually", "after",
                          "afterwords", "again", "against", "ago", "ahead", "aint", "all", "allow", "almost", "alone", "allows",
                          "along", "alongside", "already", "also", "although", "always", "am", "amid", "amidst", "among", "amongst",
                          "an", "and", "another", "any", "anybody", "anyhow", "anyone", "anything", "anyway", "anyways", "anywhere",
@@ -123,21 +123,21 @@ void XMLParser::stopwords(string word, ofstream &fout_file) {
                          "by", "came", "can", "cannot", "caption", "cause", "causes", "certain", "certainly", "changes", "cleary",
                          "c", "co", "com", "come", "comes", "coming", "concerning", "consequently", "consider", "considering",
                          "contain", "containing" "contains", "corresponding", "could", "couldn", "course", "currently", "d", "dare",
-                         "daren", "definetly", "described", "despite", "did", "didn", "different", "directly", "do", "does",
+                         "daren", "definetly", "described", "despite", "did", "didn", "different", "directly", "div", "do", "does",
                          "doesn", "doing", "done", "don", "down", "downward", "downwards", "during", "each",  "edu", "ed", "eight",
                          "eighty", "either", "else", "elsewhere", "end", "ending", "enough", "entirely", "especially", "et", "etc",
                          "even", "ever", "evermore", "every", "everybody", "everyone", "everything", "everywhere", "ex", "exactly",
                          "example", "except", "fairly", "far", "farther", "few", "fewer", "fifth", "first", "five", "follow",
                          "followed", "following", "for", "forever", "former", "formerly", "fourth", "forward", "found", "four",
                          "from", "further", "furthermore", "get", "gets", "getting", "give", "given", "gives", "go", "goes", "going",
-                         "gone", "got", "gotten", "greetings", "had", "hadn", "half", "happens", "hardly", "has", "hasn", "have",
+                         "gone", "got", "gotten", "had", "hadn", "half", "happens", "hardly", "has", "hasn", "have",
                          "haven", "having", "he", "hello", "help", "hence", "her", "here", "hereafter", "hereby", "herein",
                          "hereupon", "hers", "herself", "hi", "him", "himself", "his", "hither", "hopefully", "how", "howbeit",
                          "however", "how", "however", "hundred", "i", "ie", "if", "ignored", "immediate", "in", "inasmuch", "inc",
                          "indeed", "indicate", "indicated", "indicates", "inner", "inside", "insofar", "instead", "into", "inward",
                          "is", "isn", "it", "its", "itself","just", "k", "keep", "keeps", "kept", "know", "known", "knows", "last",
                          "lately", "later", "latter", "latterly", "least", "less", "lest", "let", "like", "liked", "likely", "likewise",
-                         "little", "ll", "look", "looking", "looks", "low", "lower", "ltd", "m", "made", "mainly", "make", "makes",
+                         "little", "ll", "look", "looking", "looks", "low", "lower", "m", "made", "mainly", "make", "makes",
                          "many", "may","maybe", "maynt", "me", "mean", "meatime", "meawhile", "mearly", "might", "mightn't", "mine",
                          "minus", "miss","mon", "more", "moreoever", "most", "mostly", "mr", "mrs", "must", "mustn", "my", "myself",
                          "name", "namely", "nd", "near", "nearly", "neccesary", "need", "needn", "needs", "never", "neither",
@@ -153,21 +153,24 @@ void XMLParser::stopwords(string word, ofstream &fout_file) {
                          "sent", "serious", "seriously", "seven", "several", "shall" "shan", "she", "should", "shouldn", "since",
                          "six", "so", "some", "somebody","someday", "somehow", "someone", "something", "sometime", "sometimes",
                          "somewhat", "somewhere", "soon", "sorry", "specified", "specify", "specifying", "still", "sub", "sup",
-                         "such", "t", "take", "taken", "taking", "tell", "tends", "th", "than", "thank", "thanks", "thanx", "that",
+                         "such", "t", "take", "taken", "taking", "tell", "tends", "th", "than", "thank", "thanks", "that",
                          "the", "their", "theirs", "them", "themselves", "then", "thence", "there", "thereafter", "thereby",
-                         "therefore", "therein", "thereupon", "these", "they", "thing" "things", "thinks", "third", "thirty" "this",
+                         "therefore", "these", "they", "thing" "things", "thinks", "third", "thirty" "this",
                          "thorough", "thoroughly", "those", "though", "three", "through", "throughout", "thru", "thus", "til", "to",
                          "together", "too", "took", "toward", "towards", "tried", "tries", "truly", "try", "trying", "twice", "two",
                          "un", "under", "under", "underneath", "undoing", "unfortunately", "unless", "unlike" "unlikely" "until",
                          "unto", "up", "upwards", "us", "use", "used", "useful", "uses", "using", "usually", "v", "value",
-                         "various", "ve", "versus", "very", "via", "viz", "vs", "want", "wants" "was", "wasn", "way", "we",
+                         "various", "ve", "versus", "very", "via", "vs", "want", "wants" "was", "wasn", "way", "we",
                          "we", "welcome", "well", "went", "were", "weren't", "what", "when", "where", "whereupon","wherever"
                          "whether", "which", "whichever", "while", "whilst", "whither", "who", "whomever", "whose", "why", "will",
                          "willing", "wish", "with", "within", "without", "wonder", "won", "would", "wouldn", "whom", "why",
-                         "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves", " "};
+                         "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves", " ", ""};
 
-        /** Remove Stopwords **/
+
+    cout << word << endl;
+    /** Remove Stopwords **/
         for(int i = 0; i < stopwords_size; i++) {
+ //           cout << i << endl;
             if(strcmp(word.c_str(), stopwords[i].c_str()) == 0) { //if the word is a stopword
                 i = stopwords_size;
                 cout << "!" << word << ": is a stopword" << endl;
