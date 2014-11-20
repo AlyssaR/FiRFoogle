@@ -103,7 +103,7 @@ void interactive(Handler * index) {
 
             /** Print 5 Results at a Time **/
             for(int x = index; iter != results.end() && x < index+5; iter++, x++)
-                cout << "[" << x << "] " << (*iter)->getTitle() << " by: " << (*iter)->getAuthor() << endl;
+                cout << "[" << x << "] " << (*iter)->getTitle() << endl;
 
             cout << "Options:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n-1\t\t quit"

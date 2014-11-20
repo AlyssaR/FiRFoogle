@@ -43,7 +43,25 @@ vector<Article*> QueryParser::find(string query) {
     return results;
 }
 
+struct find_by_id {
+    find_by_id(const string & id) : id(id) {}
+    bool operator()(Article * const& article) {
+        return (article->getID() == id);
+    }
+private:
+    string id;
+};
+
 void QueryParser::getDocInfo(vector<string> docIDs) {
+    set<Article*> articles = index->documents;
+    for(auto doc : docIDs) {
+        auto it = find_if(articles.begin(), articles.end(), find_by_id(doc));
+        if(it != articles.end())
+            results.push_back(*it);
+    }
+}
+
+/*void QueryParser::getDocInfo(vector<string> docIDs) {
     string author, title, buffer;
 
     for(auto doc : docIDs) {
@@ -59,4 +77,4 @@ void QueryParser::getDocInfo(vector<string> docIDs) {
         in.close();
         results.push_back(new Article(title, author, doc));
     }
-}
+}*/

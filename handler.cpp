@@ -8,7 +8,7 @@ bool Handler::addToIndex(char* filename, char* output) {
 
     /** Reads file and returns vector of document ids **/
     start = chrono::system_clock::now();
-    parse->parseFile(filename, index);
+    documents = parse->parseFile(filename, index);
     end = chrono::system_clock::now();
     elapsed_seconds = end-start;
     total = elapsed_seconds;

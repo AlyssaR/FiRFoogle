@@ -56,8 +56,9 @@ XMLParser::XMLParser() {
        "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};
 }
 
-void XMLParser::parseFile(char* filename, Index *&index) {
+set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
     string somefile, id, text, title;
+    set<Article*> documents;
     try {
         /** Open XML document **/
         rapidxml::file<> file(filename);
@@ -81,7 +82,8 @@ void XMLParser::parseFile(char* filename, Index *&index) {
             id = revision_node->first_node("sha1")->value();
 
             /** Write text out to file **/
-            somefile = id + ".txt";
+            documents.insert(new Article(title, text, id));
+/*            somefile = id + ".txt";
             ofstream fout_file(somefile.c_str());
             fout_file << "Title: " << title << endl;
             fout_file << "Text: " << text << endl;
@@ -96,6 +98,7 @@ void XMLParser::parseFile(char* filename, Index *&index) {
     catch(exception& e) {
         cout << e.what() << endl;
     }
+    return documents;
 } //close loadFile
 
 void XMLParser::clean(string &text) {
@@ -104,10 +107,10 @@ void XMLParser::clean(string &text) {
     string word;
     istringstream iss(text);
 
-    auto end = stopwords->begin() + 50;
+    auto end = stopwords->begin() + stopwords_size;
 
-    /** Remove punctuation and check if it's a stopword **/
     while(iss >> word) {
+        /** Remove punctuation **/
         if(ispunct(word[word.length()-1])) //Punctutation at end of words
             word[word.length()-1] = ' ';
         /** Remove stopwords **/

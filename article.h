@@ -8,11 +8,11 @@ using namespace std;
 
 class Article {
 private:
-    string title, author, id;
+    string title, text, id;
 public:
-    Article(string t, string a, string i) : title(t), author(a), id(i) {}
+    Article(string t, string tx, string i) : title(t), text(tx), id(i) {}
 
-    void display() {
+/*    void display() {
         string buffer;
         ifstream in(id + ".txt");
         if(!in.is_open()) {
@@ -27,11 +27,12 @@ public:
         while(getline(in, buffer))
             cout << buffer << endl;
         cout << "================================\n" << endl;
-    }
+    }*/
+    void display() { cout << text << endl; }
 
-    string getTitle() { return title; }
-    string getAuthor() { return author; }
-    string getID() { return id; }
+    string getTitle() const { return title; }
+//    string getAuthor() { return author; }
+    string getID() const { return id; }
 };
 
 #endif // ARTICLE_H

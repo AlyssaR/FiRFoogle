@@ -14,8 +14,10 @@ class Handler {
 private:
     Index * index;
     XMLParser * parse;
+    set<Article*> documents;
     vector<string> sorted(unordered_map<string, int>); //Sorts docs by weights
 public:
+    friend class QueryParser; //To get vector of Articles
     Handler() {
         index = new Index();
         parse = new XMLParser(); //Change to use big boy parser later

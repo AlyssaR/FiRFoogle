@@ -8,6 +8,7 @@
 #include <string>
 #include <unordered_map>
 #include <algorithm>
+#include "article.h"
 #include "rapidxml.h"
 #include "rapidxml_utils.h"
 using namespace std;
@@ -15,11 +16,11 @@ using namespace std;
 class XMLParser {
 private:
     unordered_map<string, int> keywords;
-    int stopwords_size = 50;
+    int stopwords_size = 20;
     vector<string>* stopwords; //But actually 568
 public:
     XMLParser();
-    void parseFile(char*, Index *&);
+    set<Article*> parseFile(char*, Index *&);
     void clean(string&);
     void stem();
 };
