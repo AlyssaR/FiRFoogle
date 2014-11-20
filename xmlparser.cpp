@@ -104,19 +104,18 @@ void XMLParser::clean(string &text) {
     string word;
     istringstream iss(text);
 
+    auto end = stopwords->begin() + 50;
+
     /** Remove punctuation and check if it's a stopword **/
-    do {
-        iss >> word;
+    while(iss >> word) {
         if(ispunct(word[word.length()-1])) //Punctutation at end of words
             word[word.length()-1] = ' ';
-        if(ispunct(word[word.length()-2])) //Gets those contractions
-            word[word.length()-2] = ' ';
         /** Remove stopwords **/
-        for(int i = 0; i < stopwords_size; i++) {
-            if(strcmp(word.c_str(), stopwords->at(i).c_str()) == 0) //if the word is a stopword
-                i = stopwords_size;
-            else if(i == stopwords_size - 1) //if the word doesn't match any stopwords
+        for(auto stop = stopwords->begin(); stop < end; stop++) {
+            if(strcmp(word.c_str(), (*stop).c_str()) == 0) //if the word is a stopword
+                break;
+            else if(stop < end - 1) //if the word doesn't match any stopwords
                 keywords[word]++;
         }
-    } while (iss);
+    }
 } //close clean
