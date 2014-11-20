@@ -81,7 +81,7 @@ void XMLParser::parseFile(char* filename, Index *&index) {
             id = revision_node->first_node("sha1")->value();
 
             /** Write text out to file **/
-            somefile = "./documents/" + id + ".txt";
+            somefile = id + ".txt";
             ofstream fout_file(somefile.c_str());
             fout_file << "Title: " << title << endl;
             fout_file << "Text: " << text << endl;
