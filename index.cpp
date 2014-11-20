@@ -31,13 +31,13 @@ unordered_map<string, int> Index::get(string keyword) {
 void Index::put(string docID, string keyword, int weight) {
     /** Add if first**/
     if(table[keyword] == nullptr)
-        table[keyword] = new Entry(keyword, docID, weight);
+        table[keyword] = new Entry(docID, weight);
     /** Add to end of key chain. Ha. Keychain. **/
     else {
           Entry *entry = table[keyword];
           while(entry->getNext() != nullptr)
                 entry = entry->getNext();
-          entry->setNext(new Entry(keyword, docID, weight));
+          entry->setNext(new Entry(docID, weight));
     }
 }
 

@@ -7,14 +7,13 @@ using namespace std;
 
 class Entry {
 private:
-    string keyword, docID;
+    string docID;
     int weight;
     Entry * next = nullptr;
 public:
-    Entry(string k, string d, int n = 1) : keyword(k), docID(d),
+    Entry(string d, int n = 1) : docID(d),
         weight(n) {}
 
-    string getKeyword() { return keyword; }
     string getDocID() { return docID; }
     int getWeight() { return weight; }
     Entry* getNext() { return next; }

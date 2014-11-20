@@ -67,14 +67,11 @@ set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
         rapidxml::xml_node<>* root_node = doc.first_node();
         if(root_node == 0)
             cout << "ERROR: Improperly formated XML" << endl;
+
         int x = 1; //Delete later
+
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling()) {
-
-            if(x%100 == 0)
-                cout << "+" << flush;
-            x++;
-
+        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 500; page_node = page_node->next_sibling(), x++) {
             /** Get information from individual document **/
             rapidxml::xml_node<>* revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();
@@ -88,7 +85,7 @@ set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
             fout_file << "Title: " << title << endl;
             fout_file << "Text: " << text << endl;
             fout_file.close(); //closes "filename" stream
-
+*/
             /** Call cleaning function and add keywords to index **/
             clean(text);
             index->add(title, keywords);
