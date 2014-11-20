@@ -1,7 +1,7 @@
 #include "xmlparser.h"
 
 XMLParser::XMLParser() {
-    stopwords = new vector<string>{"a", "about", "above", "abroad", "according", "accordingly", "across", "actually", "after",
+    stopwords = new set<string>{"a", "about", "above", "abroad", "according", "accordingly", "across", "actually", "after",
        "afterwords", "again", "against", "ago", "ahead", "aint", "all", "allow", "almost", "alone", "allows",
        "along", "alongside", "already", "also", "although", "always", "am", "amid", "amidst", "among", "amongst",
        "an", "and", "another", "any", "anybody", "anyhow", "anyone", "anything", "anyway", "anyways", "anywhere",
@@ -104,18 +104,18 @@ void XMLParser::clean(string &text) {
     string word;
     istringstream iss(text);
 
-    auto end = stopwords->begin() + stopwords_size;
-
     while(iss >> word) {
         /** Remove punctuation **/
         if(ispunct(word[word.length()-1])) //Punctutation at end of words
             word[word.length()-1] = ' ';
         /** Remove stopwords **/
-        for(auto stop = stopwords->begin(); stop < end; stop++) {
+        if(stopwords->find(word) == stopwords->end())
+            keywords[word]++;
+/*        for(auto stop = stopwords->begin(); stop < end; stop++) {
             if(strcmp(word.c_str(), (*stop).c_str()) == 0) //if the word is a stopword
                 break;
             else if(stop < end - 1) //if the word doesn't match any stopwords
                 keywords[word]++;
         }
-    }
+*/    }
 } //close clean
