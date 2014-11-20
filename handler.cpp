@@ -1,7 +1,5 @@
 #include "handler.h"
 
-bool inOrder(string i,string j) { return (i>j); }
-
 bool Handler::addToIndex(char* filename, char* output) {
     index->setFilename(output);
 
@@ -10,29 +8,18 @@ bool Handler::addToIndex(char* filename, char* output) {
 
     /** Reads file and returns vector of document ids **/
     start = chrono::system_clock::now();
-    vector<string> docs = parse->readFile();
+    parse->parseFile(filename, index);
     end = chrono::system_clock::now();
     elapsed_seconds = end-start;
     total = elapsed_seconds;
 
     cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
 
-    sort(docs.begin(), docs.end(), &inOrder);
-
-    /** Adds keywords from all docs to index **/
-    start = chrono::system_clock::now();
-    for(auto id : docs)
-        index->add(id, parse->getKeywords(id)); //Add all docs
-    end = chrono::system_clock::now();
-    elapsed_seconds = end-start;
-    total += elapsed_seconds;
-
     cout << "[+] Keywords added to index successfully." << endl;
     cout << "--> Keywords added in: " << elapsed_seconds.count() << "s" << endl;
 
     /** Prints index to file **/
     index->printTable(output);
-    cout << "\n--> All tasks completed in: " << elapsed_seconds.count() << "s" << endl;
 
     return true;
 }
