@@ -16,8 +16,8 @@ using namespace std;
 class XMLParser {
 private:
     unordered_map<string, int> keywords;
-    int stopwords_size = 50;
-    set<string>* stopwords; //But actually 568
+    int stopwords_size = 568;
+    set<string>* stopwords;
 public:
     XMLParser();
     set<Article*> parseFile(char*, Index *&);

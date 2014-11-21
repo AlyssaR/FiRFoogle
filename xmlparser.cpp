@@ -80,12 +80,7 @@ set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
 
             /** Write text out to file **/
             documents.insert(new Article(title, text, id));
-/*            somefile = id + ".txt";
-            ofstream fout_file(somefile.c_str());
-            fout_file << "Title: " << title << endl;
-            fout_file << "Text: " << text << endl;
-            fout_file.close(); //closes "filename" stream
-*/
+
             /** Call cleaning function and add keywords to index **/
             clean(text);
             index->add(title, keywords);
@@ -108,14 +103,10 @@ void XMLParser::clean(string &text) {
         /** Remove punctuation **/
         if(ispunct(word[word.length()-1])) //Punctutation at end of words
             word[word.length()-1] = ' ';
-        /** Remove stopwords **/
-        if(stopwords->find(word) == stopwords->end())
-            keywords[word]++;
-/*        for(auto stop = stopwords->begin(); stop < end; stop++) {
-            if(strcmp(word.c_str(), (*stop).c_str()) == 0) //if the word is a stopword
-                break;
-            else if(stop < end - 1) //if the word doesn't match any stopwords
-                keywords[word]++;
-        }
-*/    }
+        keywords[word]++;
+    }
+    /** Remove stopwords **/
+    for(auto word = stopwords->begin(); word != stopwords->end(); word++)
+        keywords.erase(*word);
+
 } //close clean
