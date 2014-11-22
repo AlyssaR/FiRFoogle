@@ -57,31 +57,31 @@ XMLParser::XMLParser() {
 }
 
 set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
-    string somefile, id, text, title;
+    string id, text, title;
     set<Article*> documents;
+    Article *add = new Article("add", "new", "article");
     try {
         /** Open XML document **/
         rapidxml::file<> file(filename);
         rapidxml::xml_document<> doc;
         doc.parse<0>(file.data());
-        rapidxml::xml_node<>* root_node = doc.first_node();
+        rapidxml::xml_node<>* root_node = doc.first_node(), *revision_node;
         if(root_node == 0)
             cout << "ERROR: Improperly formated XML" << endl;
 
         int x = 1; //Delete later
 
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling(), x++) {
-            if(x%1000 == 0)
-                cout << "+" << flush;
+        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 20000; page_node = page_node->next_sibling(), x++) {
             /** Get information from individual document **/
-            rapidxml::xml_node<>* revision_node = page_node->first_node("revision");
+            revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();
             text = revision_node->first_node("text")->value();
             id = revision_node->first_node("sha1")->value();
 
             /** Write text out to file **/
-            documents.insert(new Article(title, text, id));
+            add->set(title,text,id);
+            documents.insert(add);
 
             /** Call cleaning function and add keywords to index **/
             clean(text);
@@ -99,23 +99,14 @@ void XMLParser::clean(string &text) {
     transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
 
     string word;
-    bool add;
     istringstream iss(text);
 
     while(iss >> word) {
         /** Remove punctuation **/
-        add = true;
-        for(auto letter : word) {
-            if(ispunct(letter) || isdigit(letter) || !isalpha(letter)) { //Punctutation at end of words
-                add = false;
-                break;
-            }
-        }
-        if(add) {
-            //Porter2Stemmer::stem(word);
+        if(!(ispunct(word[0]) || ispunct(word[word.size()-1]) || isdigit(word[0])) && isalpha(word[0]))
             keywords[word]++;
-        }
     }
+
     /** Remove stopwords **/
     for(auto word = stopwords->begin(); word != stopwords->end(); word++)
         keywords.erase(*word);

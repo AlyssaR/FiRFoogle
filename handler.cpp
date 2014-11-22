@@ -1,22 +1,26 @@
 #include "handler.h"
 
-bool Handler::addToIndex(char* filename, char* output) {
+bool Handler::addToIndex(char*& filename, char*& output) {
     index->setFilename(output);
 
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds, total;
 
     /** Reads file and returns vector of document ids **/
-    start = chrono::system_clock::now();
-    documents = parse->parseFile(filename, index);
-    end = chrono::system_clock::now();
-    elapsed_seconds = end-start;
-    total = elapsed_seconds;
+    for(int x = 0; x < 3; x++) {
+        start = chrono::system_clock::now();
+        deleteIndex();
+        documents = parse->parseFile(filename, index);
+        end = chrono::system_clock::now();
+        elapsed_seconds = end-start;
+        total += elapsed_seconds;
 
-    cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
+        cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
+    }
+    total /= 3;
 
     cout << "[+] Keywords added to index successfully." << endl;
-    cout << "--> Keywords added in: " << elapsed_seconds.count() << "s" << endl;
+    cout << "--> Keywords added in: " << total.count() << "s" << endl;
 
     /** Prints index to file **/
     index->printTable(output);
@@ -24,7 +28,7 @@ bool Handler::addToIndex(char* filename, char* output) {
     return true;
 }
 
-vector<string> Handler::search(vector<string> ands, vector<string> ors, vector<string> nots) {
+vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector<string>& nots) {
     unordered_map<string, int> results, entries, temp;
 
     if(ors.size() != 0) {
@@ -91,7 +95,7 @@ bool byValues(pair<string,int> first, pair<string,int> second) { //Compares by v
     return first.second > second.second;
 }
 
-vector<string> Handler::sorted(unordered_map<string, int> entries) {
+vector<string> Handler::sorted(unordered_map<string, int>& entries) {
     vector<pair<string, int>> pairs(entries.begin(), entries.end());
 
     sort(pairs.begin(), pairs.end(), &byValues);

@@ -33,6 +33,11 @@ public:
     string getTitle() const { return title; }
 //    string getAuthor() { return author; }
     string getID() const { return id; }
+    void set(string t, string tx, string i) {
+        title = t;
+        text = tx;
+        id = i;
+    }
 };
 
 #endif // ARTICLE_H

@@ -18,23 +18,23 @@ private:
     char* filename;
     unordered_map<string, Entry*> table;
     set<string> keys, docs;
-    void printIDs(string, ofstream&);
+    void printIDs(string&, ofstream&);
     void put(string, string, int); //Adds individual key
 public:
     Index();
 
     void add(string, const unordered_map<string, int>&); //Adds all keywords from doc
 
-    unordered_map<string, int> get(string); //Returns weighted docs for given keyword
+    unordered_map<string, int> get(string&); //Returns weighted docs for given keyword
     char* getFilename() { return filename; }
     set<string> getIDs() { return docs; }
-    void setFilename(char* f) {
+    void setFilename(char*& f) {
         filename = new char[100];
         strcpy(filename, f);
     }
 
     void remove(string); /*! Not written yet !*/
-    void printTable(char*);
+    void printTable(char*&);
 
     ~Index();
 };

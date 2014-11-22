@@ -1,6 +1,6 @@
 #include "queryparser.h"
 
-vector<Article*> QueryParser::find(string query) {
+vector<Article*> QueryParser::find(string& query) {
     vector<string> docIDs;
     vector<string> ands, ors, nots, terms;
 
@@ -46,14 +46,13 @@ vector<Article*> QueryParser::find(string query) {
 struct find_by_id {
     find_by_id(const string & id) : id(id) {}
     bool operator()(Article * const& article) {
-        cout << article->getID() << " " << id << " " << (article->getID() == id) << endl;
         return (article->getID() == id);
     }
 private:
     string id;
 };
 
-void QueryParser::getDocInfo(vector<string> docIDs) {
+void QueryParser::getDocInfo(vector<string>& docIDs) {
     set<Article*> articles = index->documents;
     for(auto doc : docIDs) {
         auto it = find_if(articles.begin(), articles.end(), find_by_id(doc));

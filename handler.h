@@ -15,7 +15,7 @@ private:
     Index * index;
     XMLParser * parse;
     set<Article*> documents;
-    vector<string> sorted(unordered_map<string, int>); //Sorts docs by weights
+    vector<string> sorted(unordered_map<string, int>&); //Sorts docs by weights
 public:
     friend class QueryParser; //To get vector of Articles
     Handler() {
@@ -23,14 +23,17 @@ public:
         parse = new XMLParser(); //Change to use big boy parser later
     }
 
-    void addDocs(string doc, unordered_map<string, int> keys) { index->add(doc, keys); }
-    bool addToIndex(char*, char*); //Accepts XML and output filename from caller
+    void addDocs(string& doc, unordered_map<string, int>& keys) { index->add(doc, keys); }
+    bool addToIndex(char*&, char*&); //Accepts XML and output filename from caller
     void deleteIndex();
-    vector<string> search(vector<string>, vector<string>, vector<string>); //Accepts keywords, returns docs in weighted order
+    vector<string> search(vector<string>&, vector<string>&, vector<string>&); //Accepts keywords, returns docs in weighted order
 
     ~Handler() {
         delete index;
         delete parse;
+        for(auto doc : documents)
+            delete doc;
+        documents.clear();
     }
 };
 

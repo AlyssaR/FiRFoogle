@@ -9,7 +9,7 @@ void Index::add(string doc, const unordered_map<string, int>& keywords) {
     }
 }
 
-unordered_map<string, int> Index::get(string keyword) {
+unordered_map<string, int> Index::get(string& keyword) {
     string docID;
     Entry * entry = table[keyword];
     unordered_map<string, int> ids;
@@ -66,7 +66,7 @@ void Index::put(string docID, string keyword, int weight) {
     }
 }*/
 
-void Index::printIDs(string keyword, ofstream& out) {
+void Index::printIDs(string& keyword, ofstream& out) {
     out << "<key>" << keyword << "</key>" << endl;
     unordered_map<string, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)
@@ -74,7 +74,7 @@ void Index::printIDs(string keyword, ofstream& out) {
              << iter->second << "</weight>" << endl;
 }
 
-void Index::printTable(char * output) {
+void Index::printTable(char *& output) {
     ofstream out(output);
     out << "<index>" << endl;
 
@@ -87,6 +87,7 @@ void Index::printTable(char * output) {
 }
 
 Index::~Index() {
+    delete filename;
     for(auto item : table) {
           if(item.second != nullptr) {
                 Entry *prevEntry = nullptr;
@@ -98,4 +99,5 @@ Index::~Index() {
                 }
           }
     }
+    table.clear();
 }
