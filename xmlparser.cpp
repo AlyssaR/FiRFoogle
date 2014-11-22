@@ -53,7 +53,7 @@ XMLParser::XMLParser() {
        "we", "welcome", "well", "went", "were", "weren't", "what", "when", "where", "whereupon","wherever"
        "whether", "which", "whichever", "while", "whilst", "whither", "who", "whomever", "whose", "why", "will",
        "willing", "wish", "with", "within", "without", "wonder", "won", "would", "wouldn", "whom", "why",
-       "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};
+       "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};    
 }
 
 set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
@@ -72,7 +72,7 @@ set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
         int x = 1; //Delete later
 
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 20000; page_node = page_node->next_sibling(), x++) {
+        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 500; page_node = page_node->next_sibling(), x++) {
             /** Get information from individual document **/
             revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();
