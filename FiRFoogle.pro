@@ -5,6 +5,9 @@ CONFIG -= qt
 CONFIG += c++11
 CONFIG += xml
 QMAKE_CXXFLAGS += -Wno-write-strings
+QMAKE_CFLAGS_RELEASE += -fopenmp
+QMAKE_CFLAGS_DEBUG += -fopenmp
+
 
 SOURCES += main.cpp \
     xmlparser.cpp \

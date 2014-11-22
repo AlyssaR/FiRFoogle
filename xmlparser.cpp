@@ -72,14 +72,15 @@ set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
         int x = 1; //Delete later
 
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 20000; page_node = page_node->next_sibling(), x++) {
+#pragma omp parallel num threads(100) for
+        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 500; page_node = page_node->next_sibling(), x++) {
             /** Get information from individual document **/
             revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();
             text = revision_node->first_node("text")->value();
             id = revision_node->first_node("sha1")->value();
 
-            /** Write text out to file **/
+            /** Save text **/
             add->set(title,text,id);
             documents.insert(add);
 
