@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include "article.h"
+#include "porter2_stemmer.h"
 #include "rapidxml.h"
 #include "rapidxml_utils.h"
 using namespace std;

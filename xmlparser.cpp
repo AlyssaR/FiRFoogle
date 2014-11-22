@@ -20,12 +20,12 @@ XMLParser::XMLParser() {
        "followed", "following", "for", "forever", "former", "formerly", "fourth", "forward", "found", "four",
        "from", "further", "furthermore", "get", "gets", "getting", "give", "given", "gives", "go", "goes", "going",
        "gone", "got", "gotten", "had", "hadn", "half", "happens", "hardly", "has", "hasn", "have",
-       "haven", "having", "he", "hello", "help", "hence", "her", "here", "hereafter", "hereby", "herein",
+       "haven", "having", "he", "hello", "help", "hence", "her", "here", "hereby",
        "hereupon", "hers", "herself", "hi", "him", "himself", "his", "hither", "hopefully", "how", "howbeit",
        "however", "how", "however", "hundred", "i", "ie", "if", "ignored", "immediate", "in", "inasmuch", "inc",
        "indeed", "indicate", "indicated", "indicates", "inner", "inside", "insofar", "instead", "into", "inward",
        "is", "isn", "it", "its", "itself","just", "k", "keep", "keeps", "kept", "know", "known", "knows", "last",
-       "lately", "later", "latter", "latterly", "least", "less", "lest", "let", "like", "liked", "likely", "likewise",
+       "lately", "later", "latter", "least", "less", "lest", "let", "like", "liked", "likely", "likewise",
        "little", "ll", "look", "looking", "looks", "low", "lower", "m", "made", "mainly", "make", "makes",
        "many", "may","maybe", "maynt", "me", "mean", "meatime", "meawhile", "mearly", "might", "mightn't", "mine",
        "minus", "miss","mon", "more", "moreoever", "most", "mostly", "mr", "mrs", "must", "mustn", "my", "myself",
@@ -97,13 +97,22 @@ void XMLParser::clean(string &text) {
     transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
 
     string word;
+    bool add;
     istringstream iss(text);
 
     while(iss >> word) {
         /** Remove punctuation **/
-        if(ispunct(word[word.length()-1])) //Punctutation at end of words
-            word[word.length()-1] = ' ';
-        keywords[word]++;
+        add = true;
+        for(auto letter : word) {
+            if(ispunct(letter) || isdigit(letter) || !isalpha(letter)) { //Punctutation at end of words
+                add = false;
+                break;
+            }
+        }
+        if(add) {
+            //Porter2Stemmer::stem(word);
+            keywords[word]++;
+        }
     }
     /** Remove stopwords **/
     for(auto word = stopwords->begin(); word != stopwords->end(); word++)

@@ -37,6 +37,9 @@ vector<Article*> QueryParser::find(string query) {
 
     /** Get Doc IDs that match those terms **/
     docIDs = index->search(ands, ors, nots);
+    cout << "test" << endl;
+    for(auto doc : docIDs)
+        cout << doc << endl;
     getDocInfo(docIDs);
 
     /** Return a vector of entries with info for those docs **/

@@ -27,70 +27,60 @@ bool Handler::addToIndex(char* filename, char* output) {
 vector<string> Handler::search(vector<string> ands, vector<string> ors, vector<string> nots) {
     unordered_map<string, int> results, entries, temp;
 
-    /** Get all OR'd terms **/
-    for(auto word : ors) {
-        entries = index->get(word); //Get index entry
-        for(auto line : entries) {
-            if(results[line.first] == 0)
-                results[line.first] = line.second;
-            else
-                results[line.first] += line.second;
+    if(ors.size() != 0) {
+        /** Get all OR'd terms **/
+        for(auto word : ors) {
+            entries = index->get(word); //Get index entry
+            for(auto line : entries) {
+                if(results[line.first] == 0)
+                    results[line.first] = line.second;
+                else
+                    results[line.first] += line.second;
+            }
         }
     }
-    entries.clear();
 
-    /** Get all AND'd terms **/
-    for(auto word : ands) {
-        temp = index->get(word);
-        for(auto line : temp) {
-            if(entries[line.first] == 0)
-                entries[line.first] = line.second;
-            else
-                results[line.first] += line.second;
+    if(ands.size() != 0) {
+        /** Get all AND'd terms **/
+        for(auto word : ands) {
+            temp = index->get(word);
+            for(auto line : temp)
+                entries[line.first] += line.second;
         }
-    }
-    /** Merge AND terms with ORs **/
-    for(auto word : entries) {
-        if(results[word.first] != 0)
-            word.second += results[word.first];
-    }
-    results = entries;
-    entries.clear();
 
-    /** Get all NOT terms **/
-    for(auto word : nots) {
-        temp = index->get(word);
-        for(auto line : temp) {
-            if(entries[line.first] == 0)
-                entries[line.first] = line.second;
+        /** Merge AND terms with ORs **/
+        for(auto word : entries) {
+            if(word.second < 2)
+                entries.erase(word.first);
             else
-                results[line.first] += line.second;
+                word.second += results[word.first];
         }
+        results = entries;
+        entries.clear();
     }
-    temp = entries;
-    entries.clear();
 
-    /** Exclude NOT terms **/
-    for(auto word : results) {
-        if(temp[word.first] == 0)
-            entries[word.first] = word.second;
+    if(nots.size() != 0) {
+        /** Get all NOT terms **/
+        for(auto word : nots) {
+            temp = index->get(word);
+            for(auto line : temp) {
+                entries[line.first] += line.second;
+            }
+        }
+        temp = entries;
+        entries.clear();
+
+        /** Exclude NOT terms **/
+        for(auto word : results) {
+            if(temp[word.first] == 0)
+                entries[word.first] += word.second;
+        }
     }
 
     return sorted(entries);
 }
 
 void Handler::deleteIndex() {
-    set<string> ids = index->getIDs();
-    char *filename = new char[100];
-    for(auto doc : ids) {
-        strcpy(filename, doc.c_str());
-        strcat(filename, ".txt");
-        remove(filename);
-
-        strcpy(filename, doc.c_str());
-        strcat(filename, ".xml");
-        remove(filename);
-    }
     remove(index->getFilename());
     index = new Index();
 
