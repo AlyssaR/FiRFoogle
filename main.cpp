@@ -92,18 +92,18 @@ void interactive(Handler * index) {
         results = query->find(search);
 
         /** Display Search Results **/
-        auto iter = results.begin();
-        int index = 1;
+        int index = 1, size = sizeof(results);
+
         do {
             cout << "    ====================\n"
                  << "\tFiRFoogle\n"
                  << "    ====================" << endl;
-            cout << "Total found: " << results.size() << " results" << endl;
+            cout << "Total found: " << size << " results" << endl;
             cout << "Viewing Results: " << index << " to " << index + 4 << "\n" << endl;
 
             /** Print 5 Results at a Time **/
-            for(int x = index; iter != results.end() && x < index+5; iter++, x++)
-                cout << "[" << x << "] " << (*iter)->getTitle() << endl;
+            for(int x = index; x < size && x < index+5; x++)
+                cout << "[" << x << "] " << results.at(x-1)->getTitle() << endl;
 
             cout << "Options:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n-1\t\t quit"

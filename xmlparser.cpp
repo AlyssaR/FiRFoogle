@@ -71,7 +71,9 @@ set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
         int x = 1; //Delete later
 
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 500; page_node = page_node->next_sibling(), x++) {
+        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling(), x++) {
+            if(x%1000 == 0)
+                cout << "+" << flush;
             /** Get information from individual document **/
             rapidxml::xml_node<>* revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();

@@ -37,9 +37,6 @@ vector<Article*> QueryParser::find(string query) {
 
     /** Get Doc IDs that match those terms **/
     docIDs = index->search(ands, ors, nots);
-    cout << "test" << endl;
-    for(auto doc : docIDs)
-        cout << doc << endl;
     getDocInfo(docIDs);
 
     /** Return a vector of entries with info for those docs **/
@@ -49,6 +46,7 @@ vector<Article*> QueryParser::find(string query) {
 struct find_by_id {
     find_by_id(const string & id) : id(id) {}
     bool operator()(Article * const& article) {
+        cout << article->getID() << " " << id << " " << (article->getID() == id) << endl;
         return (article->getID() == id);
     }
 private:
@@ -63,21 +61,3 @@ void QueryParser::getDocInfo(vector<string> docIDs) {
             results.push_back(*it);
     }
 }
-
-/*void QueryParser::getDocInfo(vector<string> docIDs) {
-    string author, title, buffer;
-
-    for(auto doc : docIDs) {
-        ifstream in(doc + ".txt");
-        if(!in.is_open()) {
-            cerr << "[!] Couldn't open " << doc << ".txt" << endl;
-            continue;
-        }
-        in >> buffer;
-        getline(in, title);
-        in >> buffer;
-        getline(in, author);
-        in.close();
-        results.push_back(new Article(title, author, doc));
-    }
-}*/
