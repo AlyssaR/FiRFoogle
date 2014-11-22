@@ -53,7 +53,7 @@ XMLParser::XMLParser() {
        "we", "welcome", "well", "went", "were", "weren't", "what", "when", "where", "whereupon","wherever"
        "whether", "which", "whichever", "while", "whilst", "whither", "who", "whomever", "whose", "why", "will",
        "willing", "wish", "with", "within", "without", "wonder", "won", "would", "wouldn", "whom", "why",
-       "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};
+       "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};    
 }
 
 set<Article*> XMLParser::parseFile(char* filename, Index *&index) {

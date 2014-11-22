@@ -7,8 +7,9 @@ void maintain(Handler*);
 void stressTest(Handler*);
 void interactive(Handler*);
 
-int main(int argc, char* argv[], int option) {
-    if(argc < 3) {
+int main(int argc, char* argv[]) {
+    int option = 1;
+    if(argc < 2) {
         cerr << "\nERROR: Invalid number of arguments" << endl;
         cerr << "Correct usage: ./a.out input.xml saved_index.xml [optional mode choice]" << endl;
         cerr << "Mode choices:\n"
@@ -21,7 +22,7 @@ int main(int argc, char* argv[], int option) {
     Handler * index = new Handler();
     index->addToIndex(argv[1], argv[2]);
 
-    argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
+//    argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
 /*
     if(option == 3)
         stressTest(index);
