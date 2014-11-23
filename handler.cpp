@@ -4,23 +4,22 @@ bool Handler::addToIndex(char*& filename, char*& output) {
     index->setFilename(output);
 
     chrono::time_point<chrono::system_clock> start, end;
-    chrono::duration<double> elapsed_seconds, total;
+    chrono::duration<double> elapsed_seconds;
 
     /** Reads file and returns vector of document ids **/
-    for(int x = 0; x < 3; x++) {
-        start = chrono::system_clock::now();
-        deleteIndex();
-        documents = parse->parseFile(filename, index);
-        end = chrono::system_clock::now();
-        elapsed_seconds = end-start;
-        total += elapsed_seconds;
+    start = chrono::system_clock::now();
+    deleteIndex();
+    documents = parse->read(filename, index);
+    end = chrono::system_clock::now();
+    elapsed_seconds = end-start;
 
-        cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
-    }
-    total /= 3;
+    cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
+
+    string somecommandcrap = "rm -rf ./WikiDump";
+    system(somecommandcrap.c_str());
 
     cout << "[+] Keywords added to index successfully." << endl;
-    cout << "--> Keywords added in: " << total.count() << "s" << endl;
+    cout << "--> Keywords added in: " << elapsed_seconds.count() << "s" << endl;
 
     /** Prints index to file **/
     index->printTable(output);

@@ -56,32 +56,36 @@ XMLParser::XMLParser() {
        "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};    
 }
 
-set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
-    string id, text, title;
-    set<Article*> documents;
-    Article *add = new Article("add", "new", "article");
+void XMLParser::getFilenames() {
+    DIR *directory;
+    struct dirent *thedir;
+    if((directory  = opendir("WikiDump")) == NULL)
+        cout << "Error(" << errno << ") opening " << "WikiDump" << endl;
+
+    while ((thedir = readdir(directory)) != NULL)
+        filenames.insert(string(thedir->d_name));
+    closedir(directory);
+}
+
+void XMLParser::parseFile(const char* filename) {
+    string id = "merp", text, title, daREALFileShady;
+    daREALFileShady = "./WikiDump/" + string(filename);
+
     try {
         /** Open XML document **/
-        rapidxml::file<> file(filename);
+        rapidxml::file<> file(daREALFileShady.c_str());
         rapidxml::xml_document<> doc;
         doc.parse<0>(file.data());
-        rapidxml::xml_node<>* root_node = doc.first_node(), *revision_node;
+        rapidxml::xml_node<>* root_node = doc.first_node();
         if(root_node == 0)
             cout << "ERROR: Improperly formated XML" << endl;
 
-        int x = 1; //Delete later
-
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node && x < 1000; page_node = page_node->next_sibling(), x++) {
-
-            if(x%500 == 0)
-                cout << "+" << flush;
-
+        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling()) {
             /** Get information from individual document **/
-            revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();
-            text = revision_node->first_node("text")->value();
-            id = revision_node->first_node("sha1")->value();
+            text = page_node->first_node("revision")->first_node("text")->value();
+            //id = revision_node->first_node("sha1")->value();
 
             /** Save text **/
             add->set(title,text,id);
@@ -96,19 +100,46 @@ set<Article*> XMLParser::parseFile(char* filename, Index *&index) {
     catch(exception& e) {
         cout << e.what() << endl;
     }
-    return documents;
 } //close loadFile
+
+set<Article*> XMLParser::read(char*& bigfile, Index*& i) {
+    index = i; //Make sure same index is always used
+
+    string somecommandcrap = "perl splitter.pl " + string(bigfile);
+
+    system(somecommandcrap.c_str());
+    getFilenames();
+    int x = 1;
+    /** Parse each baby file **/
+    for(auto file : filenames) {
+        if(x%5 == 0)
+            cout << "+" << flush;
+        if(x == 15)
+            break;
+        parseFile(file.c_str());
+        x++;
+    }
+
+    return documents;
+}
 
 void XMLParser::clean(string &text) {
     transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
 
-    string word;
     istringstream iss(text);
-
-    while(iss >> word) {
-        /** Remove punctuation **/
-        if(!(ispunct(word[0]) || ispunct(word[word.size()-1]) || isdigit(word[0])) && isalpha(word[0]))
-            keywords[word]++;
+    bool addMe = true;
+    while(iss >> text) {
+        /** Remove crappy stuff **/
+        for(auto character : text) {
+            if(!isalnum(character)) {
+                addMe = false;
+                break;
+            }
+        }
+        /** Add non-crappy stuff **/
+        if(addMe)
+            keywords[text]++;
+        addMe = true;
     }
 
     /** Remove stopwords **/
