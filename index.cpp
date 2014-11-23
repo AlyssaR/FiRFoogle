@@ -1,5 +1,4 @@
 #include "index.h"
-Index::Index() {}
 
 void Index::add(string doc, const unordered_map<string, int>& keywords) {
     docs.insert(doc); //Add doc id to set

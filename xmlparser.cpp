@@ -111,7 +111,7 @@ set<Article*> XMLParser::read(char*& bigfile, Index*& i) {
     getFilenames();
 
     int x = 1;
-
+//#pragma omp parallel for
     /** Parse each baby file **/
     for(auto file : filenames) {
         if(x%5 == 0)

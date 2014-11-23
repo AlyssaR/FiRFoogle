@@ -20,7 +20,7 @@ public:
     friend class QueryParser; //To get vector of Articles
     Handler() {
         index = new Index();
-        parse = new XMLParser(); //Change to use big boy parser later
+        parse = new XMLParser();
     }
 
     void addDocs(string& doc, unordered_map<string, int>& keys) { index->add(doc, keys); }

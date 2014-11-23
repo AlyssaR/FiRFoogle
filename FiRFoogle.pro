@@ -4,8 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += c++11
 CONFIG += xml
-QMAKE_CXXFLAGS += -Wno-write-strings
-
+QMAKE_CXXFLAGS += -Wno-write-strings -fopenmp -mavx -fabi-version=0 -ffast-math
+QMAKE_LFLAGS += -fopenmp
+QMAKE_CXXFLAGS_RELEASE *= -O3
 
 
 SOURCES += main.cpp \
