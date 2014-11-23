@@ -105,11 +105,13 @@ void XMLParser::parseFile(const char* filename) {
 set<Article*> XMLParser::read(char*& bigfile, Index*& i) {
     index = i; //Make sure same index is always used
 
+    /** Split files and get directory listing **/
     string somecommandcrap = "perl splitter.pl " + string(bigfile);
-
     system(somecommandcrap.c_str());
     getFilenames();
+
     int x = 1;
+
     /** Parse each baby file **/
     for(auto file : filenames) {
         if(x%5 == 0)
