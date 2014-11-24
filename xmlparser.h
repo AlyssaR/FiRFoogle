@@ -23,6 +23,7 @@ private:
     rapidxml::xml_document<> doc;
     set<Article*> documents;
     unordered_map<string, int> keywords;
+    unordered_map<string, string> stemmed;
     int stopwords_size = 568;
     set<string>* stopwords, filenames;
     Article *add = new Article("add", "new", "article");
