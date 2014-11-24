@@ -48,7 +48,9 @@ while (<WIKIFILE>) {
     if ($pageCount == $pagesPerFile) {
         print OUTPUTFILE '</mediawiki>';
         close(OUTPUTFILE);
-
+	if($fileCount == 60) {
+		$fileCount = $fileCount + 4;
+	}
         if ($fileCount == $maxFiles) {
             close(WIKIFILE);
             die "\n\nDone! Your files are in the". $outputDir ."folder\n\n";
