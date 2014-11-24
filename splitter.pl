@@ -48,22 +48,15 @@ while (<WIKIFILE>) {
     if ($pageCount == $pagesPerFile) {
         print OUTPUTFILE '</mediawiki>';
         close(OUTPUTFILE);
-	if($fileCount == 60) {
-		$fileCount = $fileCount + 4;
-	}
         if ($fileCount == $maxFiles) {
             close(WIKIFILE);
-            die "\n\nDone! Your files are in the". $outputDir ."folder\n\n";
+            die "\n\n[+] Split files are in the ". $outputDir ." folder\n\n";
         }
 
         $fileCount = $fileCount + 1;
         open (OUTPUTFILE, '>'.$outputDir.$fileName.$fileCount.'.xml');
         print OUTPUTFILE $title;
         $pageCount = 0;
-
-        if ($fileCount % 20 == 0) {
-            print "Done with $fileCount files\n";
-        }
     }
 
     print OUTPUTFILE $_; 
