@@ -131,7 +131,7 @@ void XMLParser::clean(string &text) {
             if(!isalpha(*character))
                 break;
             /** Add non-crappy stuff **/
-            else if(character+1 == text.end()) {
+            else if(character+1 == word.end()) {
                 Porter2Stemmer::stem(word);
                 keywords[word]++;
             }
