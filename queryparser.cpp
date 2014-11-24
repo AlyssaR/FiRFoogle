@@ -40,8 +40,6 @@ vector<Article*> QueryParser::find(string& query) {
 
     /** Get Doc IDs that match those terms **/
     docIDs = index->search(ands, ors, nots);
-    for(auto thing : docIDs)
-        cout << thing << endl;
     getDocInfo(docIDs);
 
     /** Return a vector of entries with info for those docs **/
@@ -61,9 +59,7 @@ void QueryParser::getDocInfo(vector<string>& docIDs) {
     set<Article*> articles = index->documents;
     for(auto doc : docIDs) {
         auto it = find_if(articles.begin(), articles.end(), find_by_id(doc));
-        if(it != articles.end()) {
-            cout << "Adding " << *it << endl;
+        if(it != articles.end())
             results.push_back(*it);
-        }
     }
 }
