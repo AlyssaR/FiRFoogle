@@ -124,20 +124,19 @@ void XMLParser::clean(string &text) {
     transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
 
     istringstream iss(text);
-
-    while(iss >> text) {
-        for(auto character = text.begin(); character != text.end(); character++) {
+    string word;
+    while(iss >> word) {
+        for(auto character = word.begin(); character != word.end(); character++) {
             /** Remove crappy stuff **/
             if(!isalpha(*character))
                 break;
             /** Add non-crappy stuff **/
             else if(character+1 == text.end()) {
-                //Porter2Stemmer::stem(text);
-                keywords[text]++;
+                Porter2Stemmer::stem(word);
+                keywords[word]++;
             }
         }
     }
-
     /** Remove stopwords **/
     for(auto word = stopwords->begin(); word != stopwords->end(); word++)
         keywords.erase(*word);
