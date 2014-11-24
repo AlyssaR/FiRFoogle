@@ -1,59 +1,59 @@
 #include "xmlparser.h"
 
 XMLParser::XMLParser() {
-    stopwords = new set<string>{"a", "about", "above", "abroad", "according", "accordingly", "across", "actually", "after",
-       "afterwords", "again", "against", "ago", "ahead", "aint", "all", "allow", "almost", "alone", "allows",
+    stopwords = new set<string>{"a", "about", "above", "abroad", "accord", "across", "actual", "after",
+       "afterword", "again", "against", "ago", "ahead", "aint", "all", "allow", "almost", "alone",
        "along", "alongside", "already", "also", "although", "always", "am", "amid", "amidst", "among", "amongst",
-       "an", "and", "another", "any", "anybody", "anyhow", "anyone", "anything", "anyway", "anyways", "anywhere",
-       "apart", "appear", "appreciate", "appropriate", "are", "aren", "around", "as", "aside", "ask", "asking",
-       "associated", "at", "available", "away", "awfully", "back", "backward", "backwards", "be", "became",
-       "because", "become", "becoming", "been", "before", "beforehand", "began", "begin", "behind", "being",
-       "believe", "below", "beside", "besides", "best", "better", "between", "beyond", "both", "brief", "but",
+       "an", "and", "another", "any", "anybody", "anyhow", "anyone", "anything", "anyway", "anywhere",
+       "apart", "appear", "appreciate", "appropriate", "are", "around", "as", "aside", "ask",
+       "associated", "at", "available", "away", "awful", "back", "backward", "be", "became",
+       "because", "become", "becom", "been", "before", "beforehand", "began", "begin", "behind",
+       "believe", "below", "beside", "beside", "best", "better", "between", "beyond", "both", "brief", "but",
        "by", "came", "can", "cannot", "caption", "cause", "causes", "certain", "certainly", "changes", "cleary",
        "c", "co", "com", "come", "comes", "coming", "concerning", "consequently", "consider", "considering",
-       "contain", "containing" "contains", "corresponding", "could", "couldn", "course", "currently", "d", "dare",
-       "daren", "definetly", "described", "despite", "did", "didn", "different", "directly", "div", "do", "does",
-       "doesn", "doing", "done", "don", "down", "downward", "downwards", "during", "each",  "edu", "ed", "eight",
-       "eighty", "either", "else", "elsewhere", "end", "ending", "enough", "entirely", "especially", "et", "etc",
-       "even", "ever", "evermore", "every", "everybody", "everyone", "everything", "everywhere", "ex", "exactly",
-       "example", "except", "fairly", "far", "farther", "few", "fewer", "fifth", "first", "five", "follow",
+       "contain", "contains", "corresponding", "could", "couldn", "course", "currently", "d", "dare",
+       "definetly", "describ", "despite", "did", "different", "direct", "div", "do", "does",
+       "doing", "done", "down", "downward", "dur", "each",  "edu", "ed", "eight",
+       "eighty", "either", "else", "elsewhere", "end", "end", "enough", "entire", "especial", "et", "etc",
+       "even", "ever", "evermore", "every", "everybody", "everyone", "everything", "everywhere", "ex", "exact",
+       "example", "except", "fair", "far", "farther", "few", "fewer", "fifth", "first", "five", "follow",
        "followed", "following", "for", "forever", "former", "formerly", "fourth", "forward", "found", "four",
-       "from", "further", "furthermore", "get", "gets", "getting", "give", "given", "gives", "go", "goes", "going",
+       "from", "further", "furthermore", "get", "give", "given", "go", "goe",
        "gone", "got", "gotten", "had", "hadn", "half", "happens", "hardly", "has", "hasn", "have",
-       "haven", "having", "he", "hello", "help", "hence", "her", "here", "hereby",
-       "hereupon", "hers", "herself", "hi", "him", "himself", "his", "hither", "hopefully", "how", "howbeit",
-       "however", "how", "however", "hundred", "i", "ie", "if", "ignored", "immediate", "in", "inasmuch", "inc",
-       "indeed", "indicate", "indicated", "indicates", "inner", "inside", "insofar", "instead", "into", "inward",
-       "is", "isn", "it", "its", "itself","just", "k", "keep", "keeps", "kept", "know", "known", "knows", "last",
-       "lately", "later", "latter", "least", "less", "lest", "let", "like", "liked", "likely", "likewise",
-       "little", "ll", "look", "looking", "looks", "low", "lower", "m", "made", "mainly", "make", "makes",
-       "many", "may","maybe", "maynt", "me", "mean", "meatime", "meawhile", "mearly", "might", "mightn't", "mine",
-       "minus", "miss","mon", "more", "moreoever", "most", "mostly", "mr", "mrs", "must", "mustn", "my", "myself",
-       "name", "namely", "nd", "near", "nearly", "neccesary", "need", "needn", "needs", "never", "neither",
+       "hav", "he", "hello", "help", "hence", "her", "here", "hereby",
+       "hereupon", "hers", "herself", "hi", "him", "himself", "his", "hither", "hopefully", "how",
+       "however", "how", "however", "hundred", "i", "ie", "if", "ignore", "immediate", "in", "inasmuch", "inc",
+       "indeed", "indicate", "inner", "inside", "insofar", "instead", "into", "inward",
+       "is", "it", "its", "itself","just", "k", "keep", "kept", "know", "known", "last",
+       "late", "later", "latter", "least", "less", "lest", "let", "like", "lik", "likewise",
+       "little", "ll", "look", "low", "lower", "m", "made", "main", "make",
+       "many", "may","maybe", "me", "mean", "meatime", "meawhile", "mear", "might", "mine",
+       "minus", "miss","mon", "more", "moreoever", "most", "most", "mr", "mrs", "must", "my", "myself",
+       "name", "nd", "near", "neccesary", "need", "needs", "never", "neither",
        "neverless", "nevertheless", "new", "next", "nine", "ninety", "no", "nobody", "non", "none", "nonetheless"
-       "noone", "nor", "normally", "not", "nothing", "notwithstanding", "novel", "now", "nowhere", "obviously",
+       "noone", "nor", "normally", "not", "noth", "notwithstanding", "novel", "now", "nowhere", "obviously",
        "of", "off", "often", "oh", "ok", "okay", "old", "on", "once", "one", "only", "onto", "opposite", "or",
-       "other", "others", "otherwise", "ought", "oughtn", "our", "ours", "ourselves", "out", "outside", "over",
-       "overall", "own", "particular", "particularly", "past", "per", "perhaps", "placed", "please", "plus"
-       "possible", "presumably", "probably", "provided", "provides", "que", "quite", "qv", "rather", "rd", "re",
-       "really", "reasonably", "recent", "recently", "regarding", "regardless", "regards", "relatively",
-       "respectively", "right","round", "s", "said", "same", "saw", "say", "saying", "says", "second",
-       "secondly", "see", "seeing", "seem", "seemed", "seeming", "seems", "seen", "self", "selves", "sensible",
-       "sent", "serious", "seriously", "seven", "several", "shall" "shan", "she", "should", "shouldn", "since",
+       "other","otherwise", "ought", "our", "ours", "ourselve", "out", "outside", "over",
+       "overall", "own", "particular", "past", "per", "perhap", "placed", "please", "plus"
+       "possible", "presumab", "probab", "provid", "provide", "que", "quite", "qv", "rather", "rd", "re",
+       "real", "reasonab", "recent", "regard", "regardless", "relative",
+       "respective", "right","round", "s", "said", "same", "saw", "say", "say", "say", "second",
+       "second", "see", "seeing", "seem", "seen", "self", "selve", "sensible",
+       "sent", "serious",  "seven", "several", "shall" "shan", "she", "should", "since",
        "six", "so", "some", "somebody","someday", "somehow", "someone", "something", "sometime", "sometimes",
        "somewhat", "somewhere", "soon", "sorry", "specified", "specify", "specifying", "still", "sub", "sup",
-       "such", "t", "take", "taken", "taking", "tell", "tends", "th", "than", "thank", "thanks", "that",
-       "the", "their", "theirs", "them", "themselves", "then", "thence", "there", "thereafter", "thereby",
+       "such", "t", "take", "taken", "tak", "tell", "tend", "th", "than", "thank", "that",
+       "the", "their", "them", "themselve", "then", "thence", "there", "thereafter", "thereby",
        "therefore", "these", "they", "thing" "things", "thinks", "third", "thirty" "this",
-       "thorough", "thoroughly", "those", "though", "three", "through", "throughout", "thru", "thus", "til", "to",
-       "together", "too", "took", "toward", "towards", "tried", "tries", "truly", "try", "trying", "twice", "two",
-       "un", "under", "under", "underneath", "undoing", "unfortunately", "unless", "unlike" "unlikely" "until",
-       "unto", "up", "upwards", "us", "use", "used", "useful", "uses", "using", "usually", "v", "value",
-       "various", "ve", "versus", "very", "via", "vs", "want", "wants" "was", "wasn", "way", "we",
-       "we", "welcome", "well", "went", "were", "weren't", "what", "when", "where", "whereupon","wherever"
+       "thorough", "those", "though", "three", "through", "throughout", "thru", "thus", "til", "to",
+       "together", "too", "took", "toward", "tri", "tries", "tru", "try", "twice", "two",
+       "un", "under", "under", "underneath", "undo", "unfortunate", "unless", "unlike", "until",
+       "unto", "up", "upward", "us", "use", "used", "useful", "use", "us", "usual", "v", "value",
+       "various", "ve", "versus", "very", "via", "vs", "want", "was",  "way", "we",
+       "we", "welcome", "well", "went", "were", "what", "when", "where", "whereupon","wherever"
        "whether", "which", "whichever", "while", "whilst", "whither", "who", "whomever", "whose", "why", "will",
-       "willing", "wish", "with", "within", "without", "wonder", "won", "would", "wouldn", "whom", "why",
-       "would", "wouldn", "yes", "yet", "you", "your", "yours", "yourself", "yourselves"};    
+       "willing", "wish", "with", "within", "without", "wonder", "won", "would", "whom", "why",
+       "would", "yes", "yet", "you", "your", "yourself", "yourselve"};
 }
 
 void XMLParser::getFilenames() {
@@ -74,13 +74,14 @@ void XMLParser::parseFile(const char* filename) {
     try {
         /** Open XML document **/
         rapidxml::file<> file(daREALFileShady.c_str());
+        rapidxml::xml_document<> doc;
         doc.parse<0>(file.data());
-
-        //if(root_node == 0)
-          //  cout << "ERROR: Improperly formated XML" << endl;
+        rapidxml::xml_node<>* root_node = doc.first_node();
+        if(root_node == 0)
+            cout << "ERROR: Improperly formated XML" << endl;
 
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = doc.first_node()->first_node("page"); page_node; page_node = page_node->next_sibling()) {
+        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling()) {
             /** Get information from individual document **/
             title = page_node->first_node("title")->value();
             text = page_node->first_node("revision")->first_node("text")->value();
@@ -101,18 +102,22 @@ void XMLParser::parseFile(const char* filename) {
     }
 } //close loadFile
 
-set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
+set<Article*> XMLParser::read(char*& bigfile, Index*& i) {
     index = i; //Make sure same index is always used
 
+    /** Split files and get directory listing **/
     string somecommandcrap = "perl splitter.pl " + string(bigfile);
-
     system(somecommandcrap.c_str());
     getFilenames();
-    int x = 0;
+
+    int x = 1;
+//#pragma omp parallel for
     /** Parse each baby file **/
     for(auto file : filenames) {
-        if(x%4 == 0)
+        if(x%5 == 0)
             cout << "+" << flush;
+        if(x == 15)
+            break;
         parseFile(file.c_str());
         x++;
     }
@@ -121,21 +126,26 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
 }
 
 void XMLParser::clean(string &text) {
-    transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
+    //Moved into for loop to save traversing through entire document twice
+    //transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
 
     istringstream iss(text);
-
+    bool addMe = true;
     while(iss >> text) {
-        for(auto character = text.begin(); character != text.end(); character++) {
-            /** Remove crappy stuff **/
-            if(!isalpha(*character))
+        /** Remove crappy stuff **/
+        for(auto character : text) {
+            tolower(character);
+            if(!isalnum(character)) {
+                addMe = false;
                 break;
-            /** Add non-crappy stuff **/
-            else if(character+1 == text.end()) {
-                Porter2Stemmer::stem(text);
-                keywords[text]++;
             }
         }
+        /** Add non-crappy stuff **/
+        if(addMe) {
+            Porter2Stemmer::stem(text); //stems word after it has been cleaned
+            keywords[text]++;
+        }
+        addMe = true;
     }
 
     /** Remove stopwords **/
