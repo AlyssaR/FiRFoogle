@@ -21,7 +21,7 @@ private:
     void printIDs(string&, ofstream&);
     void put(string, string, int); //Adds individual key
 public:
-    Index() { cout << "Constructed" << endl; }
+    Index();
 
     void add(string, const unordered_map<string, int>&); //Adds all keywords from doc
 

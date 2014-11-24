@@ -102,21 +102,19 @@ void XMLParser::parseFile(const char* filename) {
     }
 } //close loadFile
 
-set<Article*> XMLParser::read(char*& bigfile, Index*& i) {
+set<Article*> XMLParser::read(char* bigfile, Index*& i) {
     index = i; //Make sure same index is always used
 
-    /** Split files and get directory listing **/
-    string somecommandcrap = "perl splitter.pl " + string(bigfile);
+    string somecommandcrap = "perl splitter.pl " + string(bigfile) + " 1250 68";
+
     system(somecommandcrap.c_str());
     getFilenames();
-
-    int x = 1;
-//#pragma omp parallel for
+    int x = 0;
     /** Parse each baby file **/
     for(auto file : filenames) {
-        if(x%5 == 0)
+        if(x%4 == 0)
             cout << "+" << flush;
-        if(x == 15)
+        if(x == 32)
             break;
         parseFile(file.c_str());
         x++;
@@ -129,19 +127,16 @@ void XMLParser::clean(string &text) {
     transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
 
     istringstream iss(text);
-    bool addMe = true;
+
     while(iss >> text) {
-        /** Remove crappy stuff **/
-        for(auto character : text) {
-            if(!isalnum(character)) {
-                addMe = false;
+        for(auto character = text.begin(); character != text.end(); character++) {
+            /** Remove crappy stuff **/
+            if(!isalnum(*character))
                 break;
-            }
+            /** Add non-crappy stuff **/
+            else if(character+1 == text.end())
+                keywords[text]++;
         }
-        /** Add non-crappy stuff **/
-        if(addMe)
-            keywords[text]++;
-        addMe = true;
     }
 
     /** Remove stopwords **/

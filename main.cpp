@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
     Handler * index = new Handler();
     index->addToIndex(argv[1], argv[2]);
 
-    argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
+//    argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
 /*
     if(option == 3)
         stressTest(index);

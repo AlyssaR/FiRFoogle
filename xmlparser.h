@@ -30,7 +30,7 @@ public:
 
     void getFilenames();
     void parseFile(const char*);
-    set<Article*> read(char*&, Index*&);
+    set<Article*> read(char*, Index*&);
 
     void clean(string&);
     void stem();
