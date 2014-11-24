@@ -23,7 +23,9 @@ public:
         parse = new XMLParser(); //Change to use big boy parser later
     }
 
-    void addDocs(string& doc, unordered_map<string, int>& keys) { index->add(doc, keys); }
+    void addDocs(string doc, unordered_map<string, int> keys) {
+        index->add(doc, keys);
+    }
     bool addToIndex(char*&, char*&); //Accepts XML and output filename from caller
     void deleteIndex();
     vector<string> search(vector<string>&, vector<string>&, vector<string>&); //Accepts keywords, returns docs in weighted order

@@ -79,20 +79,22 @@ void XMLParser::parseFile(const char* filename) {
         //if(root_node == 0)
           //  cout << "ERROR: Improperly formated XML" << endl;
 
+        rapidxml::xml_node<>* revision_node;
+
         /** Loop through all entries in XML file **/
         for(rapidxml::xml_node<>* page_node = doc.first_node()->first_node("page"); page_node; page_node = page_node->next_sibling()) {
             /** Get information from individual document **/
+            revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();
-            text = page_node->first_node("revision")->first_node("text")->value();
-            //id = revision_node->first_node("sha1")->value();
+            text = revision_node->first_node("text")->value();
+            id = revision_node->first_node("sha1")->value();
 
             /** Save text **/
-            add->set(title,text,id);
-            documents.insert(add);
+            documents.insert(new Article(title,text,id));
 
             /** Call cleaning function and add keywords to index **/
             clean(text);
-            index->add(title, keywords);
+            index->add(id, keywords);
             keywords.clear();
         }
     }
@@ -104,11 +106,13 @@ void XMLParser::parseFile(const char* filename) {
 set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
     index = i; //Make sure same index is always used
 
-    string somecommandcrap = "perl splitter.pl " + string(bigfile);
+    string somecommandcrap = "perl splitter.pl " + string(bigfile) + " 1000 80";
 
     system(somecommandcrap.c_str());
     getFilenames();
+
     int x = 0;
+
     /** Parse each baby file **/
     for(auto file : filenames) {
         if(x%4 == 0)

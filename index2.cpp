@@ -5,29 +5,26 @@ Index2::Index2() {
 
 void Index2::add(string doc, const unordered_map<string, int>& keywords) {
     docs.insert(doc); //Add doc id to set
+
     for(auto key : keywords) {
         keys.insert(key.first); //Add keyword to set
         put(doc, key.first, key.second); //Add to index
     }
 }
 
-unordered_map<string, int> Index2::get(string& keyword) {
+unordered_map<string, int> Index2::get(string keyword) {
     string docID;
     unordered_map<string, int> ids;
     /** If not empty, return all docs in chain with correct key **/
     for(auto thing : table[keyword]) {
-            docID = thing->getDocID();
-            ids[docID] = thing->getWeight();
+        docID = thing->getDocID();
+        ids[docID] = thing->getWeight();
     }
     return ids;
 }
 
 void Index2::put(string docID, string keyword, int weight) {
-    /** Add if first**/
-    temp->setDocID(docID);
-    temp->setWeight(weight);
-
-    table[keyword].insert(temp);
+    table[keyword].insert(new Entry(docID, weight));
 }
 
 /* NOT WRITTEN YET!
@@ -55,7 +52,7 @@ void Index2::put(string docID, string keyword, int weight) {
     }
 }*/
 
-void Index2::printIDs(string& keyword, ofstream& out) {
+void Index2::printIDs(string keyword, ofstream& out) {
     out << "<key>" << keyword << "</key>" << endl;
     unordered_map<string, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)

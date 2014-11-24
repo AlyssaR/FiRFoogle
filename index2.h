@@ -19,14 +19,14 @@ private:
     unordered_map<string, set<Entry*>> table;
     set<string> keys, docs;
     Entry * temp;
-    void printIDs(string&, ofstream&);
+    void printIDs(string, ofstream&);
     void put(string, string, int); //Adds individual key
 public:
     Index2();
 
     void add(string, const unordered_map<string, int>&); //Adds all keywords from doc
 
-    unordered_map<string, int> get(string&); //Returns weighted docs for given keyword
+    unordered_map<string, int> get(string); //Returns weighted docs for given keyword
     char* getFilename() { return filename; }
     set<string> getIDs() { return docs; }
     void setFilename(char*& f) {

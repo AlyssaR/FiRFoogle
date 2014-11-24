@@ -22,8 +22,8 @@ int main(int argc, char* argv[]) {
     Handler * index = new Handler();
     index->addToIndex(argv[1], argv[2]);
 
-//    argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
-/*
+    argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
+
     if(option == 3)
         stressTest(index);
     else if(option == 2)
@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
         interactive(index);
     else
         cerr << "\nInvalid user mode. Please try again.\n" << endl;
-*/
+
     return 0;
 }
 
@@ -89,7 +89,7 @@ void interactive(Handler * index) {
         results = query->find(search);
 
         /** Display Search Results **/
-        int index = 1, size = sizeof(results);
+        int index = 1, size = results.size();
 
         do {
             cout << "    ====================\n"

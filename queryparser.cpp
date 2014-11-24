@@ -6,8 +6,11 @@ vector<Article*> QueryParser::find(string& query) {
 
     /** Split query into individual words **/
     stringstream stream(query);
-    while(stream >> query)
-        terms.push_back(query);
+    string blah;
+    while(stream >> blah) {
+        Porter2Stemmer::stem(blah);
+        terms.push_back(blah);
+    }
 
     /** Split groups of terms into separate vectors **/
     vector<string>::iterator iter = terms.begin();
@@ -37,6 +40,8 @@ vector<Article*> QueryParser::find(string& query) {
 
     /** Get Doc IDs that match those terms **/
     docIDs = index->search(ands, ors, nots);
+    for(auto thing : docIDs)
+        cout << thing << endl;
     getDocInfo(docIDs);
 
     /** Return a vector of entries with info for those docs **/
@@ -56,7 +61,9 @@ void QueryParser::getDocInfo(vector<string>& docIDs) {
     set<Article*> articles = index->documents;
     for(auto doc : docIDs) {
         auto it = find_if(articles.begin(), articles.end(), find_by_id(doc));
-        if(it != articles.end())
+        if(it != articles.end()) {
+            cout << "Adding " << *it << endl;
             results.push_back(*it);
+        }
     }
 }
