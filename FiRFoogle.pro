@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     index.cpp \
     handler.cpp \
     babyparser.cpp \
-    queryparser.cpp
+    queryparser.cpp \
+    index2.cpp
 
 HEADERS += \
     xmlparser.h \
@@ -28,4 +29,5 @@ HEADERS += \
     rapidxml_utils.h \
     rapidxml_print.h \
     queryparser.h \
-    article.h
+    article.h \
+    index2.h

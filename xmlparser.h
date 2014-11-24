@@ -4,7 +4,7 @@
 #include <cstring>
 #include <dirent.h>
 #include <fstream>
-#include "index.h" //Temporary probably
+#include "index2.h" //Temporary probably
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -19,7 +19,8 @@ using namespace std;
 
 class XMLParser {
 private:
-    Index * index;
+    Index2 * index;
+    rapidxml::xml_document<> doc;
     set<Article*> documents;
     unordered_map<string, int> keywords;
     int stopwords_size = 568;
@@ -30,7 +31,7 @@ public:
 
     void getFilenames();
     void parseFile(const char*);
-    set<Article*> read(char*, Index*&);
+    set<Article*> read(char*, Index2*&);
 
     void clean(string&);
     void stem();

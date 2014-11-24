@@ -7,19 +7,19 @@
 #include <fstream>
 #include <stdio.h>
 #include <vector>
-#include "index.h"
+#include "index2.h"
 #include "babyparser.h"
 
 class Handler {
 private:
-    Index * index;
+    Index2 * index;
     XMLParser * parse;
     set<Article*> documents;
     vector<string> sorted(unordered_map<string, int>&); //Sorts docs by weights
 public:
     friend class QueryParser; //To get vector of Articles
     Handler() {
-        index = new Index();
+        index = new Index2();
         parse = new XMLParser(); //Change to use big boy parser later
     }
 

@@ -74,14 +74,13 @@ void XMLParser::parseFile(const char* filename) {
     try {
         /** Open XML document **/
         rapidxml::file<> file(daREALFileShady.c_str());
-        rapidxml::xml_document<> doc;
         doc.parse<0>(file.data());
-        rapidxml::xml_node<>* root_node = doc.first_node();
-        if(root_node == 0)
-            cout << "ERROR: Improperly formated XML" << endl;
+
+        //if(root_node == 0)
+          //  cout << "ERROR: Improperly formated XML" << endl;
 
         /** Loop through all entries in XML file **/
-        for(rapidxml::xml_node<>* page_node = root_node->first_node("page"); page_node; page_node = page_node->next_sibling()) {
+        for(rapidxml::xml_node<>* page_node = doc.first_node()->first_node("page"); page_node; page_node = page_node->next_sibling()) {
             /** Get information from individual document **/
             title = page_node->first_node("title")->value();
             text = page_node->first_node("revision")->first_node("text")->value();
@@ -102,10 +101,10 @@ void XMLParser::parseFile(const char* filename) {
     }
 } //close loadFile
 
-set<Article*> XMLParser::read(char* bigfile, Index*& i) {
+set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
     index = i; //Make sure same index is always used
 
-    string somecommandcrap = "perl splitter.pl " + string(bigfile) + " 1250 68";
+    string somecommandcrap = "perl splitter.pl " + string(bigfile);
 
     system(somecommandcrap.c_str());
     getFilenames();
@@ -114,8 +113,6 @@ set<Article*> XMLParser::read(char* bigfile, Index*& i) {
     for(auto file : filenames) {
         if(x%4 == 0)
             cout << "+" << flush;
-        if(x == 32)
-            break;
         parseFile(file.c_str());
         x++;
     }
@@ -131,11 +128,13 @@ void XMLParser::clean(string &text) {
     while(iss >> text) {
         for(auto character = text.begin(); character != text.end(); character++) {
             /** Remove crappy stuff **/
-            if(!isalnum(*character))
+            if(!isalpha(*character))
                 break;
             /** Add non-crappy stuff **/
-            else if(character+1 == text.end())
+            else if(character+1 == text.end()) {
+                Porter2Stemmer::stem(text);
                 keywords[text]++;
+            }
         }
     }
 
