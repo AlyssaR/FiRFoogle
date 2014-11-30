@@ -67,11 +67,12 @@ void Index::put(string docID, string keyword, int weight) {
 }*/
 
 void Index::printIDs(string& keyword, ofstream& out) {
+    cout << "<key>" << keyword << "</key>" << endl;
     out << "<key>" << keyword << "</key>" << endl;
     unordered_map<string, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)
         out << "\t<doc>" << iter->first << "</doc><weight>"
-             << iter->second << "</weight>" << endl;
+            << iter->second << "</weight>" << endl;
 }
 
 void Index::printTable(char *& output) {

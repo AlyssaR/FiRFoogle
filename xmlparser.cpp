@@ -76,8 +76,8 @@ void XMLParser::parseFile(const char* filename) {
         rapidxml::file<> file(daREALFileShady.c_str());
         doc.parse<0>(file.data());
 
-        //if(root_node == 0)
-          //  cout << "ERROR: Improperly formated XML" << endl;
+       //if(root_node == 0)
+           //cout << "ERROR: Improperly formated XML" << endl;
 
         rapidxml::xml_node<>* revision_node;
 
@@ -118,6 +118,8 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
         if(x%4 == 0)
             cout << "+" << flush;
         parseFile(file.c_str());
+        if(x%4 == 0)
+            cout << "-" << flush;
         x++;
     }
 
