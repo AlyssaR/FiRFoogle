@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    Handler * index = new Handler();
+    Handler* index = new Handler();
     index->addToIndex(argv[1], argv[2]);
 
     argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-void maintain(Handler * index) {
+void maintain(Handler* index) {
     int option;
     while(true) {
         cout << "    ====================\n"
@@ -51,7 +51,7 @@ void maintain(Handler * index) {
         if(option == -1)
             break;
         else if(option == 1) {
-            char * in = new char[50], * out = new char[50];
+            char* in = new char[50], * out = new char[50];
             cout << "Enter the filename (with path/extension) to read in: ";
             cin >> in;
             cout << "Enter the filename (with extension) to save index to: ";
@@ -65,12 +65,12 @@ void maintain(Handler * index) {
     }
 }
 
-void stressTest(Handler * index) {
+void stressTest(Handler* index) {
     cout << "No need to test. You're definitely stressed." << endl;
 }
 
-void interactive(Handler * index) {
-    QueryParser * query = new QueryParser(index);
+void interactive(Handler* index) {
+    QueryParser* query = new QueryParser(index);
     vector<Article*> results;
     string search;
 
