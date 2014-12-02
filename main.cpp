@@ -76,9 +76,16 @@ void interactive(Handler* index) {
 
     /** Enter search query **/
     while(true) {
-        cout << "    ====================\n"
-             << "\tFiRFoogle\n"
-             << "    ====================" << endl;
+         cout << " ______ _ _____  ______                _" << endl;
+         cout << "|  ____(_)  __ \\|  ____|              | |     " << endl;
+         cout << "| |__   _| |__) | |__ ___   ___   __ _| | ___ " << endl;
+         cout << "|  __| | |  _  /|  __/ _ \\ / _ \\ / _` | |/ _ \\" << endl;
+         cout << "| |    | | | \\ \\| | | (_) | (_) | (_| | |  __/" << endl;
+         cout << "|_|    |_|_|  \\_\\_|  \\___/ \\___/ \\__, |_|\\___|" << endl;
+         cout << "                                  __/ |" << endl;
+         cout << "                                  |___/ " << endl;
+         cout << "===============================================" << endl;
+
         cout << "Please tell FiRFoogle what you are searching for and press Enter."
              << "\n\t(eg. 'AND Meaning Life')\t (Type -1 to Exit)" << endl;
         cout << "\nSearch: ";

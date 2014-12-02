@@ -91,6 +91,8 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
 
 void Handler::deleteIndex() {
     remove(index->getFilename());
+    string deCommand = "rm -rf ./Articles" << endl;
+    system(deCommand.c_str());
     index = new Index2();
 
     cout << "[+] Index and all log files have been successfully deleted" << endl;
