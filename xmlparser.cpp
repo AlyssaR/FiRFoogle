@@ -118,8 +118,6 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
         if(x%4 == 0)
             cout << "+" << flush;
         parseFile(file.c_str());
-        if(x%4 == 0)
-            cout << "-" << flush;
         x++;
     }
 
