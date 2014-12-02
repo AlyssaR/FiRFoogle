@@ -15,9 +15,6 @@ bool Handler::addToIndex(char*& filename, char*& output) {
 
     cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
 
-    string somecommandcrap = "rm -rf ./WikiDump";
-    system(somecommandcrap.c_str());
-
     cout << "[+] Keywords added to index successfully." << endl;
     cout << "--> Keywords added in: " << elapsed_seconds.count() << "s" << endl;
 

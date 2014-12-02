@@ -31,6 +31,8 @@ public:
     vector<string> search(vector<string>&, vector<string>&, vector<string>&); //Accepts keywords, returns docs in weighted order
 
     ~Handler() {
+        string somecommandcrap = "rm -rf ./WikiDump";
+        system(somecommandcrap.c_str());
         delete index;
         delete parse;
         for(auto doc : documents)
