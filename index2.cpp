@@ -27,31 +27,6 @@ void Index2::put(string docID, string keyword, int weight) {
     table[keyword].insert(new Entry(docID, weight));
 }
 
-/* NOT WRITTEN YET!
- *
- * void Index2::remove(string keyword) {
-    int hash = hashIt(keyword) - 4000000;
-    if(table[hash] != nullptr) {
-          Entry *prevEntry = nullptr;
-          Entry *entry = table[hash];
-          while(entry->getNext() != nullptr && entry->getKeyword() == keyword) {
-                prevEntry = entry;
-                entry = entry->getNext();
-          }
-          if(entry->getKeyword() == keyword) {
-                if(prevEntry == nullptr) {
-                     Entry *nextEntry = entry->getNext();
-                     delete entry;
-                     table[hash] = nextEntry;
-                } else {
-                     Entry *next = entry->getNext();
-                     delete entry;
-                     prevEntry->setNext(next);
-                }
-          }
-    }
-}*/
-
 void Index2::printIDs(string keyword, ofstream& out) {
     out << "<key>" << keyword << "</key>" << endl;
     unordered_map<string, int> docs = get(keyword);
@@ -67,8 +42,10 @@ void Index2::printTable(char *& output) {
     /** Print all docs by keyword **/
     for(auto entry : keys)
         printIDs(entry, out);
+
     out << "</index>" << endl;
     out.close();
+
     cout << "[+] Index saved successfully to " << output << endl;
 }
 

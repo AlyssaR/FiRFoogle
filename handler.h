@@ -28,6 +28,7 @@ public:
     }
     bool addToIndex(char*&, char*&); //Accepts XML and output filename from caller
     void deleteIndex();
+    void outputIndex(char *&);
     vector<string> search(vector<string>&, vector<string>&, vector<string>&); //Accepts keywords, returns docs in weighted order
 
     ~Handler() {

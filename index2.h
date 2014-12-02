@@ -34,7 +34,6 @@ public:
         strcpy(filename, f);
     }
 
-    void remove(string); /*! Not written yet !*/
     void printTable(char*&);
 
     ~Index2();

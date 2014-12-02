@@ -19,9 +19,29 @@ bool Handler::addToIndex(char*& filename, char*& output) {
     cout << "--> Keywords added in: " << elapsed_seconds.count() << "s" << endl;
 
     /** Prints index to file **/
-    index->printTable(output);
+    outputIndex(output);
 
     return true;
+}
+
+void Handler::outputIndex(char *& output) {
+    index->printTable(output);
+    int x = 1, y = 1;
+
+    string deCommand = "./Articles/" + to_string(y) + ".txt";
+    ofstream out(deCommand.c_str());
+    for(auto thing : documents) {
+        if(x % 100 == 0) {
+            out.close();
+            y++;
+            deCommand = "./Articles/" + to_string(y) + ".txt";
+            out.open(deCommand.c_str());
+        }
+        out << x << " " << thing->getID() << endl;
+        out << thing->getTitle() << endl;
+        out << thing->getText() << endl;
+        x++;
+    }
 }
 
 vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector<string>& nots) {
