@@ -16,7 +16,7 @@ using namespace std;
 class Index2 {
 private:
     char* filename;
-    unordered_map<string, set<Entry*>> table;
+    unordered_map<string, set<Entry*> > table;
     set<string> keys, docs;
     Entry * temp;
     void printIDs(string, ofstream&);

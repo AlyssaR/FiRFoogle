@@ -1,0 +1,58 @@
+\hypertarget{class_handler}{\section{Handler Class Reference}
+\label{class_handler}\index{Handler@{Handler}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_handler_ad7ce26f4ba1294326b7bb2365ba1151a}{void {\bfseries add\+Docs} (string doc, unordered\+\_\+map$<$ string, int $>$ keys)}\label{class_handler_ad7ce26f4ba1294326b7bb2365ba1151a}
+
+\item 
+bool \hyperlink{class_handler_ab13b393139e6a8f66466fa481ffe5f10}{add\+To\+Index} (char $\ast$\&, char $\ast$\&)
+\item 
+\hypertarget{class_handler_a254164090c0dd6d7d0ecaf099edafda5}{void {\bfseries delete\+Index} ()}\label{class_handler_a254164090c0dd6d7d0ecaf099edafda5}
+
+\item 
+vector$<$ string $>$ \hyperlink{class_handler_a161e65ff337b738fce9b17674bc1ea8e}{search} (vector$<$ string $>$ \&, vector$<$ string $>$ \&, vector$<$ string $>$ \&)
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_handler_a0f284fa6b808eb00d61f377e84dcc6d8}{class {\bfseries Query\+Parser}}\label{class_handler_a0f284fa6b808eb00d61f377e84dcc6d8}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_handler_ab13b393139e6a8f66466fa481ffe5f10}{\index{Handler@{Handler}!add\+To\+Index@{add\+To\+Index}}
+\index{add\+To\+Index@{add\+To\+Index}!Handler@{Handler}}
+\subsubsection[{add\+To\+Index}]{\setlength{\rightskip}{0pt plus 5cm}bool Handler\+::add\+To\+Index (
+\begin{DoxyParamCaption}
+\item[{char $\ast$\&}]{filename, }
+\item[{char $\ast$\&}]{output}
+\end{DoxyParamCaption}
+)}}\label{class_handler_ab13b393139e6a8f66466fa481ffe5f10}
+Reads file and returns vector of document ids
+
+Prints index to file \hypertarget{class_handler_a161e65ff337b738fce9b17674bc1ea8e}{\index{Handler@{Handler}!search@{search}}
+\index{search@{search}!Handler@{Handler}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ string $>$ Handler\+::search (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$ \&}]{ands, }
+\item[{vector$<$ string $>$ \&}]{ors, }
+\item[{vector$<$ string $>$ \&}]{nots}
+\end{DoxyParamCaption}
+)}}\label{class_handler_a161e65ff337b738fce9b17674bc1ea8e}
+Get all O\+R'd terms
+
+Get all A\+N\+D'd terms
+
+Merge A\+N\+D terms with O\+Rs
+
+Get all N\+O\+T terms
+
+Exclude N\+O\+T terms 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/courtneykent/\+Fir\+Foogle/handler.\+h\item 
+/\+Users/courtneykent/\+Fir\+Foogle/handler.\+cpp\end{DoxyCompactItemize}

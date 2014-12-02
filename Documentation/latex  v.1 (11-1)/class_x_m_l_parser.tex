@@ -1,0 +1,67 @@
+\hypertarget{class_x_m_l_parser}{\section{X\+M\+L\+Parser Class Reference}
+\label{class_x_m_l_parser}\index{X\+M\+L\+Parser@{X\+M\+L\+Parser}}
+}
+Inheritance diagram for X\+M\+L\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_x_m_l_parser}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_x_m_l_parser_ad5032711bfbb8ff7030a7f55ec597637}{void {\bfseries get\+Filenames} ()}\label{class_x_m_l_parser_ad5032711bfbb8ff7030a7f55ec597637}
+
+\item 
+void \hyperlink{class_x_m_l_parser_adf534b865d1c9ce690b11488ccc9287f}{parse\+File} (const char $\ast$)
+\item 
+set$<$ \hyperlink{class_article}{Article} $\ast$ $>$ \hyperlink{class_x_m_l_parser_a38c20dd0a4a346309045a63e13455e8d}{read} (char $\ast$, \hyperlink{class_index2}{Index2} $\ast$\&)
+\item 
+void \hyperlink{class_x_m_l_parser_acf70ecc52e6b0c870695dc8299a5453f}{clean} (string \&)
+\item 
+\hypertarget{class_x_m_l_parser_a59728e85c39379b8419bc9e2149ac63d}{void {\bfseries stem} ()}\label{class_x_m_l_parser_a59728e85c39379b8419bc9e2149ac63d}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_x_m_l_parser_acf70ecc52e6b0c870695dc8299a5453f}{\index{X\+M\+L\+Parser@{X\+M\+L\+Parser}!clean@{clean}}
+\index{clean@{clean}!X\+M\+L\+Parser@{X\+M\+L\+Parser}}
+\subsubsection[{clean}]{\setlength{\rightskip}{0pt plus 5cm}void X\+M\+L\+Parser\+::clean (
+\begin{DoxyParamCaption}
+\item[{string \&}]{text}
+\end{DoxyParamCaption}
+)}}\label{class_x_m_l_parser_acf70ecc52e6b0c870695dc8299a5453f}
+Remove crappy stuff
+
+Add non-\/crappy stuff
+
+Remove stopwords \hypertarget{class_x_m_l_parser_adf534b865d1c9ce690b11488ccc9287f}{\index{X\+M\+L\+Parser@{X\+M\+L\+Parser}!parse\+File@{parse\+File}}
+\index{parse\+File@{parse\+File}!X\+M\+L\+Parser@{X\+M\+L\+Parser}}
+\subsubsection[{parse\+File}]{\setlength{\rightskip}{0pt plus 5cm}void X\+M\+L\+Parser\+::parse\+File (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{filename}
+\end{DoxyParamCaption}
+)}}\label{class_x_m_l_parser_adf534b865d1c9ce690b11488ccc9287f}
+Open X\+M\+L document
+
+Loop through all entries in X\+M\+L file
+
+Get information from individual document
+
+Save text
+
+Call cleaning function and add keywords to index \hypertarget{class_x_m_l_parser_a38c20dd0a4a346309045a63e13455e8d}{\index{X\+M\+L\+Parser@{X\+M\+L\+Parser}!read@{read}}
+\index{read@{read}!X\+M\+L\+Parser@{X\+M\+L\+Parser}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}set$<$ {\bf Article} $\ast$ $>$ X\+M\+L\+Parser\+::read (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{bigfile, }
+\item[{{\bf Index2} $\ast$\&}]{i}
+\end{DoxyParamCaption}
+)}}\label{class_x_m_l_parser_a38c20dd0a4a346309045a63e13455e8d}
+Parse each baby file 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/courtneykent/\+Fir\+Foogle/xmlparser.\+h\item 
+/\+Users/courtneykent/\+Fir\+Foogle/xmlparser.\+cpp\end{DoxyCompactItemize}
