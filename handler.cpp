@@ -33,13 +33,9 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
     if(ors.size() != 0) {
         /** Get all OR'd terms **/
         for(auto word : ors) {
-            entries = index->get(word); //Get index entry
-            for(auto line : entries) {
-                if(results[line.first] == 0)
-                    results[line.first] = line.second;
-                else
-                    results[line.first] += line.second;
-            }
+            temp = index->get(word); //Get index entry
+            for(auto line : entries)
+                results[line.first] += line.second;
         }
     }
 
@@ -52,12 +48,8 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
         }
 
         /** Merge AND terms with ORs **/
-        for(auto word : entries) {
-            if(word.second < 2)
-                entries.erase(word.first);
-            else
-                word.second += results[word.first];
-        }
+        for(auto word : entries)
+            entries[word.first] += results[word.first];
         results = entries;
         entries.clear();
     }
@@ -66,21 +58,18 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
         /** Get all NOT terms **/
         for(auto word : nots) {
             temp = index->get(word);
-            for(auto line : temp) {
-                entries[line.first] += line.second;
-            }
+            for(auto line : temp)
+                entries[line.first] = line.second;
         }
-        temp = entries;
-        entries.clear();
 
         /** Exclude NOT terms **/
         for(auto word : results) {
-            if(temp[word.first] == 0)
-                entries[word.first] += word.second;
+            if(entries[word.first] != 0)
+                results.erase(word.first);
         }
     }
 
-    return sorted(entries);
+    return sorted(results);
 }
 
 void Handler::deleteIndex() {
