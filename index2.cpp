@@ -6,7 +6,6 @@ Index2::Index2() {
 
 void Index2::add(string doc, const unordered_map<string, int>& keywords) {
     docs.insert(doc); //Add doc id to set
-
     for(auto key : keywords) {
         keys.insert(key.first); //Add keyword to set
         put(doc, key.first, key.second); //Add to index
@@ -19,7 +18,7 @@ unordered_map<string, int> Index2::get(string keyword) {
     /** If not empty, return all docs in chain with correct key **/
     for(auto thing : table[keyword]) {
         docID = thing->getDocID();
-        ids[docID] = thing->getWeight();
+        ids[docID] += thing->getWeight();
     }
     return ids;
 }

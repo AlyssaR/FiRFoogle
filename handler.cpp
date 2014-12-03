@@ -3,11 +3,15 @@
 bool Handler::addToIndex(char*& filename, bool load) {
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds;
-
+    if(strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0)
+        return true;
     cout << "[+] Adding " << filename <<  " to index" << endl;
+
+    set<Article*> temp;
     /** Reads file and returns vector of document ids **/
     start = chrono::system_clock::now();
-    documents = parse->read(filename, index, load);
+    temp = parse->read(filename, index, load);
+    documents.insert(temp.begin(), temp.end());
     end = chrono::system_clock::now();
     elapsed_seconds = end-start;
 
@@ -69,7 +73,7 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
         for(auto word : ands) {
             temp = index->get(word);
             for(auto line : temp)
-                entries[line.first] += line.second;
+                cout << line.first << " " << line.second << endl;//entries[line.first] += line.second;
         }
 
         /** Merge AND terms with ORs **/

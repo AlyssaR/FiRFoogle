@@ -108,20 +108,26 @@ void XMLParser::parseFile(const char* filename) {
 } //close loadFile
 
 void XMLParser::parseText(const char* file) {
-    ifstream in(file);
-    string docID, title, text, temp, id, fileNum;
-
-    while(in >> docID) {
+    string docID, title, text = "", temp, id, fileNum, filename;
+    filename = "./Articles/" + string(file);
+    ifstream in(filename.c_str());
+    if(!in.is_open()) {
+        cerr << "[!] Could not open " << file << endl;
+        return;
+    }
+    while(!in.eof()) {
+        in >> docID;
         getline(in, title);
-
-        do {
-            getline(in, temp, '<');
+        while(true) {
+            getline(in, temp, '>');
+            if(text[text.size()-1] == '<' || temp == " ")
+                break;
             text = text + temp;
-        } while(in.peek() != '>');
-
+        }
         temp = string(file);
         fileNum = temp.substr(0, temp.size() - 4);
         id = fileNum + "_" + docID;
+
         /** Save text **/
         documents.insert(new Article(title,text,id));
 

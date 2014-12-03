@@ -12,28 +12,32 @@ vector<Article*> QueryParser::find(string& query) {
         terms.push_back(blah);
     }
 
-    /** Split groups of terms into separate vectors **/
-    vector<string>::iterator iter = terms.begin();
-    while(iter != terms.end()) {
-        if((*iter).compare("AND") == 0) {
-            iter++;
-            while(iter != terms.end() && (*iter).compare("OR") != 0 && (*iter).compare("NOT") != 0) {
-                ands.push_back(*iter);
+    if(terms.size() < 2)
+        ands.push_back(terms.at(0));
+    else {
+        /** Split groups of terms into separate vectors **/
+        vector<string>::iterator iter = terms.begin();
+        while(iter != terms.end()) {
+            if((*iter).compare("AND") == 0) {
                 iter++;
+                while(iter != terms.end() && (*iter).compare("OR") != 0 && (*iter).compare("NOT") != 0) {
+                    ands.push_back(*iter);
+                    iter++;
+                }
             }
-        }
-        else if((*iter).compare("OR") == 0) {
-            iter++;
-            while(iter != terms.end() && (*iter).compare("AND") != 0 && (*iter).compare("NOT") != 0) {
-                ors.push_back(*iter);
+            else if((*iter).compare("OR") == 0) {
                 iter++;
+                while(iter != terms.end() && (*iter).compare("AND") != 0 && (*iter).compare("NOT") != 0) {
+                    ors.push_back(*iter);
+                    iter++;
+                }
             }
-        }
-        else if((*iter).compare("NOT") == 0) {
-            iter++;
-            while(iter != terms.end() && (*iter).compare("OR") != 0 && (*iter).compare("AND") != 0) {
-                nots.push_back(*iter);
+            else if((*iter).compare("NOT") == 0) {
                 iter++;
+                while(iter != terms.end() && (*iter).compare("OR") != 0 && (*iter).compare("AND") != 0) {
+                    nots.push_back(*iter);
+                    iter++;
+                }
             }
         }
     }

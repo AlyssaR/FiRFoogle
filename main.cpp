@@ -79,8 +79,7 @@ void interactive(Handler* index) {
          cout << "                                  |___/ " << endl;
          cout << "===============================================" << endl;
 
-        cout << "Please tell FiRFoogle what you are searching for and press Enter."
-             << "\n\t(eg. 'AND Meaning Life')\t (Type -1 to Exit)" << endl;
+        cout << "Example: 'AND Meaning Life'\t (Type -1 to Exit)" << endl;
         cout << "\nSearch: ";
         getline(cin, search);
         if(search.compare("-1") == 0)
