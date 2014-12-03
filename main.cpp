@@ -18,14 +18,6 @@ int main(int argc, char * argv[]) {
         maintain(index);
     else if(option == 1) {
         index->loadIndex();
-        cout << " ______ _ _____  ______                _" << endl;
-        cout << "|  ____(_)  __ \\|  ____|              | |     " << endl;
-        cout << "| |__   _| |__) | |__ ___   ___   __ _| | ___ " << endl;
-        cout << "|  __| | |  _  /|  __/ _ \\ / _ \\ / _` | |/ _ \\" << endl;
-        cout << "| |    | | | \\ \\| | | (_) | (_) | (_| | |  __/" << endl;
-        cout << "|_|    |_|_|  \\_\\_|  \\___/ \\___/ \\__, |_|\\___|" << endl;
-        cout << "                                  __/ |" << endl;
-        cout << "                                  |___/ " << endl;
         interactive(index);
     } else
         cerr << "\nInvalid user mode. Please try again.\n" << endl;
@@ -107,14 +99,21 @@ void interactive(Handler* index) {
     vector<Article*> results;
     string search;
 
+    cin.ignore();
     /** Enter search query **/
     while(true) {
-        cin.ignore();
+        cout << " ______ _ _____  ______                _" << endl;
+        cout << "|  ____(_)  __ \\|  ____|              | |     " << endl;
+        cout << "| |__   _| |__) | |__ ___   ___   __ _| | ___ " << endl;
+        cout << "|  __| | |  _  /|  __/ _ \\ / _ \\ / _` | |/ _ \\" << endl;
+        cout << "| |    | | | \\ \\| | | (_) | (_) | (_| | |  __/" << endl;
+        cout << "|_|    |_|_|  \\_\\_|  \\___/ \\___/ \\__, |_|\\___|" << endl;
+        cout << "                                  __/ |" << endl;
+        cout << "                                  |___/ " << endl;
         cout << "===============================================" << endl << endl;
         cout << "Example: 'AND Meaning Life'\t (Type -1 to Exit)"
              << "\nSearch: ";
         getline(cin, search);
-        cout << search << endl;
         if(search.compare("-1") == 0)
             break;
 
@@ -123,6 +122,7 @@ void interactive(Handler* index) {
         /** Display Search Results **/
         int index = 1, size = results.size();
 
+        cin.ignore();
         do {
             cout << "    ====================\n"
                  << "\tFiRFoogle\n"
@@ -138,7 +138,7 @@ void interactive(Handler* index) {
                  << "\n#\t\t see specific article \n-1\t\t quit"
                  << "\nAnything else\t Return to search"
                  << "\n\nPlease select an option: ";
-            cin >> search;
+            getline(cin, search);
 
             /** Input isn't a number, so prepare string for while loop check **/
             if(!atoi(search.c_str())) {
@@ -162,7 +162,6 @@ void interactive(Handler* index) {
                 search = "more";
             }
         } while(search.compare("more") == 0);
-        cin.ignore();
     }
 
 }

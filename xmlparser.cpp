@@ -140,7 +140,7 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i, bool load) {
     index = i; //Make sure same index is always used
     if(load) {
         parseText(bigfile);
-        return documents;
+        index->printTable();
     }
     string somecommandcrap = "perl splitter.pl " + string(bigfile) + " 1000 80";
 

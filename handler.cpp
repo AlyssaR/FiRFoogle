@@ -23,18 +23,29 @@ bool Handler::addToIndex(char*& filename, bool load) {
 }
 
 bool Handler::loadIndex() {
-    DIR *directory;
-    struct dirent *thedir;
-    if((directory  = opendir("Articles")) == NULL)
-        cout << "Error(" << errno << ") opening " << "Articles" << endl;
-    char * somecrap;
-    int x = 0;
-    while ((thedir = readdir(directory)) != NULL) {
-        somecrap = thedir->d_name;
-        addToIndex(somecrap, true);
+    ifstream in("output.xml");
+    if(!in.is_open()) {
+        cerr << "[!] Unable to find/open output.xml" << endl;
+        return false;
     }
-    closedir(directory);
-    return true;
+    string key, doc, weight;
+    int w, x = 1;
+    unordered_map<string, int> docAndWeight;
+    in >> key;
+    while(in >> key && key.compare("</index>") != 0) {
+        if(x % 5000 == 0)
+            cout << "+" << flush;
+        x++;
+        key = key.substr(5, key.size());
+        while(in >> doc && doc.compare("</key>") != 0) {
+            doc = doc.substr(5, doc.size()-11);
+            in >> weight;
+            w = atoi(weight.substr(8, weight.size()-1).c_str());
+            docAndWeight[doc] += w;
+        }
+        addKeys(key, docAndWeight);
+        docAndWeight.clear();
+    }
 }
 
 void Handler::outputIndex() {
@@ -65,10 +76,11 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
         /** Get all OR'd terms **/
         for(auto word : ors) {
             temp = index->get(word); //Get index entry
-            for(auto line : entries)
+            for(auto line : temp)
                 results[line.first] += line.second;
         }
     }
+
 
     if(ands.size() != 0) {
         /** Get all AND'd terms **/

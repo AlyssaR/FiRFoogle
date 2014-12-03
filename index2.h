@@ -25,6 +25,7 @@ public:
     Index2();
 
     void add(string, const unordered_map<string, int>&); //Adds all keywords from doc
+    void addKey(string, const unordered_map<string, int>&); //Adds all docs for keyword
 
     unordered_map<string, int> get(string); //Returns weighted docs for given keyword
     char* getFilename() { return filename; }

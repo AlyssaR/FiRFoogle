@@ -26,6 +26,9 @@ public:
     void addDocs(string doc, unordered_map<string, int> keys) {
         index->add(doc, keys);
     }
+    void addKeys(string key, unordered_map<string, int> docs) {
+        index->add(key, docs);
+    }
     bool addToIndex(char*&, bool); //Accepts XML filename from caller
     bool loadIndex();
     void deleteIndex();
@@ -37,9 +40,6 @@ public:
         system(somecommandcrap.c_str());
         delete index;
         delete parse;
-        for(auto doc : documents)
-            delete doc;
-        documents.clear();
     }
 };
 
