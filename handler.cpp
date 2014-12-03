@@ -1,47 +1,55 @@
 #include "handler.h"
 
-bool Handler::addToIndex(char*& filename, char*& output) {
-    index->setFilename(output);
-
+bool Handler::addToIndex(char*& filename, bool load) {
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds;
 
+    cout << "[+] Adding " << filename <<  " to index" << endl;
     /** Reads file and returns vector of document ids **/
     start = chrono::system_clock::now();
-    deleteIndex();
-    documents = parse->read(filename, index);
+    documents = parse->read(filename, index, load);
     end = chrono::system_clock::now();
     elapsed_seconds = end-start;
 
     cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
-
     cout << "[+] Keywords added to index successfully." << endl;
-    cout << "--> Keywords added in: " << elapsed_seconds.count() << "s" << endl;
-
-    /** Prints index to file **/
-    outputIndex(output);
 
     return true;
 }
 
-void Handler::outputIndex(char *& output) {
-    index->printTable(output);
+bool Handler::loadIndex() {
+    DIR *directory;
+    struct dirent *thedir;
+    if((directory  = opendir("Articles")) == NULL)
+        cout << "Error(" << errno << ") opening " << "Articles" << endl;
+    char * somecrap;
+    while ((thedir = readdir(directory)) != NULL) {
+        somecrap = thedir->d_name;
+        addToIndex(somecrap, true);
+    }
+    closedir(directory);
+    return true;
+}
+
+void Handler::outputIndex() {
+    index->printTable();
     int x = 1, y = 1;
 
     string deCommand = "./Articles/" + to_string(y) + ".txt";
     ofstream out(deCommand.c_str());
     for(auto thing : documents) {
-        if(x % 100 == 0) {
+        if(x % 101 == 0) {
+            x = 1;
             out.close();
             y++;
             deCommand = "./Articles/" + to_string(y) + ".txt";
             out.open(deCommand.c_str());
         }
-        out << x << " " << thing->getID() << endl;
-        out << thing->getTitle() << endl;
-        out << thing->getText() << endl;
+        out << x << " " << thing->getTitle() << endl;
+        out << thing->getText() << "\n<>" << endl;
         x++;
     }
+    cout << "[+] Articles saved successfully" << endl;
 }
 
 vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector<string>& nots) {
@@ -91,7 +99,7 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
 
 void Handler::deleteIndex() {
     remove(index->getFilename());
-    string deCommand = "rm -rf ./Articles" << endl;
+    string deCommand = "rm -rf ./Articles";
     system(deCommand.c_str());
     index = new Index2();
 

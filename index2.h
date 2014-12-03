@@ -34,7 +34,7 @@ public:
         strcpy(filename, f);
     }
 
-    void printTable(char*&);
+    void printTable();
 
     ~Index2();
 };

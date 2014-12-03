@@ -1,5 +1,6 @@
 #include "index2.h"
 Index2::Index2() {
+    filename = "output.xml";
     temp = new Entry("blah");
 }
 
@@ -35,8 +36,8 @@ void Index2::printIDs(string keyword, ofstream& out) {
              << iter->second << "</weight>" << endl;
 }
 
-void Index2::printTable(char *& output) {
-    ofstream out(output);
+void Index2::printTable() {
+    ofstream out(filename);
     out << "<index>" << endl;
 
     /** Print all docs by keyword **/
@@ -46,7 +47,7 @@ void Index2::printTable(char *& output) {
     out << "</index>" << endl;
     out.close();
 
-    cout << "[+] Index saved successfully to " << output << endl;
+    cout << "[+] Index saved successfully to " << filename << endl;
 }
 
 Index2::~Index2() {

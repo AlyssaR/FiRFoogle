@@ -24,7 +24,7 @@ private:
     set<Article*> documents;
     unordered_map<string, int> keywords;
     unordered_map<string, string> stemmed;
-    int stopwords_size = 568;
+    int stopwords_size = 568, fileNum = 1, docNum = 1;
     set<string>* stopwords, filenames;
     Article *add = new Article("add", "new", "article");
 public:
@@ -32,7 +32,8 @@ public:
 
     void getFilenames();
     void parseFile(const char*);
-    set<Article*> read(char*, Index2*&);
+    void parseText(const char*);
+    set<Article*> read(char*, Index2*&, bool);
 
     void clean(string&);
     void stem();

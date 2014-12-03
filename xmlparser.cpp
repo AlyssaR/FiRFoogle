@@ -62,13 +62,14 @@ void XMLParser::getFilenames() {
     if((directory  = opendir("WikiDump")) == NULL)
         cout << "Error(" << errno << ") opening " << "WikiDump" << endl;
 
-    while ((thedir = readdir(directory)) != NULL)
+    while ((thedir = readdir(directory)) != NULL) {
         filenames.insert(string(thedir->d_name));
+    }
     closedir(directory);
 }
 
 void XMLParser::parseFile(const char* filename) {
-    string id = "merp", text, title, daREALFileShady;
+    string id, text, title, daREALFileShady;
     daREALFileShady = "./WikiDump/" + string(filename);
 
     try {
@@ -84,14 +85,17 @@ void XMLParser::parseFile(const char* filename) {
         /** Loop through all entries in XML file **/
         for(rapidxml::xml_node<>* page_node = doc.first_node()->first_node("page"); page_node; page_node = page_node->next_sibling()) {
             /** Get information from individual document **/
-            revision_node = page_node->first_node("revision");
             title = page_node->first_node("title")->value();
-            text = revision_node->first_node("text")->value();
-            id = revision_node->first_node("sha1")->value();
+            text = page_node->first_node("revision")->first_node("text")->value();
+
+            id = to_string(fileNum) + "_" + to_string(docNum);
+            if(++docNum % 101 == 0) {
+                docNum = 1;
+                fileNum++;
+            }
 
             /** Save text **/
             documents.insert(new Article(title,text,id));
-
             /** Call cleaning function and add keywords to index **/
             clean(text);
             index->add(id, keywords);
@@ -103,9 +107,37 @@ void XMLParser::parseFile(const char* filename) {
     }
 } //close loadFile
 
-set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
-    index = i; //Make sure same index is always used
+void XMLParser::parseText(const char* file) {
+    ifstream in(file);
+    string docID, title, text, temp, id, fileNum;
 
+    while(in >> docID) {
+        getline(in, title);
+
+        do {
+            getline(in, temp, '<');
+            text = text + temp;
+        } while(in.peek() != '>');
+
+        temp = string(file);
+        fileNum = temp.substr(0, temp.size() - 4);
+        id = fileNum + "_" + docID;
+        /** Save text **/
+        documents.insert(new Article(title,text,id));
+
+        /** Call cleaning function and add keywords to index **/
+        clean(text);
+        index->add(id, keywords);
+        keywords.clear();
+    }
+}
+
+set<Article*> XMLParser::read(char* bigfile, Index2*& i, bool load) {
+    index = i; //Make sure same index is always used
+    if(load) {
+        parseText(bigfile);
+        return documents;
+    }
     string somecommandcrap = "perl splitter.pl " + string(bigfile) + " 1000 80";
 
     system(somecommandcrap.c_str());

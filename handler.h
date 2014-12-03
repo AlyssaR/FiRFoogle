@@ -26,9 +26,10 @@ public:
     void addDocs(string doc, unordered_map<string, int> keys) {
         index->add(doc, keys);
     }
-    bool addToIndex(char*&, char*&); //Accepts XML and output filename from caller
+    bool addToIndex(char*&, bool); //Accepts XML filename from caller
+    bool loadIndex();
     void deleteIndex();
-    void outputIndex(char *&);
+    void outputIndex();
     vector<string> search(vector<string>&, vector<string>&, vector<string>&); //Accepts keywords, returns docs in weighted order
 
     ~Handler() {

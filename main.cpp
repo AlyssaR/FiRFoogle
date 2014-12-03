@@ -7,22 +7,10 @@ void maintain(Handler*);
 void stressTest(Handler*);
 void interactive(Handler*);
 
-int main(int argc, char* argv[]) {
-    int option = 1;
-    if(argc < 2) {
-        cerr << "\nERROR: Invalid number of arguments" << endl;
-        cerr << "Correct usage: ./a.out input.xml saved_index.xml [optional mode choice]" << endl;
-        cerr << "Mode choices:\n"
-             << "\t [1] Interactive/User (default)\n"
-             << "\t [2] Maintenance\n"
-             << "\t [3] Stress Test\n" << endl;
-        exit(1);
-    }
-
+int main(int argc, char * argv[]) {
     Handler* index = new Handler();
-    index->addToIndex(argv[1], argv[2]);
-
-    argv[3]==NULL?option=1:option=atoi(argv[3]); //If no mode chosen, set to 1
+    int option;
+    argv[1]==NULL?option=1:option = atoi(argv[1]); //If no mode chosen, set to 1
 
     if(option == 3)
         stressTest(index);
@@ -45,6 +33,8 @@ void maintain(Handler* index) {
         cout << "Would you like to:\n"
              << "    [1] Add documents to index\n"
              << "    [2] Clear index\n"
+             << "    [3] Load saved index\n"
+             << "    [4] Output index\n"
              << "    [-1] Quit\n\n"
              << "Select: ";
         cin >> option;
@@ -54,12 +44,14 @@ void maintain(Handler* index) {
             char* in = new char[50], * out = new char[50];
             cout << "Enter the filename (with path/extension) to read in: ";
             cin >> in;
-            cout << "Enter the filename (with extension) to save index to: ";
-            cin >> out;
-            index->addToIndex(in, out);
+            index->addToIndex(in, false);
         }
         else if(option == 2)
             index->deleteIndex();
+        else if(option == 3)
+            index->loadIndex();
+        else if(option == 4)
+            index->outputIndex();
         else
             cout << "\nInvalid choice. Please try again.\n" << endl;
     }
@@ -70,6 +62,7 @@ void stressTest(Handler* index) {
 }
 
 void interactive(Handler* index) {
+    index->loadIndex();
     QueryParser* query = new QueryParser(index);
     vector<Article*> results;
     string search;
