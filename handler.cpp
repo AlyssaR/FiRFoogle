@@ -80,7 +80,7 @@ void Handler::outputIndex() {
 }
 
 vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector<string>& nots) {
-    unordered_map<string, int> results, entries, temp;
+    unordered_map<string, int> results, temp, *andy = new unordered_map<string,int>[ands.size()];
 
     if(ors.size() != 0) {
         /** Get all OR'd terms **/
@@ -90,34 +90,42 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
                 results[line.first] += line.second;
         }
     }
-
+    temp.clear();
 
     if(ands.size() != 0) {
         /** Get all AND'd terms **/
+        int x = 0;
+        /** Save docs/weights in separate maps for each keyword **/
         for(auto word : ands) {
-            temp = index->get(word);
-            for(auto line : temp)
-                entries[line.first] += line.second;
+            andy[x] = index->get(word);
+            x++;
+        }
+        /** Check each doc with first keyword **/
+        for(auto line : andy[0]) {
+            /** If it's not in every subsequent map ignore it **/
+            for(int x = 0; x < ands.size(); x++) {
+                if(andy[x][line.first] == 0)
+                    break;
+                else if(x == ands.size() - 1)
+                    temp[line.first] += line.second;
+            }
         }
 
         /** Merge AND terms with ORs **/
-        for(auto word : entries)
-            entries[word.first] += results[word.first];
-        results = entries;
-        entries.clear();
+        for(auto word : temp)
+            temp[word.first] += results[word.first];
+        results = temp;
+        temp.clear();
     }
 
     if(nots.size() != 0) {
         /** Get all NOT terms **/
-        for(auto word : nots) {
-            temp = index->get(word);
-            for(auto line : temp)
-                entries[line.first] = line.second;
-        }
+        for(auto word : nots)
+            temp.insert(index->get(word).begin(), index->get(word).end());
 
         /** Exclude NOT terms **/
         for(auto word : results) {
-            if(entries[word.first] != 0)
+            if(temp[word.first] != 0)
                 results.erase(word.first);
         }
     }
