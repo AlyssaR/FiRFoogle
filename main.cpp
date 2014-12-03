@@ -17,6 +17,7 @@ int main(int argc, char * argv[]) {
     else if(option == 2)
         maintain(index);
     else if(option == 1) {
+        index->loadIndex();
         cout << " ______ _ _____  ______                _" << endl;
         cout << "|  ____(_)  __ \\|  ____|              | |     " << endl;
         cout << "| |__   _| |__) | |__ ___   ___   __ _| | ___ " << endl;
@@ -80,21 +81,21 @@ void stressTest(Handler* index) {
              << "    QT - Quit\n\n"
              << "Enter Command: ";
         cin >> option;
-        if(option == "AD") {
+        if(strcmp(option, "AD") == 0) {
             char* in = new char[50], * out = new char[50];
             cout << "Enter the filename (with path/extension) to read in: ";
             cin >> in;
             index->addToIndex(in, false);
         }
-        else if(option == "CL")
+        else if(strcmp(option, "CL") == 0)
             index->deleteIndex();
-        else if(option == "LD")
+        else if(strcmp(option, "LD") == 0)
             index->loadIndex();
-        else if(option == "OT")
+        else if(strcmp(option, "OT") == 0)
             index->outputIndex();
-        else if(option == "SR")
+        else if(strcmp(option, "SR") == 0)
             interactive(index);
-        else if(option == "QT")
+        else if(strcmp(option, "QT") == 0)
             break;
         else
             cout << "\nERROR: Invalid Entry. Please enter valid command.\n" << endl;
@@ -102,18 +103,18 @@ void stressTest(Handler* index) {
 }
 
 void interactive(Handler* index) {
-    index->loadIndex();
     QueryParser* query = new QueryParser(index);
     vector<Article*> results;
     string search;
 
     /** Enter search query **/
     while(true) {
-         cout << "===============================================" << endl << endl;
-
-        cout << "Example: 'AND Meaning Life'\t (Type -1 to Exit)" << endl;
-        cout << "\nSearch: ";
+        cin.ignore();
+        cout << "===============================================" << endl << endl;
+        cout << "Example: 'AND Meaning Life'\t (Type -1 to Exit)"
+             << "\nSearch: ";
         getline(cin, search);
+        cout << search << endl;
         if(search.compare("-1") == 0)
             break;
 

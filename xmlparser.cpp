@@ -80,8 +80,6 @@ void XMLParser::parseFile(const char* filename) {
        //if(root_node == 0)
            //cout << "ERROR: Improperly formated XML" << endl;
 
-        rapidxml::xml_node<>* revision_node;
-
         /** Loop through all entries in XML file **/
         for(rapidxml::xml_node<>* page_node = doc.first_node()->first_node("page"); page_node; page_node = page_node->next_sibling()) {
             /** Get information from individual document **/
@@ -89,7 +87,7 @@ void XMLParser::parseFile(const char* filename) {
             text = page_node->first_node("revision")->first_node("text")->value();
 
             id = to_string(fileNum) + "_" + to_string(docNum);
-            if(++docNum % 101 == 0) {
+            if(++docNum % 1001 == 0) {
                 docNum = 1;
                 fileNum++;
             }

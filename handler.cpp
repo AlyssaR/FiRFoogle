@@ -5,7 +5,8 @@ bool Handler::addToIndex(char*& filename, bool load) {
     chrono::duration<double> elapsed_seconds;
     if(strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0)
         return true;
-    cout << "[+] Adding " << filename <<  " to index" << endl;
+
+    if(!load) cout << "[+] Adding " << filename <<  " to index" << endl;
 
     set<Article*> temp;
     /** Reads file and returns vector of document ids **/
@@ -15,8 +16,8 @@ bool Handler::addToIndex(char*& filename, bool load) {
     end = chrono::system_clock::now();
     elapsed_seconds = end-start;
 
-    cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
-    cout << "[+] Keywords added to index successfully." << endl;
+    if(!load) cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
+    load?cout << "[+] Keywords added to index successfully." << endl:cout << "+" << flush;
 
     return true;
 }
@@ -27,6 +28,7 @@ bool Handler::loadIndex() {
     if((directory  = opendir("Articles")) == NULL)
         cout << "Error(" << errno << ") opening " << "Articles" << endl;
     char * somecrap;
+    int x = 0;
     while ((thedir = readdir(directory)) != NULL) {
         somecrap = thedir->d_name;
         addToIndex(somecrap, true);
@@ -42,7 +44,7 @@ void Handler::outputIndex() {
     string deCommand = "./Articles/" + to_string(y) + ".txt";
     ofstream out(deCommand.c_str());
     for(auto thing : documents) {
-        if(x % 101 == 0) {
+        if(x % 1001 == 0) {
             x = 1;
             out.close();
             y++;
@@ -73,7 +75,7 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
         for(auto word : ands) {
             temp = index->get(word);
             for(auto line : temp)
-                cout << line.first << " " << line.second << endl;//entries[line.first] += line.second;
+                entries[line.first] += line.second;
         }
 
         /** Merge AND terms with ORs **/

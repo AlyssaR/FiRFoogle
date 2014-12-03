@@ -8,23 +8,23 @@ void Index2::add(string doc, const unordered_map<string, int>& keywords) {
     docs.insert(doc); //Add doc id to set
     for(auto key : keywords) {
         keys.insert(key.first); //Add keyword to set
-        put(doc, key.first, key.second); //Add to index
+        table[key.first].insert(new Entry(doc, key.second)); //Add to index
     }
 }
 
 unordered_map<string, int> Index2::get(string keyword) {
     string docID;
     unordered_map<string, int> ids;
+    cout << "Looking" << endl;
     /** If not empty, return all docs in chain with correct key **/
     for(auto thing : table[keyword]) {
+        cout << "getting stuff" << endl;
         docID = thing->getDocID();
-        ids[docID] += thing->getWeight();
+        ids[docID] = thing->getWeight();
     }
+    for(auto thing : ids)
+        cout << "got " << thing.first << endl;
     return ids;
-}
-
-void Index2::put(string docID, string keyword, int weight) {
-    table[keyword].insert(new Entry(docID, weight));
 }
 
 void Index2::printIDs(string keyword, ofstream& out) {
