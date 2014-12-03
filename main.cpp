@@ -45,7 +45,7 @@ void maintain(Handler* index) {
             char* in = new char[50], * out = new char[50];
             cout << "Enter the filename (with path/extension) to read in: ";
             cin >> in;
-            index->addToIndex(in, false);
+            index->addToIndex(in);
         }
         else if(option == 2)
             index->deleteIndex();
@@ -77,7 +77,7 @@ void stressTest(Handler* index) {
             char* in = new char[50], * out = new char[50];
             cout << "Enter the filename (with path/extension) to read in: ";
             cin >> in;
-            index->addToIndex(in, false);
+            index->addToIndex(in);
         }
         else if(strcmp(option, "CL") == 0)
             index->deleteIndex();
@@ -122,7 +122,7 @@ void interactive(Handler* index) {
         /** Display Search Results **/
         int index = 1, size = results.size();
 
-        cin.ignore();
+        //cin.ignore();
         do {
             cout << "    ====================\n"
                  << "\tFiRFoogle\n"
@@ -135,8 +135,8 @@ void interactive(Handler* index) {
                 cout << "[" << x << "] " << results.at(x-1)->getTitle() << endl;
 
             cout << "Options:\n'more'\t\t see next page \n'back'\t\t see last page"
-                 << "\n#\t\t see specific article \n-1\t\t quit"
-                 << "\nAnything else\t Return to search"
+                 << "\n#\t\t see specific article \n'return'\t Return to search"
+                 << "\n-1\t\t quit"
                  << "\n\nPlease select an option: ";
             getline(cin, search);
 

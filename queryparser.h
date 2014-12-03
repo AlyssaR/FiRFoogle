@@ -18,6 +18,7 @@ public:
     QueryParser(Handler * i) : index(i) {}
 
     vector<Article*> find(string&);
+    Article* getArticle(string);
     void getDocInfo(vector<string>&);
 
     ~QueryParser() {

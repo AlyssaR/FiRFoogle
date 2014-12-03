@@ -32,8 +32,7 @@ public:
 
     void getFilenames();
     void parseFile(const char*);
-    void parseText(const char*);
-    set<Article*> read(char*, Index2*&, bool);
+    set<Article*> read(char*, Index2*&);
 
     void clean(string&);
     void stem();

@@ -1,28 +1,32 @@
 #include "handler.h"
 
-bool Handler::addToIndex(char*& filename, bool load) {
+bool Handler::addToIndex(char*& filename) {
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds;
-    if(strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0)
-        return true;
 
-    if(!load) cout << "[+] Adding " << filename <<  " to index" << endl;
+    cout << "[+] Adding " << filename <<  " to index" << endl;
 
     set<Article*> temp;
     /** Reads file and returns vector of document ids **/
     start = chrono::system_clock::now();
-    temp = parse->read(filename, index, load);
+    temp = parse->read(filename, index);
     documents.insert(temp.begin(), temp.end());
     end = chrono::system_clock::now();
     elapsed_seconds = end-start;
 
-    if(!load) cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
-    load?cout << "[+] Keywords added to index successfully." << endl:cout << "+" << flush;
+    cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
+    cout << "[+] Keywords added to index successfully." << endl;
 
     return true;
 }
 
 bool Handler::loadIndex() {
+    chrono::time_point<chrono::system_clock> start, end;
+    chrono::duration<double> elapsed_seconds;
+
+    cout << "[+] Loading index" << endl;
+    start = chrono::system_clock::now();
+
     ifstream in("output.xml");
     if(!in.is_open()) {
         cerr << "[!] Unable to find/open output.xml" << endl;
@@ -46,6 +50,12 @@ bool Handler::loadIndex() {
         addKeys(key, docAndWeight);
         docAndWeight.clear();
     }
+    end = chrono::system_clock::now();
+    elapsed_seconds = end-start;
+
+    cout << "--> Index loaded in: " << elapsed_seconds.count() << "s" << endl;
+    cout << "[+] Keywords added to index successfully." << endl;
+
 }
 
 void Handler::outputIndex() {

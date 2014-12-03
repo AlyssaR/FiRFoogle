@@ -105,44 +105,9 @@ void XMLParser::parseFile(const char* filename) {
     }
 } //close loadFile
 
-void XMLParser::parseText(const char* file) {
-    string docID, title, text = "", temp, id, fileNum, filename;
-    filename = "./Articles/" + string(file);
-    ifstream in(filename.c_str());
-    if(!in.is_open()) {
-        cerr << "[!] Could not open " << file << endl;
-        return;
-    }
-    while(!in.eof()) {
-        in >> docID;
-        getline(in, title);
-        while(true) {
-            getline(in, temp, '>');
-            if(text[text.size()-1] == '<' || temp == " ")
-                break;
-            text = text + temp;
-        }
-        temp = string(file);
-        fileNum = temp.substr(0, temp.size() - 4);
-        id = fileNum + "_" + docID;
-
-        /** Save text **/
-        documents.insert(new Article(title,text,id));
-
-        /** Call cleaning function and add keywords to index **/
-        clean(text);
-        index->add(id, keywords);
-        keywords.clear();
-    }
-}
-
-set<Article*> XMLParser::read(char* bigfile, Index2*& i, bool load) {
+set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
     index = i; //Make sure same index is always used
-    if(load) {
-        parseText(bigfile);
-        index->printTable();
-    }
-    string somecommandcrap = "perl splitter.pl " + string(bigfile) + " 1000 80";
+    string somecommandcrap = "perl splitter.pl " + string(bigfile);
 
     system(somecommandcrap.c_str());
     getFilenames();
@@ -151,6 +116,8 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i, bool load) {
 
     /** Parse each baby file **/
     for(auto file : filenames) {
+        if(file[file.size()-1] == '.')
+            continue;
         if(x%4 == 0)
             cout << "+" << flush;
         parseFile(file.c_str());

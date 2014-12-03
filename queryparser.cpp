@@ -50,20 +50,36 @@ vector<Article*> QueryParser::find(string& query) {
     return results;
 }
 
-struct find_by_id {
-    find_by_id(const string & id) : id(id) {}
-    bool operator()(Article * const& article) {
-        return (article->getID() == id);
+Article* QueryParser::getArticle(string id) {
+    string title, text, temp, docID, docNum, filename;
+
+    filename = "./Articles/" + id.substr(0, id.find('_')) + ".txt";
+    docNum = id.substr(id.find('_') + 1, id.size());
+
+    ifstream in(filename.c_str());
+    if(!in.is_open()) {
+        cerr << "[!] Could not open " << filename << endl;
+        return (new Article("error", "error", "error"));
     }
-private:
-    string id;
-};
+    while(!in.eof() && docID.compare(docNum) != 0) {
+        in >> docID;
+        getline(in, title);
+        while(true) {
+            getline(in, temp, '>');
+            if(text[text.size()-1] == '<' || temp == " ")
+                break;
+            text = text + temp;
+        }
+    }
+    in.close();
+    return (new Article(title,text,id));
+}
 
 void QueryParser::getDocInfo(vector<string>& docIDs) {
-    set<Article*> articles = index->documents;
     for(auto doc : docIDs) {
-        auto it = find_if(articles.begin(), articles.end(), find_by_id(doc));
+        results.push_back(getArticle(doc));
+        /*auto it = find_if(articles.begin(), articles.end(), find_by_id(doc));
         if(it != articles.end())
-            results.push_back(*it);
+            results.push_back(*it);*/
     }
 }

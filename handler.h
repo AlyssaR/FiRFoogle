@@ -27,9 +27,9 @@ public:
         index->add(doc, keys);
     }
     void addKeys(string key, unordered_map<string, int> docs) {
-        index->add(key, docs);
+        index->addKey(key, docs);
     }
-    bool addToIndex(char*&, bool); //Accepts XML filename from caller
+    bool addToIndex(char*&); //Accepts XML filename from caller
     bool loadIndex();
     void deleteIndex();
     void outputIndex();
