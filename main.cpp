@@ -16,9 +16,17 @@ int main(int argc, char * argv[]) {
         stressTest(index);
     else if(option == 2)
         maintain(index);
-    else if(option == 1)
+    else if(option == 1) {
+        cout << " ______ _ _____  ______                _" << endl;
+        cout << "|  ____(_)  __ \\|  ____|              | |     " << endl;
+        cout << "| |__   _| |__) | |__ ___   ___   __ _| | ___ " << endl;
+        cout << "|  __| | |  _  /|  __/ _ \\ / _ \\ / _` | |/ _ \\" << endl;
+        cout << "| |    | | | \\ \\| | | (_) | (_) | (_| | |  __/" << endl;
+        cout << "|_|    |_|_|  \\_\\_|  \\___/ \\___/ \\__, |_|\\___|" << endl;
+        cout << "                                  __/ |" << endl;
+        cout << "                                  |___/ " << endl;
         interactive(index);
-    else
+    } else
         cerr << "\nInvalid user mode. Please try again.\n" << endl;
 
     return 0;
@@ -85,7 +93,7 @@ void stressTest(Handler* index) {
         else if(option == "OT")
             index->outputIndex();
         else if(option == "SR")
-            break;
+            interactive(index);
         else if(option == "QT")
             break;
         else
@@ -101,15 +109,7 @@ void interactive(Handler* index) {
 
     /** Enter search query **/
     while(true) {
-         cout << " ______ _ _____  ______                _" << endl;
-         cout << "|  ____(_)  __ \\|  ____|              | |     " << endl;
-         cout << "| |__   _| |__) | |__ ___   ___   __ _| | ___ " << endl;
-         cout << "|  __| | |  _  /|  __/ _ \\ / _ \\ / _` | |/ _ \\" << endl;
-         cout << "| |    | | | \\ \\| | | (_) | (_) | (_| | |  __/" << endl;
-         cout << "|_|    |_|_|  \\_\\_|  \\___/ \\___/ \\__, |_|\\___|" << endl;
-         cout << "                                  __/ |" << endl;
-         cout << "                                  |___/ " << endl;
-         cout << "===============================================" << endl;
+         cout << "===============================================" << endl << endl;
 
         cout << "Example: 'AND Meaning Life'\t (Type -1 to Exit)" << endl;
         cout << "\nSearch: ";
