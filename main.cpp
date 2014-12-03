@@ -58,7 +58,39 @@ void maintain(Handler* index) {
 }
 
 void stressTest(Handler* index) {
-    cout << "No need to test. You're definitely stressed." << endl;
+    char option[2];
+    while(true) {
+        cout << "    ====================\n"
+             << "      Stress Test Mode\n"
+             << "    ====================" << endl;
+        cout << "Command List:\n"
+             << "    AD - Add documents to index\n"
+             << "    CL - Clear index\n"
+             << "    LD - Load saved index\n"
+             << "    OT - Output index\n"
+             << "    SR - Search\n"
+             << "    QT - Quit\n\n"
+             << "Enter Command: ";
+        cin >> option;
+        if(option == "AD") {
+            char* in = new char[50], * out = new char[50];
+            cout << "Enter the filename (with path/extension) to read in: ";
+            cin >> in;
+            index->addToIndex(in, false);
+        }
+        else if(option == "CL")
+            index->deleteIndex();
+        else if(option == "LD")
+            index->loadIndex();
+        else if(option == "OT")
+            index->outputIndex();
+        else if(option == "SR")
+            break;
+        else if(option == "QT")
+            break;
+        else
+            cout << "\nERROR: Invalid Entry. Please enter valid command.\n" << endl;
+    }
 }
 
 void interactive(Handler* index) {
