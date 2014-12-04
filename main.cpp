@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
         maintain(index);
     else if(option == 1) {
         index->loadIndex();
-        cout << "test" << endl;
+        cout << "Press enter to begin searching." << endl;
         interactive(index);
     } else
         cerr << "\nERROR: Invalid user mode. Please try again.\n" << endl;
@@ -122,8 +122,8 @@ void interactive(Handler* index) {
     vector<Article*> results;
     string search;
 
-    cin.ignore();
     /** Enter search query **/
+    cin.ignore();
     while(true) {
         cout << " ______ _ _____  ______                _" << endl;
         cout << "|  ____(_)  __ \\|  ____|              | |     " << endl;
@@ -145,7 +145,6 @@ void interactive(Handler* index) {
         /** Display Search Results **/
         int index = 1, size = results.size();
 
-        //cin.ignore();
         do {
             cout << "    ====================\n"
                  << "\tFiRFoogle\n"

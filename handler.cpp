@@ -120,13 +120,10 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
 
     if(nots.size() != 0) {
         /** Get all NOT terms **/
-        for(auto word : nots)
-            temp.insert(index->get(word).begin(), index->get(word).end());
-
-        /** Exclude NOT terms **/
-        for(auto word : results) {
-            if(temp[word.first] != 0)
-                results.erase(word.first);
+        for(auto word : nots) {
+            temp = index->get(word);
+            for(auto thing : temp)
+                results.erase(thing.first);
         }
     }
 
