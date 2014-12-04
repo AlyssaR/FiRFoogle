@@ -103,7 +103,7 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
         /** Check each doc with first keyword **/
         for(auto line : andy[0]) {
             /** If it's not in every subsequent map ignore it **/
-            for(int x = 0; x < ands.size(); x++) {
+            for(int x = 1; x < ands.size(); x++) {
                 if(andy[x][line.first] == 0)
                     break;
                 else if(x == ands.size() - 1)
