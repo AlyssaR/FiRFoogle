@@ -12,8 +12,8 @@
 
 class Handler {
 private:
-    Index2 * index;
-    XMLParser * parse;
+    Index2* index;
+    XMLParser* parse;
     set<Article*> documents;
     vector<string> sorted(unordered_map<string, int>&); //Sorts docs by weights
 public:

@@ -29,7 +29,7 @@ bool Handler::loadIndex() {
 
     ifstream in("output.xml");
     if(!in.is_open()) {
-        cerr << "[!] Unable to find/open output.xml" << endl;
+        cerr << "ERROR: Unable to find/open output.xml" << endl;
         return false;
     }
     string key, doc, weight;

@@ -1,3 +1,16 @@
+/***********************************************
+ * FiRFoogle
+ * Authors:
+ *   Alyssa Rahman
+ *   Courtney Kent
+ * December 8, 2014
+ *
+ * FiRFoogle is a search engine for wikibooks.
+ * For more information on FiRFoogle and how to
+ * use itplease refer to the User Manual.
+ *
+ ***********************************************/
+
 #include <fstream>
 #include "handler.h"
 #include "queryparser.h"
@@ -7,11 +20,12 @@ void maintain(Handler*);
 void stressTest(Handler*);
 void interactive(Handler*);
 
-int main(int argc, char * argv[]) {
+int main(int argc, char* argv[]) {
     Handler* index = new Handler();
     int option;
     argv[1]==NULL?option=1:option = atoi(argv[1]); //If no mode chosen, set to 1
 
+    /** Mode Option **/
     if(option == 3)
         stressTest(index);
     else if(option == 2)
@@ -21,13 +35,15 @@ int main(int argc, char * argv[]) {
         cout << "test" << endl;
         interactive(index);
     } else
-        cerr << "\nInvalid user mode. Please try again.\n" << endl;
+        cerr << "\nERROR: Invalid user mode. Please try again.\n" << endl;
 
     return 0;
 }
 
 void maintain(Handler* index) {
     int option;
+
+    /** Display Options Menu **/
     while(true) {
         cout << "    ====================\n"
              << "      Maintenance Mode\n"
@@ -48,6 +64,8 @@ void maintain(Handler* index) {
             cin >> in;
             index->addToIndex(in);
         }
+
+        /** Select Option **/
         else if(option == 2)
             index->deleteIndex();
         else if(option == 3)
@@ -55,12 +73,14 @@ void maintain(Handler* index) {
         else if(option == 4)
             index->outputIndex();
         else
-            cout << "\nInvalid choice. Please try again.\n" << endl;
+            cout << "\nERROR: Invalid choice. Please try again.\n" << endl;
     }
 }
 
 void stressTest(Handler* index) {
     char option[2];
+
+    /** Display Codes Menu**/
     while(true) {
         cout << "    ====================\n"
              << "      Stress Test Mode\n"
@@ -80,6 +100,8 @@ void stressTest(Handler* index) {
             cin >> in;
             index->addToIndex(in);
         }
+
+        /** Enter Code **/
         else if(strcmp(option, "CL") == 0)
             index->deleteIndex();
         else if(strcmp(option, "LD") == 0)
