@@ -100,9 +100,7 @@ void interactive(Handler* index) {
     vector<Article*> results;
     string search;
 
-    cout << "test1" << endl;
     cin.ignore();
-    cout << "test2" << endl;
     /** Enter search query **/
     while(true) {
         cout << " ______ _ _____  ______                _" << endl;
