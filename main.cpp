@@ -18,6 +18,7 @@ int main(int argc, char * argv[]) {
         maintain(index);
     else if(option == 1) {
         index->loadIndex();
+        cout << "test" << endl;
         interactive(index);
     } else
         cerr << "\nInvalid user mode. Please try again.\n" << endl;
@@ -99,7 +100,9 @@ void interactive(Handler* index) {
     vector<Article*> results;
     string search;
 
+    cout << "test1" << endl;
     cin.ignore();
+    cout << "test2" << endl;
     /** Enter search query **/
     while(true) {
         cout << " ______ _ _____  ______                _" << endl;

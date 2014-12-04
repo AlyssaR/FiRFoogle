@@ -4,6 +4,7 @@ vector<Article*> QueryParser::find(string& query) {
     vector<string> docIDs;
     vector<string> ands, ors, nots, terms;
 
+    cout << endl;
     /** Split query into individual words **/
     stringstream stream(query);
     string blah;
