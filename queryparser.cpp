@@ -8,10 +8,10 @@ vector<Article*> QueryParser::find(string& query) {
     /** Split query into individual words **/
     transform(query.begin(), query.end(), query.begin(), ::tolower); //make words lowercase
     stringstream stream(query);
-    string blah;
-    while(stream >> blah) {
-        Porter2Stemmer::stem(blah);
-        terms.push_back(blah);
+    string entry;
+    while(stream >> entry) {
+        Porter2Stemmer::stem(entry);
+        terms.push_back(entry);
     }
 
     if(terms.size() < 2)
@@ -20,14 +20,15 @@ vector<Article*> QueryParser::find(string& query) {
         /** Split groups of terms into separate vectors **/
         vector<string>::iterator iter = terms.begin();
         while(iter != terms.end()) {
-            if((*iter).compare("and") == 0) {
+
+      -->   if((*iter).compare("and") == 0) {
                 iter++;
                 while(iter != terms.end() && (*iter).compare("or") != 0 && (*iter).compare("not") != 0) {
                     ands.push_back(*iter);
                     iter++;
                 }
             }
-            else if((*iter).compare("and") == 0) {
+      -->  else if((*iter).compare("and") == 0) {
                 iter++;
                 while(iter != terms.end() && (*iter).compare("and") != 0 && (*iter).compare("not") != 0) {
                     ors.push_back(*iter);

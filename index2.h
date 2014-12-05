@@ -18,11 +18,14 @@ private:
     char* filename;
     unordered_map<string, set<Entry*> > table;
     set<string> keys, docs;
-    Entry * temp;
+    Entry* temp;
     void printIDs(string, ofstream&);
     void put(string, string, int); //Adds individual key
 public:
-    Index2();
+    Index2() {
+        filename = "output.xml";
+        temp = new Entry("temp");
+    }
 
     void add(string, const unordered_map<string, int>&); //Adds all keywords from doc
     void addKey(string, const unordered_map<string, int>&); //Adds all docs for keyword

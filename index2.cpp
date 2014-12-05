@@ -1,10 +1,7 @@
 #include "index2.h"
-Index2::Index2() {
-    filename = "output.xml";
-    temp = new Entry("blah");
-}
 
 void Index2::add(string doc, const unordered_map<string, int>& keywords) {
+    /** Add all keywords from document **/
     docs.insert(doc); //Add doc id to set
     for(auto key : keywords) {
         keys.insert(key.first); //Add keyword to set
@@ -13,6 +10,7 @@ void Index2::add(string doc, const unordered_map<string, int>& keywords) {
 }
 
 void Index2::addKey(string key, const unordered_map<string, int>& theDocs) {
+    /** Add all documents for keyword **/
     keys.insert(key);
     for(auto doc : theDocs) {
         docs.insert(doc.first);
@@ -33,6 +31,7 @@ unordered_map<string, int> Index2::get(string keyword) {
 }
 
 void Index2::printIDs(string keyword, ofstream& out) {
+    /** Output keys to index **/
     out << "<key>" << keyword << endl;
     unordered_map<string, int> docs = get(keyword);
     for(auto iter = docs.begin(); iter != docs.end(); ++iter)
@@ -45,13 +44,14 @@ void Index2::printTable() {
     ofstream out(filename);
     out << "<index>" << endl;
 
-    /** Print all docs by keyword **/
+    /** Print all keywords, docs, and weights **/
     for(auto entry : keys)
         printIDs(entry, out);
 
     out << "</index>" << endl;
     out.close();
 
+    /** Display completion message **/
     cout << "[+] Index saved successfully to " << filename << endl;
 }
 
