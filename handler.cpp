@@ -41,7 +41,6 @@ bool Handler::loadIndex() {
     /** Read in keywords **/
     in >> key;
     while(in >> key && key.compare("</index>") != 0) {
-        cout << key << endl;
         if(x % 5000 == 0)   //status check
             cout << "+" << flush; //output every 5000 keys
         x++;

@@ -46,43 +46,6 @@ int main(int argc, char* argv[]) {
 }
 
 void maintain(Handler* index) {
-    int option;
-
-    /** Display Options Menu **/
-    while(true) {
-        cout << "    ====================\n"
-             << "      Maintenance Mode\n"
-             << "    ====================" << endl;
-        cout << "Would you like to:\n"
-             << "    [1] Add documents to index\n"
-             << "    [2] Clear index\n"
-             << "    [3] Load saved index\n"
-             << "    [4] Output index\n"
-             << "    [-1] Quit\n\n"
-             << "Select: ";
-        cin >> option;
-        if(option == -1)
-            break;
-        else if(option == 1) {
-            char* in = new char[50], * out = new char[50];
-            cout << "Enter the filename (with path/extension) to read in: ";
-            cin >> in;
-            index->addToIndex(in);
-        }
-
-        /** Select Option **/
-        else if(option == 2)
-            index->deleteIndex();
-        else if(option == 3)
-            index->loadIndex();
-        else if(option == 4)
-            index->outputIndex();
-        else
-            cout << "\nERROR: Invalid choice. Please try again.\n" << endl;
-    }
-}
-
-void stressTest(Handler* index) {
     char option[2];
 
     /** Display Codes Menu**/
@@ -94,7 +57,7 @@ void stressTest(Handler* index) {
              << "    AD - Add documents to index\n"
              << "    CL - Clear index\n"
              << "    LD - Load saved index\n"
-             << "    OT - Output index\n"
+             << "    OI - Output index\n"
              << "    SR - Search\n"
              << "    QT - Quit\n\n"
              << "Enter Command: ";
@@ -111,7 +74,7 @@ void stressTest(Handler* index) {
             index->deleteIndex();
         else if(strcmp(option, "LD") == 0)
             index->loadIndex();
-        else if(strcmp(option, "OT") == 0)
+        else if(strcmp(option, "OI") == 0)
             index->outputIndex();
         else if(strcmp(option, "SR") == 0)
             interactive(index);
@@ -120,6 +83,11 @@ void stressTest(Handler* index) {
         else
             cout << "\nERROR: Invalid Entry. Please enter valid command.\n" << endl;
     }
+
+}
+
+void stressTest(Handler* index) {
+    /** WRITE THIS! **/
 }
 
 void interactive(Handler* index) {
@@ -155,7 +123,7 @@ void interactive(Handler* index) {
         sort(results.begin(), results.end(), &byValues);
 
         do {
-            cout << "    ====================\n"
+            cout << "\n    ====================\n"
                  << "\tFiRFoogle\n"
                  << "    ====================" << endl;
             cout << "Total found: " << size << " results" << endl;
@@ -163,9 +131,11 @@ void interactive(Handler* index) {
 
             /** Print 5 Results at a Time **/
             for(int x = index; x < size && x < index+5; x++)
-                cout << fixed << setprecision(2) << "[" << x << "] " << results[x-1]->getTitle() << "\tScore: " << results[x-1]->getWordCount() << endl;
+                cout << fixed << setprecision(2) << "[" << x << "] " << results[x-1]->getTitle()
+                     << "\tScore: " << results[x-1]->getWordCount()
+                     << "\tSee Document: " << results[x-1]->getID() << endl;
 
-            cout << "Options:\n'more'\t\t see next page \n'back'\t\t see last page"
+            cout << "\nOptions:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n'return'\t Return to search"
                  << "\n-1\t\t quit"
                  << "\n\nPlease select an option: ";
@@ -189,10 +159,11 @@ void interactive(Handler* index) {
 
             /** Display selected article and reprint current list of results **/
             else {
-                cout << "\t" << results[index+atoi(search.c_str())-2]->getTitle()
-                     << "=====================================================" << endl;
+                cout << "\n=====================================================\n"
+                     << "\t" << results[index+atoi(search.c_str())-2]->getTitle()
+                     << "\n=====================================================" << endl;
                 results[index+atoi(search.c_str())-2]->display(); //Print article
-                cout << "\nPress any key to return to results: ";
+                cout << "\nPress any key to return to results.";
                 getline(cin, search);
                 search = "more";
             }

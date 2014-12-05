@@ -1,7 +1,6 @@
 #include "xmlparser.h"
 
 XMLParser::XMLParser() {
-    /** !!!! Remove class, extract, boy, effect from list before demo !!!! **/
     stopwords = new set<string>{"a", "about", "above", "abroad", "accord", "across", "actual", "after",
            "afterword", "again", "against", "ago", "ahead", "aint", "all", "allow", "almost", "alone",
            "along", "alongside", "already", "also", "although", "always", "am", "amid", "amidst", "among", "amongst",
@@ -9,15 +8,15 @@ XMLParser::XMLParser() {
            "apart", "appear", "appreciate", "appropriate", "are", "around", "as", "aside", "ask",
            "associated", "at", "available", "away", "awful", "back", "backward", "be", "became",
            "because", "become", "becom", "been", "before", "beforehand", "began", "begin", "behind",
-           "believe", "below", "beside", "beside", "best", "better", "between", "beyond", "both", "boy", "brief", "but",
-           "by", "came", "can", "cannot", "caption", "cause", "causes", "certain", "certainly", "changes", "class", "cleary",
+           "believe", "below", "beside", "beside", "best", "better", "between", "beyond", "both", "brief", "but",
+           "by", "came", "can", "cannot", "caption", "cause", "causes", "certain", "certainly", "changes", "cleary",
            "c", "co", "com", "come", "comes", "coming", "concerning", "consequently", "consider", "considering",
            "contain", "contains", "corresponding", "could", "couldn", "course", "currently", "d", "dare",
            "definetly", "describ", "despite", "did", "different", "direct", "div", "do", "does",
-           "doing", "done", "down", "downward", "dur", "each",  "edu", "ed", "effect", "eight",
+           "doing", "done", "down", "downward", "dur", "each",  "edu", "ed", "eight",
            "eighty", "either", "else", "elsewhere", "end", "end", "enough", "entire", "especial", "et", "etc",
            "even", "ever", "evermore", "every", "everybody", "everyone", "everything", "everywhere", "ex", "exact",
-           "example", "except", "extract", "fair", "fanci", "far", "farther", "few", "fewer", "fifth", "first", "five", "follow",
+           "example", "except", "fair", "fanci", "far", "farther", "few", "fewer", "fifth", "first", "five", "follow",
            "followed", "following", "for", "forever", "former", "formerly", "fourth", "forward", "found", "four",
            "from", "further", "furthermore", "get", "give", "given", "go", "goe",
            "gone", "got", "gotten", "had", "hadn", "half", "happens", "hardly", "has", "hasn", "have",
@@ -75,7 +74,6 @@ void XMLParser::parseFile(const char* filename) {
 
     try {
         /** Open XML document **/
-        cout << "FileName is " << realFile << endl;
         rapidxml::file<> file(realFile.c_str());
         doc.parse<0>(file.data());
 
@@ -94,6 +92,8 @@ void XMLParser::parseFile(const char* filename) {
             text = revision_node->first_node("text")->value();
             timestamp = revision_node->first_node("timestamp")->value();
             title = page_node->first_node("title")->value();
+            if(title.find("User") != string::npos)  //Skip the stupid User chat logs
+                continue;
 
             id = to_string(fileNum) + "_" + to_string(docNum);
             if(++docNum % 1001 == 0) {
