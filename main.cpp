@@ -189,9 +189,9 @@ void interactive(Handler* index) {
 
             /** Display selected article and reprint current list of results **/
             else {
-                cout << "\t" << results[index-1]->getTitle()
+                cout << "\t" << results[index+atoi(search.c_str())-2]->getTitle()
                      << "=====================================================" << endl;
-                results[index-1]->display(); //Print article
+                results[index+atoi(search.c_str())-2]->display(); //Print article
                 cout << "\nPress any key to return to results: ";
                 getline(cin, search);
                 search = "more";
