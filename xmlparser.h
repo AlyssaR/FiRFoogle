@@ -26,7 +26,7 @@ private:
     unordered_map<string, string> stemmed;
     int stopwords_size = 568, fileNum = 1, docNum = 1;
     set<string>* stopwords, filenames;
-    Article *add = new Article("add", "new", "article");
+    Article *add = new Article("add", "new", "article", 0);
 public:
     XMLParser();
 
@@ -34,7 +34,7 @@ public:
     void parseFile(const char*);
     set<Article*> read(char*, Index2*&);
 
-    void clean(string&);
+    int clean(string&);
     void stem();
 
     ~XMLParser() {

@@ -33,7 +33,7 @@ public:
     bool loadIndex();
     void deleteIndex();
     void outputIndex();
-    vector<string> search(vector<string>&, vector<string>&, vector<string>&); //Accepts keywords, returns docs in weighted order
+    unordered_map<string, int> search(vector<string>&, vector<string>&, vector<string>&); //Accepts keywords, returns docs in weighted order
 
     ~Handler() {
         string somecommandcrap = "rm -rf ./WikiDump";

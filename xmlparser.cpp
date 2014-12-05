@@ -69,7 +69,7 @@ void XMLParser::getFilenames() {
 }
 
 void XMLParser::parseFile(const char* filename) {
-    string id, text, title, daREALFileShady;
+    string author, id, output, text, timestamp, title, daREALFileShady;
     daREALFileShady = "./WikiDump/" + string(filename);
 
     try {
@@ -77,14 +77,21 @@ void XMLParser::parseFile(const char* filename) {
         rapidxml::file<> file(daREALFileShady.c_str());
         doc.parse<0>(file.data());
 
-       //if(root_node == 0)
-           //cout << "ERROR: Improperly formated XML" << endl;
-
         /** Loop through all entries in XML file **/
+        rapidxml::xml_node<>* revision_node, *temp;
         for(rapidxml::xml_node<>* page_node = doc.first_node()->first_node("page"); page_node; page_node = page_node->next_sibling()) {
             /** Get information from individual document **/
+            revision_node = page_node->first_node("revision");
+
+            temp = revision_node->first_node("contributor")->first_node("username");
+            if(temp == nullptr)
+                author = "Unknown";
+            else
+                author = temp->value();
+
+            text = revision_node->first_node("text")->value();
+            timestamp = revision_node->first_node("timestamp")->value();
             title = page_node->first_node("title")->value();
-            text = page_node->first_node("revision")->first_node("text")->value();
 
             id = to_string(fileNum) + "_" + to_string(docNum);
             if(++docNum % 1001 == 0) {
@@ -92,12 +99,15 @@ void XMLParser::parseFile(const char* filename) {
                 fileNum++;
             }
 
-            /** Save text **/
-            documents.insert(new Article(title,text,id));
+            output = "By: " + author + "\nPublished: " + timestamp + "\n\n" + text;
+
             /** Call cleaning function and add keywords to index **/
-            clean(text);
+            int wc = clean(text);
             index->add(id, keywords);
             keywords.clear();
+
+            /** Save text **/
+            documents.insert(new Article(title,output,id, wc));
         }
     }
     catch(exception& e) {
@@ -127,12 +137,14 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
     return documents;
 }
 
-void XMLParser::clean(string &text) {
+int XMLParser::clean(string &text) {
     transform(text.begin(), text.end(), text.begin(), ::tolower); //make words lowercase
 
     istringstream iss(text);
     string word, after;
+    int wordCount = 0;
     while(iss >> word) {
+        wordCount++;
         for(auto character = word.begin(); character != word.end(); character++) {
             /** Remove crappy stuff **/
             if(!isalpha(*character))
@@ -154,4 +166,5 @@ void XMLParser::clean(string &text) {
     for(auto word = stopwords->begin(); word != stopwords->end(); word++)
         keywords.erase(*word);
 
+    return wordCount;
 } //close clean

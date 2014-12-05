@@ -7,11 +7,13 @@
  *
  * FiRFoogle is a search engine for wikibooks.
  * For more information on FiRFoogle and how to
- * use itplease refer to the User Manual.
+ * use it please refer to the User Manual.
  *
  ***********************************************/
 
 #include <fstream>
+#include <iomanip>
+#include <math.h>
 #include "handler.h"
 #include "queryparser.h"
 #include "xmlparser.h"
@@ -19,6 +21,9 @@
 void maintain(Handler*);
 void stressTest(Handler*);
 void interactive(Handler*);
+bool byValues(const Article* first, const Article* second) { //Compares by value
+    return first->getWordCount() > second->getWordCount();
+}
 
 int main(int argc, char* argv[]) {
     Handler* index = new Handler();
@@ -144,6 +149,10 @@ void interactive(Handler* index) {
 
         /** Display Search Results **/
         int index = 1, size = results.size();
+        float idf = log(179708/size);
+        for(auto thing : results)
+            thing->setWordCount(idf);
+        sort(results.begin(), results.end(), &byValues);
 
         do {
             cout << "    ====================\n"
@@ -154,7 +163,7 @@ void interactive(Handler* index) {
 
             /** Print 5 Results at a Time **/
             for(int x = index; x < size && x < index+5; x++)
-                cout << "[" << x << "] " << results.at(x-1)->getTitle() << endl;
+                cout << fixed << setprecision(2) << "[" << x << "] " << results[x-1]->getTitle() << "\tScore: " << results[x-1]->getWordCount() << endl;
 
             cout << "Options:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n'return'\t Return to search"
@@ -180,7 +189,11 @@ void interactive(Handler* index) {
 
             /** Display selected article and reprint current list of results **/
             else {
+                cout << "\t" << results[index-1]->getTitle()
+                     << "=====================================================" << endl;
                 results[index-1]->display(); //Print article
+                cout << "\nPress any key to return to results: ";
+                getline(cin, search);
                 search = "more";
             }
         } while(search.compare("more") == 0);

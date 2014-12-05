@@ -72,14 +72,14 @@ void Handler::outputIndex() {
             deCommand = "./Articles/" + to_string(y) + ".txt";
             out.open(deCommand.c_str());
         }
-        out << x << " " << thing->getTitle() << endl;
+        out << x << " " << thing->getWordCount() << " " << thing->getTitle() << endl;
         out << thing->getText() << "\n<>" << endl;
         x++;
     }
     cout << "[+] Articles saved successfully" << endl;
 }
 
-vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector<string>& nots) {
+unordered_map<string, int> Handler::search(vector<string>& ands, vector<string>& ors, vector<string>& nots) {
     unordered_map<string, int> results, temp, *andy = new unordered_map<string,int>[ands.size()];
 
     if(ors.size() != 0) {
@@ -103,6 +103,8 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
         /** Check each doc with first keyword **/
         for(auto line : andy[0]) {
             /** If it's not in every subsequent map ignore it **/
+            if(ands.size() < 2)
+                temp[line.first] += line.second;
             for(int x = 1; x < ands.size(); x++) {
                 if(andy[x][line.first] == 0)
                     break;
@@ -126,8 +128,7 @@ vector<string> Handler::search(vector<string>& ands, vector<string>& ors, vector
                 results.erase(thing.first);
         }
     }
-
-    return sorted(results);
+    return results;
 }
 
 void Handler::deleteIndex() {
@@ -137,20 +138,4 @@ void Handler::deleteIndex() {
     index = new Index2();
 
     cout << "[+] Index and all log files have been successfully deleted" << endl;
-}
-
-bool byValues(pair<string,int> first, pair<string,int> second) { //Compares by value
-    return first.second > second.second;
-}
-
-vector<string> Handler::sorted(unordered_map<string, int>& entries) {
-    vector<pair<string, int>> pairs(entries.begin(), entries.end());
-
-    sort(pairs.begin(), pairs.end(), &byValues);
-
-    vector<string> justDocs;
-    for(auto doc : pairs)
-        justDocs.push_back(doc.first);
-
-    return justDocs;
 }
