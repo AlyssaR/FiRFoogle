@@ -69,12 +69,13 @@ void XMLParser::getFilenames() {
 }
 
 void XMLParser::parseFile(const char* filename) {
-    string author, id, output, text, timestamp, title, daREALFileShady;
-    daREALFileShady = "./WikiDump/" + string(filename);
+    string author, id, output, text, timestamp, title, realFile;
+    realFile = "./WikiDump/" + string(filename);
 
     try {
         /** Open XML document **/
-        rapidxml::file<> file(daREALFileShady.c_str());
+        cout << "FileName is " << realFile << endl;
+        rapidxml::file<> file(realFile.c_str());
         doc.parse<0>(file.data());
 
         /** Loop through all entries in XML file **/
@@ -128,10 +129,12 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
     for(auto file : filenames) {
         if(file[file.size()-1] == '.')
             continue;
-        if(x%4 == 0)
-            cout << "+" << flush;
-        parseFile(file.c_str());
-        x++;
+        if(file[0] != '.') {
+            if(x%4 == 0)
+                cout << "+" << flush;
+            parseFile(file.c_str());
+            x++;
+        }
     }
 
     return documents;
@@ -146,10 +149,8 @@ int XMLParser::clean(string &text) {
     while(iss >> word) {
         wordCount++;
         for(auto character = word.begin(); character != word.end(); character++) {
-            /** Remove crappy stuff **/
             if(!isalpha(*character))
                 break;
-            /** Add non-crappy stuff **/
             else if(character+1 == word.end()) {
                 if(stemmed[word] != "")
                     keywords[stemmed[word]]++;

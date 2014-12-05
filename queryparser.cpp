@@ -21,20 +21,25 @@ vector<Article*> QueryParser::find(string& query) {
         vector<string>::iterator iter = terms.begin();
         while(iter != terms.end()) {
 
-      -->   if((*iter).compare("and") == 0) {
+            /** Get AND terms **/
+            if((*iter).compare("and") == 0) {
                 iter++;
                 while(iter != terms.end() && (*iter).compare("or") != 0 && (*iter).compare("not") != 0) {
                     ands.push_back(*iter);
                     iter++;
                 }
             }
-      -->  else if((*iter).compare("and") == 0) {
+
+            /** Get OR terms **/
+            else if((*iter).compare("or") == 0) {
                 iter++;
                 while(iter != terms.end() && (*iter).compare("and") != 0 && (*iter).compare("not") != 0) {
                     ors.push_back(*iter);
                     iter++;
                 }
             }
+
+            /** Get NOT terms **/
             else if((*iter).compare("not") == 0) {
                 iter++;
                 while(iter != terms.end() && (*iter).compare("or") != 0 && (*iter).compare("and") != 0) {
@@ -61,11 +66,14 @@ Article* QueryParser::getArticle(string id, int weight) {
     filename = "./Articles/" + id.substr(0, id.find('_')) + ".txt";
     docNum = id.substr(id.find('_') + 1, id.size());
 
+    /** Open file to retrieve article **/
     ifstream in(filename.c_str());
     if(!in.is_open()) {
         cerr << "[!] Could not open " << filename << endl;
         return (new Article("error", "error", "error", 0));
     }
+
+    /** Read in neccessary information to display article **/
     while(!in.eof() && docID.compare(docNum) != 0) {
         in >> docID;
         in >> wordCount;
@@ -80,8 +88,10 @@ Article* QueryParser::getArticle(string id, int weight) {
             }
         }
     }
+
+    /** Calculate term frequency and return article **/
     in.close();
-    wc = float(weight)/float(atoi(wordCount.c_str()));
+    wc = float(weight)/float(atoi(wordCount.c_str())); //calculates term frequency
     return (new Article(title,text,id,wc));
 }
 
