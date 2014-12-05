@@ -13,9 +13,9 @@ using namespace std;
 class QueryParser {
 private:
     vector<Article*> results;
-    Handler * index;
+    Handler* index;
 public:
-    QueryParser(Handler * i) : index(i) {}
+    QueryParser(Handler* i) : index(i) {}
 
     vector<Article*> find(string&);
     Article* getArticle(string, int);
