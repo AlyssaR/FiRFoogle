@@ -12,7 +12,8 @@ using namespace std;
 
 struct AVLTreeNode
 {
-   string key;
+   string keyword;
+   int wordCount;
    // Other data fields can be inserted here
    AVLTreeNode *left;
    AVLTreeNode *right;
@@ -37,6 +38,9 @@ class Code203_Tree
       void adjustRightLeft(AVLTreeNode *end, AVLTreeNode *start);
 //    void Delete(int key);  // Not implemented yet
       void PrintTree();
+
+      string getKeyword() {return AVLTreeNode::keyword;}
+      int getWordCount() {return AVLTreeNode::wordCount;}
    private:
       void ClearTree(AVLTreeNode *n);
       void Print(AVLTreeNode *n);
