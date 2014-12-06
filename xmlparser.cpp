@@ -68,7 +68,7 @@ void XMLParser::getFilenames() {
     closedir(directory);
 }
 
-void XMLParser::parseFile(const char* filename) {
+void XMLParser::parseFile(const char* filename, const bool hash) {
     string author, id, output, text, timestamp, title, realFile;
     realFile = "./WikiDump/" + string(filename);
 
@@ -105,7 +105,10 @@ void XMLParser::parseFile(const char* filename) {
 
             /** Call cleaning function and add keywords to index **/
             int wc = clean(text);
-            index->add(id, keywords);
+            if(hash == true)
+                index_hash->add(id, keywords);
+            else
+                index_avl->add(id, keywords);
             keywords.clear();
 
             /** Save text **/
@@ -117,9 +120,10 @@ void XMLParser::parseFile(const char* filename) {
     }
 } //close loadFile
 
-set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
-    index = i; //Make sure same index is always used
+set<Article*> XMLParser::read_hash(char* bigfile, Index2*& i) {
+    index_hash = i; //Make sure same index is always used
     string somecommandcrap = "perl splitter.pl " + string(bigfile);
+    bool hash = true;
 
     system(somecommandcrap.c_str());
     getFilenames();
@@ -133,7 +137,32 @@ set<Article*> XMLParser::read(char* bigfile, Index2*& i) {
         if(file[0] != '.') {
             if(x%4 == 0)
                 cout << "+" << flush;
-            parseFile(file.c_str());
+            parseFile(file.c_str(), hash);
+            x++;
+        }
+    }
+
+    return documents;
+}
+
+set<Article*> XMLParser::read_AVL(char* bigfile, AVLIndex*& i) {
+    index_avl = i; //Make sure same index is always used
+    string somecommandcrap = "perl splitter.pl " + string(bigfile);
+    bool hash = false;
+
+    system(somecommandcrap.c_str());
+    getFilenames();
+
+    int x = 0;
+
+    /** Parse each baby file **/
+    for(auto file : filenames) {
+        if(file[file.size()-1] == '.')
+            continue;
+        if(file[0] != '.') {
+            if(x%4 == 0)
+                cout << "+" << flush;
+            parseFile(file.c_str(), hash);
             x++;
         }
     }

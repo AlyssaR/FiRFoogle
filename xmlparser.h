@@ -4,22 +4,24 @@
 #include <cstring>
 #include <dirent.h>
 #include <fstream>
-#include "index2.h" //Temporary probably
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <algorithm>
+#include <stdlib.h>
+
 #include "article.h"
+#include "avlindex.h"
+#include "index2.h" //hash table index
 #include "porter2_stemmer.h"
 #include "rapidxml.h"
 #include "rapidxml_utils.h"
-#include <stdlib.h>
-
 using namespace std;
 
 class XMLParser {
 private:
-    Index2 * index;
+    Index2* index_hash;
+    AVLIndex* index_avl;
     rapidxml::xml_document<> doc;
     set<Article*> documents;
     unordered_map<string, int> keywords;
@@ -31,8 +33,9 @@ public:
     XMLParser();
 
     void getFilenames();
-    void parseFile(const char*);
-    set<Article*> read(char*, Index2*&);
+    void parseFile(const char*, const bool);
+    set<Article*> read_hash(char*, Index2*&);
+    set<Article*> read_AVL(char*, AVLIndex*&);
 
     int clean(string&);
     void stem();

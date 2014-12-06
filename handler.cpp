@@ -1,18 +1,20 @@
 #include "handler.h"
 
-void Handler::addToIndex(char*& filename) {
+void Handler::addToIndex(char*& filename, bool hash) {
     chrono::time_point<chrono::system_clock> start, end;
     chrono::duration<double> elapsed_seconds;
 
     cout << "[+] Adding " << filename <<  " to index" << endl;
 
-    set<Article*> temp;
-    /** Insert files into index **/
-    start = chrono::system_clock::now(); //begin timer
-    temp = parser->read(filename, index);
-    documents.insert(temp.begin(), temp.end());
-    end = chrono::system_clock::now(); //end timer
-    elapsed_seconds = end-start;
+    /** Insert files into index using hash table **/
+    if(hash == true) {
+        set<Article*> temp;
+        start = chrono::system_clock::now(); //begin timer
+        temp = parser->read_hash(filename, hashTable);
+        documents.insert(temp.begin(), temp.end());
+        end = chrono::system_clock::now(); //end timer
+        elapsed_seconds = end-start;
+    }
 
     /** Display time taken to insert **/
     cout << "--> File read in: " << elapsed_seconds.count() << "s" << endl;
@@ -66,7 +68,7 @@ bool Handler::loadIndex() {
 }
 
 void Handler::outputIndex() {
-    index->printTable();
+    hashTable->printTable();
     int x = 1, y = 1;
 
     string file = "./Articles/" + to_string(y) + ".txt";
@@ -98,7 +100,7 @@ unordered_map<string, int> Handler::search(vector<string>& ands, vector<string>&
     if(ors.size() != 0) {
         /** Get all OR'd terms **/
         for(auto word : ors) {
-            temp = index->get(word); //Get index entry
+            temp = hashTable->get(word); //Get index entry
             for(auto line : temp)
                 results[line.first] += line.second;
         }
@@ -110,7 +112,7 @@ unordered_map<string, int> Handler::search(vector<string>& ands, vector<string>&
         int x = 0;
         /** Save docs/weights in separate maps for each keyword **/
         for(auto word : ands) {
-            andy[x] = index->get(word);
+            andy[x] = hashTable->get(word);
             x++;
         }
         /** Check each doc with first keyword **/
@@ -136,7 +138,7 @@ unordered_map<string, int> Handler::search(vector<string>& ands, vector<string>&
     if(nots.size() != 0) {
         /** Get all NOT terms **/
         for(auto word : nots) {
-            temp = index->get(word);
+            temp = hashTable->get(word);
             for(auto thing : temp)
                 results.erase(thing.first);
         }
@@ -145,10 +147,15 @@ unordered_map<string, int> Handler::search(vector<string>& ands, vector<string>&
 }
 
 void Handler::deleteIndex() {
-    remove(index->getFilename());
+    cout << "test1" << endl;
+    remove(hashTable->getFilename());
+    cout << "test2 " << endl;
     string deCommand = "rm -rf ./Articles";
+    cout << "test3" << endl;
     system(deCommand.c_str());
-    index = new Index2();
+    cout << "test4" << endl;
+    hashTable = new Index2();
+    cout << "test5" << endl;
 
     cout << "[+] Index and all log files have been successfully deleted" << endl;
 }

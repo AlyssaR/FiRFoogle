@@ -14,23 +14,23 @@
 
 class Handler {
 private:
-    Index2* index;
+    Index2* hashTable;
     XMLParser* parser;
     set<Article*> documents;
     vector<string> sorted(unordered_map<string, int>&); //Sorts docs by weights
 public:
     Handler() {
-        index = new Index2();
+        hashTable = new Index2();
         parser = new XMLParser();
     }
 
     void addDocs(string doc, unordered_map<string, int> keys) {
-        index->add(doc, keys);
+        hashTable->add(doc, keys);
     }
     void addKeys(string key, unordered_map<string, int> docs) {
-        index->addKey(key, docs);
+        hashTable->addKey(key, docs);
     }
-    void addToIndex(char*&); //Accepts XML filename from caller
+    void addToIndex(char*&, bool); //Accepts XML filename from caller
     bool loadIndex();
     void deleteIndex();
     void outputIndex();
@@ -39,7 +39,7 @@ public:
     ~Handler() {
         string somecommandcrap = "rm -rf ./WikiDump";
         system(somecommandcrap.c_str());
-        delete index;
+        delete hashTable;
         delete parser;
     }
 };

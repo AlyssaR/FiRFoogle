@@ -47,6 +47,7 @@ int main(int argc, char* argv[]) {
 
 void maintain(Handler* index) {
     char option[2];
+    bool hash;
 
     /** Display Codes Menu**/
     while(true) {
@@ -62,14 +63,31 @@ void maintain(Handler* index) {
              << "    QT - Quit\n\n"
              << "Enter Command: ";
         cin >> option;
-        if(strcmp(option, "AD") == 0) {
-            char* in = new char[50], * out = new char[50];
-            cout << "Enter the filename (with path/extension) to read in: ";
-            cin >> in;
-            index->addToIndex(in);
-        }
 
         /** Enter Code **/
+        if(strcmp(option, "AD") == 0) {
+            int key;
+            bool hash;
+            /** Option to use AVL tree or hash table **/
+            cout << "[1] Use AVL Tree\n"
+                 << "[2] Use Hash Table\n"
+                 << "Enter option: ";
+            cin >> key;
+            if(key == 1)
+                hash = false;
+            if(key == 2)
+                hash = true;
+            else
+                cerr << "ERROR: Invalid option" << endl;
+
+            /** Get file to add to index **/
+            char* file = new char[50];
+            cout << "Enter the filename (with path/extension) to read in: ";
+            cin >> file;
+            index->addToIndex(file, key);
+        }
+        else if(strcmp(option, "AV") == 0)
+            index->deleteIndex();
         else if(strcmp(option, "CL") == 0)
             index->deleteIndex();
         else if(strcmp(option, "LD") == 0)

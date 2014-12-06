@@ -13,8 +13,9 @@ SOURCES += main.cpp \
     porter2_stemmer.cpp \
     handler.cpp \
     queryparser.cpp \
+    avltree.cpp \
     index2.cpp \
-    avltree.cpp
+    avlindex.cpp
 
 HEADERS += \
     xmlparser.h \
@@ -27,7 +28,7 @@ HEADERS += \
     rapidxml_print.h \
     queryparser.h \
     article.h \
-    index2.h \
     avltree.h \
-    avlnode.h \
-    dsexceptions.h
+    dsexceptions.h \
+    index2.h \
+    avlindex.h
