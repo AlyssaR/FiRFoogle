@@ -5,16 +5,19 @@
 
 #include "avlindex.h"
 
-AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<string, set<Entry*> > table) {
-   AVLTreeNode *temp = new AVLTreeNode();
-   temp->setKeyword(word);
-   temp->setDocAndWeights(table);
-   temp->setLeft(NULL);
-   temp->setRight(NULL);
-   temp->setParent(NULL);
-   temp->setBalanceFactor('=');
-   return temp;
-}
+/** IN PROGRESS **/
+
+
+//AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<string, set<Entry*> > table) {
+//   AVLTreeNode *temp = new AVLTreeNode();
+//   temp->setKeyword(word);
+//   temp->setDocAndWeights(table);
+//   temp->setLeft(NULL);
+//   temp->setRight(NULL);
+//   temp->setParent(NULL);
+//   temp->setBalanceFactor('=');
+//   return temp;
+//}
 
 //void AVLIndex::add(string id, unordered_map<string, int> keywords) {
 //    /** Add all keywords from document **/
@@ -30,7 +33,7 @@ AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<stri
 //    keys.insert(key);
 //    for(auto doc : theDocs) {
 //        docs.insert(doc.first);
-//        table[key].insert(new Entry(doc.first, doc.second));
+//        //table[key].insert(new Entry(doc.first, doc.second));
 //        tree->Insert(createNewNode(key, table));
 //    }
 //}
@@ -39,18 +42,23 @@ AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<stri
 //unordered_map<string, int> AVLIndex::get(string keyword) {
 //    string docID;
 //    unordered_map<string, int> ids;
+//    AVLTreeNode node;
+//    unordered_map<string, set<Entry*> > group;
 
-//    /** If not empty, return all docs in chain with correct key **/
-//    for(auto thing : table[keyword]) {
-//        docID = thing->getDocID();
-//        ids[docID] = thing->getWeight();
-//    }
+//    node = tree->find(keyword, tree->root);
+//    unordered_map<string, set<Entry*> >::const_iterator got = table.find(keyword);
+//    docID = got->second.getDocID();
+//    ids[docID] = got->second.getWeight();
+
 //    return ids;
 //}
 
-//void Index2::printIDs(string keyword, ofstream& out) {
+//void AVLIndex::printIDs(string keyword, ofstream& out) {
 //    /** Output keys to index **/
 //    out << "<key>" << keyword << endl;
+//    node = tree->find(keyword, tree->root);
+//    unordered_map<string, set<Entry*> >::const_iterator got = table.find(keyword);
+
 //    unordered_map<string, int> docs = get(keyword);
 //    for(auto iter = docs.begin(); iter != docs.end(); ++iter)
 //        out << "\t<doc>" << iter->first << "</doc> <weight>"
@@ -58,7 +66,7 @@ AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<stri
 //    out  << "</key>" << endl;
 //}
 
-//void Index2::printTable() {
+//void AVLIndex::printTable() {
 //    ofstream out(filename);
 //    out << "<index>" << endl;
 
@@ -73,7 +81,7 @@ AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<stri
 //    cout << "[+] Index saved successfully to " << filename << endl;
 //}
 
-//Index2::~Index2() {
+//AVLIndex::~AVLIndex() {
 //    delete filename;
 //    /*for(auto item : table) {
 //          if(item.second != nullptr) {
@@ -86,6 +94,6 @@ AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<stri
 //                }
 //          }
 //    }*/
-//    table.clear();
+//    tree->delete();
 //}
 

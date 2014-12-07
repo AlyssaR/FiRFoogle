@@ -18,7 +18,8 @@ using namespace std;
 class AVLIndex{
 private:
     string filename;
-    Code203_Tree* tree; //equivalent of table
+    Code203_Tree* tree;
+    unordered_map<string, set<Entry*> > table;
     set<string> keys, docs;
     //Entry* temp;
     void printIDs(string, ofstream&);

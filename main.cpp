@@ -88,8 +88,6 @@ void maintain(Handler* index) {
             cin >> file;
             index->addToIndex(file, hash);
         }
-        else if(strcmp(option, "AV") == 0)
-            index->deleteIndex();
         else if(strcmp(option, "CL") == 0)
             index->deleteIndex();
         else if(strcmp(option, "LD") == 0)

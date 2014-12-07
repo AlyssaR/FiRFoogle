@@ -37,6 +37,7 @@ class Code203_Tree
       void adjustRightLeft(AVLTreeNode *end, AVLTreeNode *start);
 //    void Delete(int key);  // Not implemented yet
       void PrintTree();
+      AVLTreeNode* find(string, AVLTreeNode*&);
 
    private:
       void ClearTree(AVLTreeNode *n);

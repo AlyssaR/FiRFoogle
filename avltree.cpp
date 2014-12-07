@@ -344,3 +344,25 @@ void Code203_Tree::Print(AVLTreeNode *n)
       }
    }
 }
+
+ AVLTreeNode* Code203_Tree::find(string word, AVLTreeNode* &p)
+{
+    if (p == nullptr) {
+        return nullptr;
+    }
+    else {
+        if (word < p->getKeyword()) {
+            AVLTreeNode* left = p->getLeft();
+            find(word, left);
+        }
+        else {
+            if (word > p->getKeyword()) {
+                AVLTreeNode* right = p->getRight();
+                find(word, right);
+            }
+            else {
+                return p;
+            }
+        }
+    }
+}
