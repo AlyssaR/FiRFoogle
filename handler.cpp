@@ -14,6 +14,13 @@ void Handler::addToIndex(char*& filename, bool hash) {
         documents.insert(temp.begin(), temp.end());
         end = chrono::system_clock::now(); //end timer
         elapsed_seconds = end-start;
+    } else {
+        set<Article*> temp;
+        start = chrono::system_clock::now(); //begin timer
+        temp = parser->read_AVL(filename, AVLTree);
+        documents.insert(temp.begin(), temp.end());
+        end = chrono::system_clock::now(); //end timer
+        elapsed_seconds = end-start;
     }
 
     /** Display time taken to insert **/
@@ -147,15 +154,9 @@ unordered_map<string, int> Handler::search(vector<string>& ands, vector<string>&
 }
 
 void Handler::deleteIndex() {
-    cout << "test1" << endl;
-    remove(hashTable->getFilename());
-    cout << "test2 " << endl;
     string deCommand = "rm -rf ./Articles";
-    cout << "test3" << endl;
     system(deCommand.c_str());
-    cout << "test4" << endl;
     hashTable = new Index2();
-    cout << "test5" << endl;
 
     cout << "[+] Index and all log files have been successfully deleted" << endl;
 }

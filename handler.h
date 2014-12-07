@@ -9,12 +9,14 @@
 #include <vector>
 
 #include "article.h"
+#include "avlindex.h"
 #include "index2.h"
 #include "xmlparser.h"
 
 class Handler {
 private:
     Index2* hashTable;
+    AVLIndex* AVLTree;
     XMLParser* parser;
     set<Article*> documents;
     vector<string> sorted(unordered_map<string, int>&); //Sorts docs by weights

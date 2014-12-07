@@ -66,16 +66,16 @@ void maintain(Handler* index) {
 
         /** Enter Code **/
         if(strcmp(option, "AD") == 0) {
-            int key;
+            int indexType;
             bool hash;
             /** Option to use AVL tree or hash table **/
             cout << "[1] Use AVL Tree\n"
                  << "[2] Use Hash Table\n"
                  << "Enter option: ";
-            cin >> key;
-            if(key == 1)
+            cin >> indexType;
+            if(indexType == 1)
                 hash = false;
-            if(key == 2)
+            else if(indexType == 2)
                 hash = true;
             else
                 cerr << "ERROR: Invalid option" << endl;
@@ -84,7 +84,7 @@ void maintain(Handler* index) {
             char* file = new char[50];
             cout << "Enter the filename (with path/extension) to read in: ";
             cin >> file;
-            index->addToIndex(file, key);
+            index->addToIndex(file, hash);
         }
         else if(strcmp(option, "AV") == 0)
             index->deleteIndex();

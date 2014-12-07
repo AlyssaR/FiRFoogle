@@ -122,10 +122,10 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
 
 set<Article*> XMLParser::read_hash(char* bigfile, Index2*& i) {
     index_hash = i; //Make sure same index is always used
-    string somecommandcrap = "perl splitter.pl " + string(bigfile);
+    string split = "perl splitter.pl " + string(bigfile);
     bool hash = true;
 
-    system(somecommandcrap.c_str());
+    system(split.c_str());
     getFilenames();
 
     int x = 0;
@@ -147,10 +147,11 @@ set<Article*> XMLParser::read_hash(char* bigfile, Index2*& i) {
 
 set<Article*> XMLParser::read_AVL(char* bigfile, AVLIndex*& i) {
     index_avl = i; //Make sure same index is always used
-    string somecommandcrap = "perl splitter.pl " + string(bigfile);
+    string split = "splitter.pl " + string(bigfile);
     bool hash = false;
 
-    system(somecommandcrap.c_str());
+    system(split.c_str());
+                    cout << "test" << endl;
     getFilenames();
 
     int x = 0;

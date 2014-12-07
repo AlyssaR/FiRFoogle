@@ -16,7 +16,7 @@ private:
     void printIDs(string, ofstream&);
     void put(string, string, int); //Adds individual key
 public:
-    AVLIndex() { filename - "output.xml"; }
+    AVLIndex() { filename = "output.xml"; }
 
     AVLTreeNode* createNewNode(string&, int&);
 
