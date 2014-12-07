@@ -87,16 +87,16 @@ Article* QueryParser::getArticle(string id, int weight) {
         while(true) {
             getline(in, temp, '>');
             text = text + temp;
-            if(text[text.size()-1] == '<' || temp == " ") {
+            if(text[text.size()-1] == '<') {
                 text = text.substr(0, text.size() - 2);
                 break;
             }
         }
     }
-
     /** Calculate term frequency and return article **/
     in.close();
     wc = float(weight)/float(atoi(wordCount.c_str())); //calculates term frequency
+    cout << "Weight: " << weight << " Word count: " << wordCount << " TF: " << wc << endl;
     return (new Article(title,text,id,wc));
 }
 

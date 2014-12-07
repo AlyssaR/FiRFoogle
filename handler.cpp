@@ -73,7 +73,7 @@ bool Handler::loadIndex() {
     end = chrono::system_clock::now(); //end timer
     elapsed_seconds = end-start;
 
-    /** Display time take to add keywords **/
+    /** Display time taken to add keywords **/
     cout << "--> Index loaded in: " << elapsed_seconds.count() << "s" << endl;
     cout << "[+] Keywords added to index successfully." << endl;
 

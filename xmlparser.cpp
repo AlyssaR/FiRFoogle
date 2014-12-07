@@ -75,8 +75,8 @@ void XMLParser::getFilenames() {
 
 void XMLParser::parseFile(const char* filename, const bool hash) {
     string author, id, output, text, timestamp, title, realFile;
-    //realFile = "./WikiDump/" + string(filename);
-    realFile = "./Temp/" + string(filename);
+    realFile = "./WikiDump/" + string(filename);
+
     try {
         /** Open XML document **/
         rapidxml::file<> file(realFile.c_str());

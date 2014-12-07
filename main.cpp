@@ -54,7 +54,7 @@ void maintain(Handler* index) {
     /** Display Codes Menu**/
     while(true) {
         cout << "    ====================\n"
-             << "      Stress Test Mode\n"
+             << "      Maintenance Mode\n"
              << "    ====================" << endl;
         cout << "Command List:\n"
              << "    AD - Add documents to index\n"
@@ -125,7 +125,7 @@ void interactive(Handler* index) {
         cout << "| |    | | | \\ \\| | | (_) | (_) | (_| | |  __/" << endl;
         cout << "|_|    |_|_|  \\_\\_|  \\___/ \\___/ \\__, |_|\\___|" << endl;
         cout << "                                  __/ |" << endl;
-        cout << "                                  |___/ " << endl;
+        cout << "                                 |____/ " << endl;
         cout << "===============================================" << endl << endl;
         cout << "Example: 'AND Meaning Life'\t (Type -1 to Exit)"
              << "\nSearch: ";
@@ -152,7 +152,7 @@ void interactive(Handler* index) {
             /** Print 5 Results at a Time **/
             for(int x = index; x <= size && x < index+5; x++)
                 cout << fixed << setprecision(2) << "[" << x << "] " << results[x-1]->getTitle()
-                     << "\tScore: " << results[x-1]->getWordCount() << endl;
+                     << "\t[Score: " << results[x-1]->getWordCount() << "]" << endl;
 
             cout << "\nOptions:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n'return'\t Return to search"

@@ -6,6 +6,7 @@
 #ifndef ARTICLE_H
 #define ARTICLE_H
 
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -24,11 +25,11 @@ public:
     string getID() const { return id; }
     string getText() const { return text; }
     float getWordCount() const { return wordCount; }
-    void setWordCount(float idf) { wordCount *= idf; }
-    void set(string t, string tx, string i) {
-        title = t;
-        text = tx;
-        id = i;
+    void setWordCount(float idf) {
+        if(!isnan(wordCount * idf) && isfinite(wordCount * idf))
+            wordCount *= idf;
+        else
+            wordCount = 100;
     }
 };
 
