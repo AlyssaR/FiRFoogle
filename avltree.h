@@ -8,23 +8,15 @@
 #define CODE203_TREE_H
 
 #include <iostream>
-using namespace std;
 
-struct AVLTreeNode
-{
-   string keyword;
-   int wordCount;
-   // Other data fields can be inserted here
-   AVLTreeNode *left;
-   AVLTreeNode *right;
-   AVLTreeNode *parent;
-   char balanceFactor;
-};
+#include "avlnode.h"
+using namespace std;
 
 class Code203_Tree
 {
    private:
-      AVLTreeNode   *root;
+      AVLTreeNode* root;
+      AVLTreeNode* a;
 
    public:
       Code203_Tree();            // Constructor
@@ -39,8 +31,6 @@ class Code203_Tree
 //    void Delete(int key);  // Not implemented yet
       void PrintTree();
 
-      string getKeyword() {return AVLTreeNode::keyword;}
-      int getWordCount() {return AVLTreeNode::wordCount;}
    private:
       void ClearTree(AVLTreeNode *n);
       void Print(AVLTreeNode *n);

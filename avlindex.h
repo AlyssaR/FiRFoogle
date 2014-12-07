@@ -18,7 +18,7 @@ private:
 public:
     AVLIndex() { filename - "output.xml"; }
 
-    AVLTreeNode* createNewNode(string);
+    AVLTreeNode* createNewNode(string&, int&);
 
     void add(string, unordered_map<string, int>); //Adds all keywords from doc
     void addKey(string, Code203_Tree&); //Adds all docs for keyword

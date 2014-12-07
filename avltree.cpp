@@ -34,8 +34,8 @@ void Code203_Tree::ClearTree(AVLTreeNode *n)
 {
    if(n != NULL)
    {
-      ClearTree(n->left);   // Recursively clear the left sub-tree
-      ClearTree(n->right);   // Recursively clear the right sub-tree
+      ClearTree(n->getLeft());   // Recursively clear the left sub-tree
+      ClearTree(n->getRight());   // Recursively clear the right sub-tree
       delete n;         // Delete this node
    }
 }
@@ -66,25 +66,25 @@ void Code203_Tree::Insert(AVLTreeNode *newNode)
       back = temp;
       // Mark ancestor that will be out of balance after
       //   this node is inserted
-      if(temp->balanceFactor != '=')
+      if(temp->getBalanceFactor() != '=')
          ancestor = temp;
-      if(newNode->key < temp->key)
-         temp = temp->left;
+      if(newNode->getKeyword() < temp->getKeyword())
+         temp = temp->getLeft();
       else
-         temp = temp->right;
+         temp = temp->getRight();
    }
    // temp is now NULL
    // back points to parent node to attach newNode to
    // ancestor points to most recent out of balance ancestor
 
-   newNode->parent = back;   // Set parent
-   if(newNode->key < back->key)  // Insert at left
+   newNode->setParent(back);   // Set parent
+   if(newNode->getKeyword() < back->getKeyword())  // Insert at left
    {
-      back->left = newNode;
+      back->setLeft(newNode);
    }
    else     // Insert at right
    {
-      back->right = newNode;
+      back->setRight(newNode);
    }
 
    // Now call function to restore the tree's AVL property
@@ -105,10 +105,10 @@ void Code203_Tree::restoreAVL(AVLTreeNode *ancestor, AVLTreeNode *newNode)
    //--------------------------------------------------------------------------------
    if(ancestor == NULL)
    {
-      if(newNode->key < root->key)       // newNode inserted to left of root
-         root->balanceFactor = 'L';
+      if(newNode->getKeyword() < root->getKeyword())       // newNode inserted to left of root
+         root->setBalanceFactor('L');
       else
-         root->balanceFactor = 'R';   // newNode inserted to right of root
+         root->setBalanceFactor('R');   // newNode inserted to right of root
       // Adjust the balanceFactor for all nodes from newNode back up to root
       adjustBalanceFactors(root, newNode);
    }
@@ -119,10 +119,10 @@ void Code203_Tree::restoreAVL(AVLTreeNode *ancestor, AVLTreeNode *newNode)
    //     OR
    //  ancestor.balanceFactor = 'R' AND  Insertion made in ancestor's left subtree
    //--------------------------------------------------------------------------------
-   else if(((ancestor->balanceFactor == 'L') && (newNode->key > ancestor->key)) ||
-        ((ancestor->balanceFactor == 'R') && (newNode->key < ancestor->key)))
+   else if(((ancestor->getBalanceFactor() == 'L') && (newNode->getKeyword() > ancestor->getKeyword())) ||
+        ((ancestor->getBalanceFactor() == 'R') && (newNode->getKeyword() < ancestor->getKeyword())))
    {
-      ancestor->balanceFactor = '=';
+      ancestor->setBalanceFactor('=');
       // Adjust the balanceFactor for all nodes from newNode back up to ancestor
       adjustBalanceFactors(ancestor, newNode);
    }
@@ -130,34 +130,34 @@ void Code203_Tree::restoreAVL(AVLTreeNode *ancestor, AVLTreeNode *newNode)
    // Case 3: ancestor.balanceFactor = 'R' and the node inserted is
    //      in the right subtree of ancestor's right child
    //--------------------------------------------------------------------------------
-   else if((ancestor->balanceFactor == 'R') && (newNode->key > ancestor->right->key))
+   else if((ancestor->getBalanceFactor() == 'R') && (newNode->getKeyword() > ancestor->getRight()->getKeyword()))
    {
-      ancestor->balanceFactor = '='; // Reset ancestor's balanceFactor
+      ancestor->setBalanceFactor('='); // Reset ancestor's balanceFactor
       rotateLeft(ancestor);       // Do single left rotation about ancestor
       // Adjust the balanceFactor for all nodes from newNode back up to ancestor's parent
-      adjustBalanceFactors(ancestor->parent, newNode);
+      adjustBalanceFactors(ancestor->getParent(), newNode);
    }
 
    //--------------------------------------------------------------------------------
    // Case 4: ancestor.balanceFactor is 'L' and the node inserted is
    //      in the left subtree of ancestor's left child
    //--------------------------------------------------------------------------------
-   else if((ancestor->balanceFactor == 'L') && (newNode->key < ancestor->left->key))
+   else if((ancestor->getBalanceFactor() == 'L') && (newNode->getKeyword() < ancestor->getLeft()->getKeyword()))
    {
-      ancestor->balanceFactor = '='; // Reset ancestor's balanceFactor
+      ancestor->setBalanceFactor('='); // Reset ancestor's balanceFactor
       rotateRight(ancestor);       // Do single right rotation about ancestor
       // Adjust the balanceFactor for all nodes from newNode back up to ancestor's parent
-      adjustBalanceFactors(ancestor->parent, newNode);
+      adjustBalanceFactors(ancestor->getParent(), newNode);
    }
 
    //--------------------------------------------------------------------------------
    // Case 5: ancestor.balanceFactor is 'L' and the node inserted is
    //      in the right subtree of ancestor's left child
    //--------------------------------------------------------------------------------
-   else if((ancestor->balanceFactor == 'L') && (newNode->key > ancestor->left->key))
+   else if((ancestor->getBalanceFactor() == 'L') && (newNode->getKeyword() > ancestor->getLeft()->getKeyword()))
    {
       // Perform double right rotation (actually a left followed by a right)
-      rotateLeft(ancestor->left);
+      rotateLeft(ancestor->getLeft());
       rotateRight(ancestor);
       // Adjust the balanceFactor for all nodes from newNode back up to ancestor
       adjustLeftRight(ancestor, newNode);
@@ -170,7 +170,7 @@ void Code203_Tree::restoreAVL(AVLTreeNode *ancestor, AVLTreeNode *newNode)
    else
    {
       // Perform double left rotation (actually a right followed by a left)
-          rotateRight(ancestor->right);
+          rotateRight(ancestor->getRight());
           rotateLeft(ancestor);
           adjustRightLeft(ancestor, newNode);
    }
@@ -184,14 +184,14 @@ void Code203_Tree::restoreAVL(AVLTreeNode *ancestor, AVLTreeNode *newNode)
 //------------------------------------------------------------------
 void Code203_Tree::adjustBalanceFactors(AVLTreeNode *end, AVLTreeNode *start)
 {
-    AVLTreeNode *temp = start->parent; // Set starting point at start's parent
+    AVLTreeNode *temp = start->getParent(); // Set starting point at start's parent
     while(temp != end)
     {
-        if(start->key < temp->key)
-            temp->balanceFactor = 'L';
+        if(start->getKeyword() < temp->getKeyword())
+            temp->setBalanceFactor('L');
         else
-            temp->balanceFactor = 'R';
-        temp = temp->parent;
+            temp->setBalanceFactor('R');
+        temp = temp->getParent();
     } // end while
 }
 
@@ -203,22 +203,22 @@ void Code203_Tree::adjustBalanceFactors(AVLTreeNode *end, AVLTreeNode *start)
 //------------------------------------------------------------------
 void Code203_Tree::rotateLeft(AVLTreeNode *n)
 {
-   AVLTreeNode *temp = n->right;   //Hold pointer to n's right child
-   n->right = temp->left;      // Move temp 's left child to right child of n
-   if(temp->left != NULL)      // If the left child does exist
-      temp ->left->parent = n;// Reset the left child's parent
-   if(n->parent == NULL)       // If n was the root
+   AVLTreeNode *temp = n->getRight();   //Hold pointer to n's right child
+   n->setRight(temp->getLeft());      // Move temp 's left child to right child of n
+   if(temp->getLeft() != NULL)      // If the left child does exist
+      temp->getLeft()->setParent(n);// Reset the left child's parent
+   if(n->getParent() == NULL)       // If n was the root
    {
       root = temp;      // Make temp the new root
-      temp->parent = NULL;   // Root has no parent
+      temp->setParent(NULL);   // Root has no parent
    }
-   else if(n->parent->left == n) // If n was the left child of its' parent
-      n->parent->left = temp;   // Make temp the new left child
+   else if(n->getParent()->getLeft() == n) // If n was the left child of its' parent
+      n->getParent()->setLeft(temp);   // Make temp the new left child
    else               // If n was the right child of its' parent
-      n->parent->right = temp;// Make temp the new right child
+      n->getParent()->setRight(temp);// Make temp the new right child
 
-   temp->left = n;         // Move n to left child of temp
-   n->parent = temp;         // Reset n's parent
+   temp->setLeft(n);         // Move n to left child of temp
+   n->setParent(temp);         // Reset n's parent
 }
 
 //------------------------------------------------------------------
@@ -229,22 +229,22 @@ void Code203_Tree::rotateLeft(AVLTreeNode *n)
 //------------------------------------------------------------------
 void Code203_Tree::rotateRight(AVLTreeNode *n)
 {
-   AVLTreeNode *temp = n->left;   //Hold pointer to temp
-   n->left = temp->right;      // Move temp's right child to left child of n
-   if(temp->right != NULL)      // If the right child does exist
-      temp->right->parent = n;// Reset right child's parent
-   if(n->parent == NULL)       // If n was root
+   AVLTreeNode *temp = n->getLeft();   //Hold pointer to temp
+   n->setLeft(temp->getRight());      // Move temp's right child to left child of n
+   if(temp->getRight() != NULL)      // If the right child does exist
+      temp->getRight()->setParent(n);// Reset right child's parent
+   if(n->getParent() == NULL)       // If n was root
    {
       root = temp;      // Make temp the root
-      temp->parent = NULL;   // Root has no parent
+      temp->setParent(NULL);   // Root has no parent
    }
-   else if(n->parent->left == n) // If was the left child of its' parent
-      n->parent->left = temp;   // Make temp the new left child
+   else if(n->getParent()->getLeft() == n) // If was the left child of its' parent
+      n->getParent()->setLeft(temp);   // Make temp the new left child
    else               // If n was the right child of its' parent
-      n->parent->right = temp;// Make temp the new right child
+      n->getParent()->setRight(temp);// Make temp the new right child
 
-   temp->right = n;         // Move n to right child of temp
-   n->parent = temp;         // Reset n's parent
+   temp->setRight(n);         // Move n to right child of temp
+   n->setParent(temp);         // Reset n's parent
 }
 
 //------------------------------------------------------------------
@@ -255,16 +255,16 @@ void Code203_Tree::rotateRight(AVLTreeNode *n)
 void Code203_Tree::adjustLeftRight(AVLTreeNode *end, AVLTreeNode *start)
 {
     if(end == root)
-        end->balanceFactor = '=';
-    else if(start->key < end->parent->key)
+        end->setBalanceFactor('=');
+    else if(start->getKeyword() < end->getParent()->getKeyword())
     {
-        end->balanceFactor = 'R';
-        adjustBalanceFactors(end->parent->left, start);
+        end->setBalanceFactor('R');
+        adjustBalanceFactors(end->getParent()->getLeft(), start);
     }
     else
     {
-        end->balanceFactor = '=';
-        end->parent->left->balanceFactor = 'L';
+        end->setBalanceFactor('=');
+        end->getParent()->getLeft()->setBalanceFactor('L') ;
         adjustBalanceFactors(end, start);
     }
 }
@@ -277,16 +277,16 @@ void Code203_Tree::adjustLeftRight(AVLTreeNode *end, AVLTreeNode *start)
 void Code203_Tree::adjustRightLeft(AVLTreeNode *end, AVLTreeNode *start)
 {
     if(end == root)
-        end->balanceFactor = '=';
-    else if(start->key > end->parent->key)
+        end->setBalanceFactor('=');
+    else if(start->getKeyword() > end->getParent()->getKeyword())
     {
-        end->balanceFactor = 'L';
-        adjustBalanceFactors(end->parent->right, start);
+        end->setBalanceFactor('L');
+        adjustBalanceFactors(end->getParent()->getRight(), start);
     }
     else
     {
-        end->balanceFactor = '=';
-        end->parent->right->balanceFactor = 'R';
+        end->setBalanceFactor('=');
+        end->getParent()->getRight()->setBalanceFactor('R');
         adjustBalanceFactors(end, start);
     }
 }
@@ -298,8 +298,8 @@ void Code203_Tree::adjustRightLeft(AVLTreeNode *end, AVLTreeNode *start)
 void Code203_Tree::PrintTree()
 {
    cout << "\nPrinting the tree...\n";
-   cout << "Root Node: " << root->key << " balanceFactor is " <<
-      root->balanceFactor << "\n\n";
+   cout << "Root Node: " << root->getKeyword() << " balanceFactor is " <<
+      root->getBalanceFactor() << "\n\n";
    Print(root);
 }
 
@@ -311,25 +311,25 @@ void Code203_Tree::Print(AVLTreeNode *n)
 {
    if(n != NULL)
    {
-      cout<<"Node: " << n->key << " balanceFactor is " <<
-         n->balanceFactor << "\n";
-      if(n->left != NULL)
+      cout<<"Node: " << n->getKeyword() << " balanceFactor is " <<
+         n->getBalanceFactor() << "\n";
+      if(n->getLeft() != NULL)
       {
          cout<<"\t moving left\n";
-         Print(n->left);
-         cout<<"Returning to Node" << n->key << " from its' left subtree\n";
+         Print(n->getLeft());
+         cout<<"Returning to Node" << n->getKeyword() << " from its' left subtree\n";
       }
       else
       {
          cout<<"\t left subtree is empty\n";
       }
-      cout<<"Node: " << n->key << " balanceFactor is " <<
-         n->balanceFactor << "\n";
-      if(n->right != NULL)
+      cout<<"Node: " << n->getKeyword() << " balanceFactor is " <<
+         n->getBalanceFactor() << "\n";
+      if(n->getRight() != NULL)
       {
          cout<<"\t moving right\n";
-         Print(n->right);
-         cout<<"Returning to Node" << n->key << " from its' right subtree\n";
+         Print(n->getRight());
+         cout<<"Returning to Node" << n->getKeyword() << " from its' right subtree\n";
       }
       else
       {

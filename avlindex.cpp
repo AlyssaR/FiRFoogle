@@ -1,13 +1,13 @@
 #include "avlindex.h"
 
-AVLTreeNode* AVLIndex::createNewNode(string key, int count) {
+AVLTreeNode* AVLIndex::createNewNode(string& key, int& count) {
    AVLTreeNode *temp = new AVLTreeNode();
-   temp->keyword = key;
-   temo->wordCount = count;
-   temp->left = NULL;
-   temp->right = NULL;
-   temp->parent = NULL;
-   temp->balanceFactor = '=';
+   temp->setKeyword(key);
+   temp->setwordCount(count);
+   temp->setLeft(NULL);
+   temp->setRight(NULL);
+   temp->setParent(NULL);
+   temp->setBalanceFactor('=');
    return temp;
 }
 
@@ -16,7 +16,8 @@ void AVLIndex::add(string id, unordered_map<string, int> keywords) {
     docs.insert(id); //Add doc id to set
     for(auto key : keywords) {
         keys.insert(key.first); //Add keyword to set
-        tree->Insert(createNewNode(key.first, key.second)); //Add to index
+        cout << key.first << " " << key.second << endl;
+        //tree->Insert(createNewNode(key.first, key.second)); //Add to index
     }
 }
 

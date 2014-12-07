@@ -31,4 +31,5 @@ HEADERS += \
     avltree.h \
     dsexceptions.h \
     index2.h \
-    avlindex.h
+    avlindex.h \
+    avlnode.h
