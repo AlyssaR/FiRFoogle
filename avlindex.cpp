@@ -16,24 +16,24 @@ AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<stri
    return temp;
 }
 
-void AVLIndex::add(string id, unordered_map<string, int> keywords) {
-    /** Add all keywords from document **/
-    docs.insert(id); //Add doc id to set
-    for(auto key : keywords) {
-        keys.insert(key.first); //Add keyword to set
-        table[key.first].insert(new Entry(key.first, key.second)); //Add to index
-    }
-}
+//void AVLIndex::add(string id, unordered_map<string, int> keywords) {
+//    /** Add all keywords from document **/
+//    docs.insert(id); //Add doc id to set
+//    for(auto key : keywords) {
+//        keys.insert(key.first); //Add keyword to set
+//        table[key.first].insert(new Entry(key.first, key.second)); //Add to index
+//    }
+//}
 
-void AVLIndex::addKey(string key, unordered_map<string, int>& theDocs) {
-    /** Add all documents for keyword **/
-    keys.insert(key);
-    for(auto doc : theDocs) {
-        docs.insert(doc.first);
-        table[key].insert(new Entry(doc.first, doc.second));
-        tree->Insert(createNewNode(key, table));
-    }
-}
+//void AVLIndex::addKey(string key, unordered_map<string, int>& theDocs) {
+//    /** Add all documents for keyword **/
+//    keys.insert(key);
+//    for(auto doc : theDocs) {
+//        docs.insert(doc.first);
+//        table[key].insert(new Entry(doc.first, doc.second));
+//        tree->Insert(createNewNode(key, table));
+//    }
+//}
 
 
 //unordered_map<string, int> AVLIndex::get(string keyword) {
