@@ -97,7 +97,7 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
             text = revision_node->first_node("text")->value();
             timestamp = revision_node->first_node("timestamp")->value();
             title = page_node->first_node("title")->value();
-            if(title.find("User") != string::npos)  //Skip the stupid User chat logs
+            if(title.find("User") != string::npos || title.find("alk:") != string::npos || title.find("ile:") != string::npos)  //Skip useless files
                 continue;
 
             id = to_string(fileNum) + "_" + to_string(docNum);

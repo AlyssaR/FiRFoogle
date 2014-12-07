@@ -139,7 +139,7 @@ void interactive(Handler* index) {
         int index = 1, size = results.size();
         float idf = log(179708/size);
         for(auto thing : results)
-            thing->setWordCount(idf);
+            thing->setWordCount(idf); // Sets wordcount to be TF/IDF
         sort(results.begin(), results.end(), &byValues);
 
         do {
@@ -151,8 +151,7 @@ void interactive(Handler* index) {
 
             /** Print 5 Results at a Time **/
             for(int x = index; x <= size && x < index+5; x++)
-                cout << fixed << setprecision(2) << "[" << x << "] " << results[x-1]->getTitle()
-                     << "\t[Score: " << results[x-1]->getWordCount() << "]" << endl;
+                cout << "[" << x << "] " << results[x-1]->getTitle() << endl;
 
             cout << "\nOptions:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n'return'\t Return to search"
@@ -179,9 +178,9 @@ void interactive(Handler* index) {
             /** Display selected article and reprint current list of results **/
             else {
                 cout << "\n=====================================================\n"
-                     << "\t" << results[index+atoi(search.c_str())-2]->getTitle()
+                     << "\t" << results[atoi(search.c_str())-1]->getTitle()
                      << "\n=====================================================" << endl;
-                results[index+atoi(search.c_str())-2]->display(); //Print article
+                results[atoi(search.c_str())-1]->display(); //Print article
                 cout << "\nPress any key to return to results.";
                 getline(cin, search);
                 search = "more";

@@ -25,12 +25,7 @@ public:
     string getID() const { return id; }
     string getText() const { return text; }
     float getWordCount() const { return wordCount; }
-    void setWordCount(float idf) {
-        if(!isnan(wordCount * idf) && isfinite(wordCount * idf))
-            wordCount *= idf;
-        else
-            wordCount = 100;
-    }
+    void setWordCount(float idf) { wordCount *= idf; }
 };
 
 #endif // ARTICLE_H

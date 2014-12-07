@@ -96,7 +96,6 @@ Article* QueryParser::getArticle(string id, int weight) {
     /** Calculate term frequency and return article **/
     in.close();
     wc = float(weight)/float(atoi(wordCount.c_str())); //calculates term frequency
-    cout << "Weight: " << weight << " Word count: " << wordCount << " TF: " << wc << endl;
     return (new Article(title,text,id,wc));
 }
 
