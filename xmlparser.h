@@ -1,14 +1,14 @@
   #ifndef XMLPARSER_H
 #define XMLPARSER_H
 
+#include <algorithm>
 #include <cstring>
 #include <dirent.h>
 #include <fstream>
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <unordered_map>
-#include <algorithm>
-#include <stdlib.h>
 
 #include "article.h"
 #include "avlindex.h"

@@ -6,6 +6,11 @@
 #include <ctime>
 #include <fstream>
 #include <stdio.h>
+/***********************************************
+ * Class: Handler
+ * Owner: Alyssa Rahman
+ ***********************************************/
+
 #include <vector>
 
 #include "article.h"

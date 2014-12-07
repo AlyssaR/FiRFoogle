@@ -1,3 +1,8 @@
+/***********************************************
+ * Class: XMLParser
+ * Owner: Courtney Kent
+ ***********************************************/
+
 #include "xmlparser.h"
 
 XMLParser::XMLParser() {
@@ -147,17 +152,17 @@ set<Article*> XMLParser::read_hash(char* bigfile, Index2*& i) {
 
 set<Article*> XMLParser::read_AVL(char* bigfile, AVLIndex*& i) {
     index_avl = i; //Make sure same index is always used
-    string split = "splitter.pl " + string(bigfile);
+    string split = "perl splitter.pl " + string(bigfile);
     bool hash = false;
 
     system(split.c_str());
-                    cout << "test" << endl;
     getFilenames();
 
     int x = 0;
 
     /** Parse each baby file **/
     for(auto file : filenames) {
+        cout << file << endl;
         if(file[file.size()-1] == '.')
             continue;
         if(file[0] != '.') {

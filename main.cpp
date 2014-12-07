@@ -1,4 +1,4 @@
-/***********************************************
+/*************************************************
  * FiRFoogle
  * Authors:
  *   Alyssa Rahman
@@ -9,14 +9,16 @@
  * For more information on FiRFoogle and how to
  * use it please refer to the User Manual.
  *
- ***********************************************/
+ *************************************************/
 
 #include <fstream>
 #include <iomanip>
 #include <math.h>
+
 #include "handler.h"
 #include "queryparser.h"
 #include "xmlparser.h"
+using namespace std;
 
 void maintain(Handler*);
 void stressTest(Handler*);

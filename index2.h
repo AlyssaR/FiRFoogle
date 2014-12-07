@@ -1,3 +1,8 @@
+/*************************************************
+ * Class: Index2 (Hash Table)
+ * Owner: Alyssa Rahman
+ *************************************************/
+
 #ifndef INDEX2_H
 #define INDEX2_H
 

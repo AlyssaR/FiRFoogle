@@ -1,3 +1,10 @@
+/*************************************************
+ * Class: RapidXML_iterators
+ * Owner: Courtney Kent
+ *
+ * **Written By Marcin Kalicinski**
+ *************************************************/
+
 #ifndef RAPIDXML_ITERATORS_HPP_INCLUDED
 #define RAPIDXML_ITERATORS_HPP_INCLUDED
 

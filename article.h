@@ -1,3 +1,8 @@
+/*************************************************
+ * Class: Article
+ * Owner: Alyssa Rahman
+ *************************************************/
+
 #ifndef ARTICLE_H
 #define ARTICLE_H
 

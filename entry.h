@@ -1,8 +1,14 @@
+/*************************************************
+ * Class: Entry
+ * Owner: Alyssa Rahman
+ *************************************************/
+
 #ifndef ENTRY_H
 #define ENTRY_H
 
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 class Entry {

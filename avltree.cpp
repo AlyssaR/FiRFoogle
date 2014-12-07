@@ -1,3 +1,10 @@
+/*************************************************
+ * Class: AVLTree
+ * Owner: Courtney Kent
+ *
+ * **Adapted from Code203_3 by Dr. Rick Coleman**
+ *************************************************/
+
 //==================================================================
 // Code203_Tree.cpp
 // Demonstration of an AVL tree which keeps the tree nodes in as

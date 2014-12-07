@@ -1,3 +1,8 @@
+/***********************************************
+ * Class: Index2 (Hash Table)
+ * Owner: Alyssa Rahman
+ ***********************************************/
+
 #include "index2.h"
 
 void Index2::add(string doc, const unordered_map<string, int>& keywords) {

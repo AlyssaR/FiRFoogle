@@ -1,3 +1,10 @@
+/***********************************************
+ * Class: Porter2_Stemmer
+ * Owner: Courtney Kent
+ *
+ * **Written By Sean Massung**
+ ***********************************************/
+
 /**
  * @file porter2_stemmer.cpp
  * @author Sean Massung

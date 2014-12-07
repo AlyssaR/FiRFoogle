@@ -1,9 +1,14 @@
+/*************************************************
+ * Class: AVLIndex
+ * Owner: Courtney Kent
+ *************************************************/
+
 #include "avlindex.h"
 
-AVLTreeNode* AVLIndex::createNewNode(string& key, int& count) {
+AVLTreeNode* AVLIndex::createNewNode(const string word, const unordered_map<string, set<Entry*> > table) {
    AVLTreeNode *temp = new AVLTreeNode();
-   temp->setKeyword(key);
-   temp->setwordCount(count);
+   temp->setKeyword(word);
+   temp->setDocAndWeights(table);
    temp->setLeft(NULL);
    temp->setRight(NULL);
    temp->setParent(NULL);
@@ -16,21 +21,22 @@ void AVLIndex::add(string id, unordered_map<string, int> keywords) {
     docs.insert(id); //Add doc id to set
     for(auto key : keywords) {
         keys.insert(key.first); //Add keyword to set
-        cout << key.first << " " << key.second << endl;
-        //tree->Insert(createNewNode(key.first, key.second)); //Add to index
+        table[key.first].insert(new Entry(key.first, key.second)); //Add to index
     }
 }
 
-//void Index2::addKey(string key, const unordered_map<string, int>& theDocs) {
-//    /** Add all documents for keyword **/
-//    keys.insert(key);
-//    for(auto doc : theDocs) {
-//        docs.insert(doc.first);
-//        table[key].insert(new Entry(doc.first, doc.second));
-//    }
-//}
+void AVLIndex::addKey(string key, unordered_map<string, int>& theDocs) {
+    /** Add all documents for keyword **/
+    keys.insert(key);
+    for(auto doc : theDocs) {
+        docs.insert(doc.first);
+        table[key].insert(new Entry(doc.first, doc.second));
+        tree->Insert(createNewNode(key, table));
+    }
+}
 
-//unordered_map<string, int> Index2::get(string keyword) {
+
+//unordered_map<string, int> AVLIndex::get(string keyword) {
 //    string docID;
 //    unordered_map<string, int> ids;
 

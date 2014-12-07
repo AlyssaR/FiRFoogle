@@ -1,3 +1,8 @@
+/***********************************************
+ * Class: QueryParser
+ * Owner: Alyssa Rahman
+ ***********************************************/
+
 #include "queryparser.h"
 
 vector<Article*> QueryParser::find(string& query) {

@@ -1,34 +1,42 @@
+/*************************************************
+ * Class: AVLIndex
+ * Owner: Courtney Kent
+ *************************************************/
+
 #ifndef AVLINDEX_H
 #define AVLINDEX_H
 
 #include <set>
+#include <string>
 #include <unordered_map>
 
 #include "avltree.h"
+#include "entry.h"
 using namespace std;
 
 class AVLIndex{
 private:
-    char* filename;
-    Code203_Tree* tree; //equivelent of table
+    string filename;
+    Code203_Tree* tree; //equivalent of table
     set<string> keys, docs;
     //Entry* temp;
     void printIDs(string, ofstream&);
     void put(string, string, int); //Adds individual key
 public:
-    AVLIndex() { filename = "output.xml"; }
+    AVLIndex() {
+        filename = "output.xml";
+    }
 
-    AVLTreeNode* createNewNode(string&, int&);
+    AVLTreeNode* createNewNode(const string, const unordered_map<string, set<Entry*> >);
 
     void add(string, unordered_map<string, int>); //Adds all keywords from doc
-    void addKey(string, Code203_Tree&); //Adds all docs for keyword
+    void addKey(string, unordered_map<string, int>&); //Adds all docs for keyword
 
     unordered_map<string, int> get(string); //Returns weighted docs for given keyword
-    char* getFilename() { return filename; }
+    string getFilename() { return filename; }
     set<string> getIDs() { return docs; }
     void setFilename(char*& f) {
-        filename = new char[100];
-        strcpy(filename, f);
+        filename = string(f);
     }
 
     void printTable();

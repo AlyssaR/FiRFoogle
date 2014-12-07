@@ -1,3 +1,10 @@
+/*************************************************
+ * Class: RapidXML_utils
+ * Owner: Courtney Kent
+ *
+ * **Written By Marcin Kalicinski**
+ *************************************************/
+
 #ifndef RAPIDXML_UTILS_HPP_INCLUDED
 #define RAPIDXML_UTILS_HPP_INCLUDED
 

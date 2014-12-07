@@ -1,3 +1,10 @@
+/*************************************************
+ * Class: RapidXML_print
+ * Owner: Courtney Kent
+ *
+ * **Written By Marcin Kalicinski**
+ *************************************************/
+
 #ifndef RAPIDXML_PRINT_HPP_INCLUDED
 #define RAPIDXML_PRINT_HPP_INCLUDED
 

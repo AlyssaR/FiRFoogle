@@ -1,3 +1,8 @@
+/***********************************************
+ * Class: Handler
+ * Owner: Alyssa Rahman
+ ***********************************************/
+
 #include "handler.h"
 
 void Handler::addToIndex(char*& filename, bool hash) {

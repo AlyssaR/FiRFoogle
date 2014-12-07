@@ -29,7 +29,6 @@ HEADERS += \
     queryparser.h \
     article.h \
     avltree.h \
-    dsexceptions.h \
     index2.h \
     avlindex.h \
     avlnode.h
