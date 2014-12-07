@@ -150,10 +150,9 @@ void interactive(Handler* index) {
             cout << "Viewing Results: " << index << " to " << index + 4 << "\n" << endl;
 
             /** Print 5 Results at a Time **/
-            for(int x = index; x < size && x < index+5; x++)
+            for(int x = index; x <= size && x < index+5; x++)
                 cout << fixed << setprecision(2) << "[" << x << "] " << results[x-1]->getTitle()
-                     << "\tScore: " << results[x-1]->getWordCount()
-                     << "\tSee Document: " << results[x-1]->getID() << endl;
+                     << "\tScore: " << results[x-1]->getWordCount() << endl;
 
             cout << "\nOptions:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n'return'\t Return to search"

@@ -75,8 +75,8 @@ void XMLParser::getFilenames() {
 
 void XMLParser::parseFile(const char* filename, const bool hash) {
     string author, id, output, text, timestamp, title, realFile;
-    realFile = "./WikiDump/" + string(filename);
-
+    //realFile = "./WikiDump/" + string(filename);
+    realFile = "./Temp/" + string(filename);
     try {
         /** Open XML document **/
         rapidxml::file<> file(realFile.c_str());
@@ -112,8 +112,8 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
             int wc = clean(text);
             if(hash == true)
                 index_hash->add(id, keywords);
-            else
-                index_avl->add(id, keywords);
+            //else
+                //index_avl->add(id, keywords);
             keywords.clear();
 
             /** Save text **/
