@@ -1,6 +1,7 @@
 #ifndef AVLINDEX_H
 #define AVLINDEX_H
 
+#include <cstring>
 #include <set>
 #include <unordered_map>
 
