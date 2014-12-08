@@ -17,7 +17,6 @@ class AVLTreeNode {
 private:
    string keyword;
    unordered_map<string, set<Entry*> > table;
-   // Other data fields can be inserted here
    AVLTreeNode *left;
    AVLTreeNode *right;
    AVLTreeNode *parent;

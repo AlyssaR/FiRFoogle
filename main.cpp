@@ -105,7 +105,74 @@ void maintain(Handler* index) {
 }
 
 void stressTest(Handler* index) {
-    /** WRITE THIS! **/
+    string file, command;
+    bool indexExists = true;
+    while(true) {
+        cout << "    ====================\n"
+             << "        Stress Test\n"
+             << "    ====================\n" << endl;
+        cout << "Enter name of command file: ";
+        cin >> file;
+
+        ifstream fin;
+        fin.open(file);
+        if(!fin.is_open())
+            cout << "ERROR: Could not open file" << endl;
+
+        while(!fin.eof()) {
+            fin >> command;
+
+            /** Enter Code **/
+            if(command == "AD") {
+                string indexType;
+                bool hash;
+                /** Option to use AVL tree or hash table **/
+                fin >> indexType;
+                if(indexType == "AVL")
+                    hash = false;
+                else if(indexType == "HASH")
+                    hash = true;
+                else {
+                    cerr << "ERROR: Invalid Command --> " << command << endl;
+                    exit(1);
+                }
+
+                /** Get file to add to index **/
+
+                char* xmlFile = new char[50];
+                fin >> xmlFile;
+                index->addToIndex(xmlFile, hash);
+            }
+            else if(command == "CL") {
+                if(indexExists == false) {
+                    cerr << "ERROR: Index does not exist. Cannot clear." << endl;
+                    exit(1);
+                }
+                index->deleteIndex();
+                indexExists = false;
+            } else if(command == "LD") {
+                index->loadIndex();
+                indexExists = true;
+            } else if(command == "OI")
+                if(indexExists == false) {
+                    cerr << "ERROR: Index does not exist. Cannot ouput." << endl;
+                    exit(1);
+                }
+                index->outputIndex();
+            else if(strcmp(option, "SR") == 0) {
+                if(indexExists == false) {
+                    cerr << "ERROR: Index does not exists. Cannot search." << endl;
+                    exit(1);
+                }
+                interactive(index);
+            } else if(command == "QT")
+                break;
+            else {
+                cerr << "ERROR: Invalid Command --> " << command << endl;
+                exit(1);
+            }
+        }
+    }
 }
 
 void interactive(Handler* index) {

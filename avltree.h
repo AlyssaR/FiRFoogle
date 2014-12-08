@@ -24,6 +24,8 @@ class Code203_Tree
    private:
       AVLTreeNode* root;
       AVLTreeNode* a;
+      void ClearTree(AVLTreeNode *n);
+      void Print(AVLTreeNode *n);
 
    public:
       Code203_Tree();            // Constructor
@@ -39,9 +41,6 @@ class Code203_Tree
       void PrintTree();
       AVLTreeNode* find(string, AVLTreeNode*&);
 
-   private:
-      void ClearTree(AVLTreeNode *n);
-      void Print(AVLTreeNode *n);
 };
 
 #endif

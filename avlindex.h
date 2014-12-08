@@ -21,7 +21,6 @@ private:
     Code203_Tree* tree;
     unordered_map<string, set<Entry*> > table;
     set<string> keys, docs;
-    //Entry* temp;
     void printIDs(string, ofstream&);
     void put(string, string, int); //Adds individual key
 public:
