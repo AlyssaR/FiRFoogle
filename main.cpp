@@ -216,8 +216,7 @@ void interactive(Handler* index) {
 
             /** Print 5 Results at a Time **/
             for(int x = index; x <= size && x < index+5; x++)
-                cout << "[" << x << "] " << results[x-1]->getTitle()
-                     << "\nSee Doc: " << results[x-1]->getID() << endl;
+                cout << "[" << x << "] " << results[x-1]->getTitle() << endl;
 
             cout << "\nOptions:\n'more'\t\t see next page \n'back'\t\t see last page"
                  << "\n#\t\t see specific article \n'return'\t Return to search"

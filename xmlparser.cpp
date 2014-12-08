@@ -105,7 +105,6 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
                 docNum = 1;
                 fileNum++;
             }
-
             output = "By: " + author + "\nPublished: " + timestamp + "\n\n" + text;
 
             /** Call cleaning function and add keywords to index **/
@@ -118,6 +117,12 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
             keywords.clear();
 
             /** Save text **/
+            string filething = "./Temp/" + id + ".txt";
+            ofstream out(filething);
+            out << wc << endl;
+            out << title << endl;
+            out << output << endl;
+            out.close();
             documents.insert(documents.end(), new Article(title,output,id, wc));
         }
     }

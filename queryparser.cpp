@@ -64,7 +64,7 @@ vector<Article*> QueryParser::find(string& query) {
     return results;
 }
 
-Article* QueryParser::getArticle(string id, int weight) {
+/*Article* QueryParser::getArticle(string id, int weight) {
     string title, text, temp, docID, docNum, filename, wordCount;
     float wc;
 
@@ -72,14 +72,14 @@ Article* QueryParser::getArticle(string id, int weight) {
     docNum = id.substr(id.find('_') + 1, id.size());
 
     /** Open file to retrieve article **/
-    ifstream in(filename.c_str());
+/*    ifstream in(filename.c_str());
     if(!in.is_open()) {
         cerr << "[!] Could not open " << filename << endl;
         return (new Article("error", "error", "error", 0));
     }
 
     /** Read in neccessary information to display article **/
-    while(!in.eof() && docID.compare(docNum) != 0) {
+/*    while(!in.eof() && docID.compare(docNum) != 0) {
         in >> docID;
         in >> wordCount;
         getline(in, title);
@@ -92,6 +92,33 @@ Article* QueryParser::getArticle(string id, int weight) {
                 break;
             }
         }
+    }
+    /** Calculate term frequency and return article **/
+/*    in.close();
+    wc = float(weight)/float(atoi(wordCount.c_str())); //calculates term frequency
+    return (new Article(title,text,id,wc));
+}*/
+
+Article* QueryParser::getArticle(string id, int weight) {
+    string title, text, temp, docID, docNum, filename, wordCount;
+    float wc;
+
+    filename = "./Temp/" + id + ".txt";
+
+    /** Open file to retrieve article **/
+    ifstream in(filename.c_str());
+    if(!in.is_open()) {
+        cerr << "[!] Could not open " << filename << endl;
+        return (new Article("error", "error", "error", 0));
+    }
+
+    /** Read in neccessary information to display article **/
+    getline(in, wordCount);
+    getline(in, title);
+    text = "";
+    while(!in.eof()) {
+        getline(in, temp);
+        text = text + temp;
     }
     /** Calculate term frequency and return article **/
     in.close();
