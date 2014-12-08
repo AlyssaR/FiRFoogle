@@ -153,13 +153,13 @@ void stressTest(Handler* index) {
             } else if(command == "LD") {
                 index->loadIndex();
                 indexExists = true;
-            } else if(command == "OI")
+            } else if(command == "OI") {
                 if(indexExists == false) {
                     cerr << "ERROR: Index does not exist. Cannot ouput." << endl;
                     exit(1);
                 }
                 index->outputIndex();
-            else if(strcmp(option, "SR") == 0) {
+            } else if(command == "SR") {
                 if(indexExists == false) {
                     cerr << "ERROR: Index does not exists. Cannot search." << endl;
                     exit(1);
