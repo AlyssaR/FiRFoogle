@@ -11,19 +11,18 @@ void Handler::addToIndex(char*& filename, bool hash) {
 
     cout << "[+] Adding " << filename <<  " to index" << endl;
 
+    vector<Article*> temp;
     /** Insert files into index using hash table **/
     if(hash == true) {
-        set<Article*> temp;
         start = chrono::system_clock::now(); //begin timer
         temp = parser->read_hash(filename, hashTable);
-        documents.insert(temp.begin(), temp.end());
+        documents.insert(documents.end(), temp.begin(), temp.end());
         end = chrono::system_clock::now(); //end timer
         elapsed_seconds = end-start;
     } else {
-        set<Article*> temp;
         start = chrono::system_clock::now(); //begin timer
         temp = parser->read_AVL(filename, AVLTree);
-        documents.insert(temp.begin(), temp.end());
+        documents.insert(documents.begin(), temp.begin(), temp.end());
         end = chrono::system_clock::now(); //end timer
         elapsed_seconds = end-start;
     }
@@ -79,26 +78,36 @@ bool Handler::loadIndex() {
 
 }
 
+bool byID(const Article* left, const Article* right) {
+    return (strcmp(left->getID().c_str(), right->getID().c_str()) < 0);
+}
+
 void Handler::outputIndex() {
     hashTable->printTable();
-    int x = 1, y = 1;
 
-    string file = "./Articles/" + to_string(y) + ".txt";
+    sort(documents.begin(), documents.end(), &byID);
+
+    int x = 1;
+    string z, file;
 
     /** Open files to output documents **/
     ofstream out(file.c_str());
     for(auto thing : documents) {
-        if(x % 1001 == 0) { //output 1000 documents per file
-            x = 1;
-            out.close();
-            y++;
-            file = "./Articles/" + to_string(y) + ".txt";
+        istringstream temp(thing->getID());
+        getline(temp, z, '_');
+        if(x == 1) {
+            file = "./Articles/" + z + ".txt";
             out.open(file.c_str());
         }
-
+        else if(x % 1001 == 0) { //output 1000 documents per file
+            out.close();
+            file = "./Articles/" + z + ".txt";
+            out.open(file.c_str());
+        }
+        getline(temp, z);
         /** Write out documents to files **/
-        out << x << " " << thing->getWordCount() << " " << thing->getTitle() << endl;
-        out << thing->getText() << "\n<>" << endl;
+        out << z << " " << thing->getWordCount() << " " << thing->getTitle()
+            << "\n" << thing->getText() << "\n<>" << endl;
         x++;
     }
 

@@ -110,6 +110,7 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
 
             /** Call cleaning function and add keywords to index **/
             int wc = clean(text);
+
             if(hash == true)
                 index_hash->add(id, keywords);
             //else
@@ -117,7 +118,7 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
             keywords.clear();
 
             /** Save text **/
-            documents.insert(new Article(title,output,id, wc));
+            documents.insert(documents.end(), new Article(title,output,id, wc));
         }
     }
     catch(exception& e) {
@@ -125,7 +126,7 @@ void XMLParser::parseFile(const char* filename, const bool hash) {
     }
 } //close loadFile
 
-set<Article*> XMLParser::read_hash(char* bigfile, Index2*& i) {
+vector<Article*> XMLParser::read_hash(char* bigfile, Index2*& i) {
     index_hash = i; //Make sure same index is always used
     string split = "perl splitter.pl " + string(bigfile);
     bool hash = true;
@@ -150,7 +151,7 @@ set<Article*> XMLParser::read_hash(char* bigfile, Index2*& i) {
     return documents;
 }
 
-set<Article*> XMLParser::read_AVL(char* bigfile, AVLIndex*& i) {
+vector<Article*> XMLParser::read_AVL(char* bigfile, AVLIndex*& i) {
     index_avl = i; //Make sure same index is always used
     string split = "perl splitter.pl " + string(bigfile);
     bool hash = false;

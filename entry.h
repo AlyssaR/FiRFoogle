@@ -15,20 +15,16 @@ class Entry {
 private:
     string docID;
     int weight;
-    Entry* next = nullptr;
 public:
-    Entry(string d, int n = 1) : docID(d),
-        weight(n) {}
+    Entry(string d, int n) : docID(d), weight(n) {}
 
     string getDocID() { return docID; }
     int getWeight() { return weight; }
-    Entry* getNext() { return next; }
 
     void setDocID(string d) { docID = d; }
-    void setNext(Entry* n) { next = n; }
     void setWeight(int w) { weight = w; }
 
-    ~Entry() { delete next; }
+    ~Entry() {}
 };
 
 #endif // ENTRY_H

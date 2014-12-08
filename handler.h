@@ -23,7 +23,7 @@ private:
     Index2* hashTable;
     AVLIndex* AVLTree;
     XMLParser* parser;
-    set<Article*> documents;
+    vector<Article*> documents;
     vector<string> sorted(unordered_map<string, int>&); //Sorts docs by weights
 public:
     Handler() {

@@ -23,7 +23,7 @@ private:
     Index2* index_hash;
     AVLIndex* index_avl;
     rapidxml::xml_document<> doc;
-    set<Article*> documents;
+    vector<Article*> documents;
     unordered_map<string, int> keywords;
     unordered_map<string, string> stemmed;
     int stopwords_size = 568, fileNum = 1, docNum = 1;
@@ -34,8 +34,8 @@ public:
 
     void getFilenames();
     void parseFile(const char*, const bool);
-    set<Article*> read_hash(char*, Index2*&);
-    set<Article*> read_AVL(char*, AVLIndex*&);
+    vector<Article*> read_hash(char*, Index2*&);
+    vector<Article*> read_AVL(char*, AVLIndex*&);
 
     int clean(string&);
     void stem();
